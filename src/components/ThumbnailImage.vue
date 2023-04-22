@@ -1,11 +1,14 @@
 <template>
-	<div class="contents_module">
+	<div ref="module" class="contents_module">
 		<div>{{ container_title }}</div>
-		<div class="postion_check_container">
+		<div :class= "[computedClass, 'postion_check_container']">
 			<span ref="first_position"></span>
 			<span ref="last_position"></span>
 		</div>
-		<div class="img_container" :section="container_num">
+		<div ref="img_container"
+			:class= "[computedClass, 'img_container']"
+			:section="container_num"
+		>
 			<div
 				class="img_wrapper"
 				v-for="(thumbnail, index) in thumbnails"
@@ -36,19 +39,43 @@ export default {
 		lastPositionIndex: [],
 		};
 	},
+	computed: {
+		isActiveContainer() {
+			return this.container_num == this.activeIndex - (this.activeIndex%10)
+		},
+		computedClass() {
+			return[{active : this.isActiveContainer}]
+		},
+		positionIndex (){
+			return this.activeIndex % 10;
+		}
+	},
 	methods: {
 		handleArrowKey(e) {
 			this.getFirstPosition(this.$refs.first_position);
 			this.getFirstPosition(this.$refs.last_position);
 
 		if (e.key === "ArrowRight") {
-			if(this.activeIndex % 10 != 0 && this.activeIndex == this.lastPositionIndex) {
+			if(
+				this.activeIndex % 10 != 0
+				&& this.activeIndex % 10 != 9
+				&& this.activeIndex == this.lastPositionIndex) {
 				this.rightMove();
 			}
-			this.activeIndex += 1;
+			if(this.activeIndex % 10 != 9) {
+				this.activeIndex += 1;
+			}
 			this.keyPressed = "right";
+
 		} else if (e.key === "ArrowLeft") {
-			this.activeIndex -= 1;
+			if(
+				this.activeIndex % 10 != 0
+				&& this.activeIndex == this.firstPositionIndex) {
+				this.leftMove();
+			}
+			if(this.activeIndex % 10 != 0){
+				this.activeIndex -= 1;
+			}
 			this.keyPressed = "left";
 		} else if (e.key === "ArrowDown") {
 			this.activeIndex += 10;
@@ -58,9 +85,10 @@ export default {
 			this.keyPressed = "up";
 		}
 		},
+
 		getFirstPosition(position) {
 		const positionRect = position.getBoundingClientRect();
-		const imgWrappers = position.nextElementSibling.querySelectorAll('.img_wrapper');
+		const imgWrappers = this.$el.querySelectorAll('.img_wrapper');
 		let minDistance = Number.MAX_VALUE;
 
 		imgWrappers.forEach((thumbnail) => {
@@ -80,28 +108,22 @@ export default {
 		});
 		},
 		rightMove() {
-			let containerNum = this.activeIndex % 10;
-			const imgContainers = this.$el.querySelectorAll(".img_container");
-			console.log('exectued', this.activeIndex, containerNum);
-			imgContainers.forEach((container) => {
-				if (container.getAttribute("section") == Math.floor(this.activeIndex / 10)) {
-						// container.style.transform = `translateX(-${
-						// (this.wrapperWidth + this.gap) * (containerNum - 3)
-						// }px`;
-						container.style.transform = `translateX(-${
-							(this.wrapperWidth + this.gap) * (containerNum - 2)
+			console.log('exectued', this.activeIndex, this.positionIndex);
+			let container = this.$refs.img_container;
+			container.style.transform =`translateX(-${
+				(this.wrapperWidth + this.gap) * (this.positionIndex - 2)
+			}px`;
+		},
+		leftMove() {
+			console.log('exectued', this.activeIndex, this.positionIndex);
+			let container = this.$refs.img_container;
+			let currentPositon = container.getBoundingClientRect().left;
+			container.style.transform = `translateX(${
+			// 			currentPositon + (this.wrapperWidth/2)
+						currentPositon + this.leftMoveAmount
 						}px`;
-					}
-				});
-			}
+		}
 	},
-	// watch: {
-	// 	activeIndex() {
-	// 		if (this.keyPressed === "right") {
-	// 			this.rightMove();
-	// 		}
-	// 	},
-	// },
 
 	mounted() {
 		window.addEventListener("keydown", this.handleArrowKey);
@@ -111,11 +133,17 @@ export default {
 		this.wrapperWidth = this.imgWrapper.offsetWidth;
 		this.wrapperHeight = this.imgWrapper.offsetHeight;
 		this.position = this.$el.querySelector(".postion_check_container");
+		this.module = this.$refs.module;
 
 		this.imgContainer.style.height = `${this.wrapperHeight}px`;
 		this.position.style.width = `${this.wrapperWidth * 4 + this.gap * 3}px`;
 		this.$refs.first_position.style.width = `${this.wrapperWidth}px`;
 		this.$refs.last_position.style.width = `${this.wrapperWidth}px`;
+
+		this.imgContainers = this.$el.querySelectorAll(".img_container");
+
+		this.leftMoveAmount = this.module.offsetWidth - this.position.offsetWidth + this.gap ;
+		console.log(this.leftMoveAmount);
 	},
 
 	beforeUnmount() {
