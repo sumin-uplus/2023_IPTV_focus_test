@@ -115,12 +115,11 @@ export default {
 			}px`;
 		},
 		leftMove() {
-			console.log('exectued', this.activeIndex, this.positionIndex);
 			let container = this.$refs.img_container;
-			let currentPositon = container.getBoundingClientRect().left;
-			container.style.transform = `translateX(${
-			// 			currentPositon + (this.wrapperWidth/2)
-						currentPositon + this.leftMoveAmount
+			let currentPosition = container.getBoundingClientRect().left;
+			console.log('exectued', this.activeIndex, this.positionIndex, currentPosition);
+			container.style.transform = `translateX(-${
+						(this.wrapperWidth + this.gap) * (this.positionIndex - 1)
 						}px`;
 		}
 	},
@@ -142,13 +141,14 @@ export default {
 
 		this.imgContainers = this.$el.querySelectorAll(".img_container");
 
-		this.leftMoveAmount = this.module.offsetWidth - this.position.offsetWidth + this.gap ;
-		console.log(this.leftMoveAmount);
+		this.leftMoveAmount = this.module.offsetWidth - this.position.offsetWidth;
+		console.log(this.module.offsetWidth, this.position.offsetWidth);
 	},
 
 	beforeUnmount() {
 		window.removeEventListener("keydown", this.handleArrowKey);
 	},
+
 };
 </script>
 
