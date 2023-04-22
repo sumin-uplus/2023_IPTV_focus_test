@@ -5,9 +5,10 @@
 			<span ref="first_position"></span>
 			<span ref="last_position"></span>
 		</div>
-		<div ref="img_container"
-			:class= "[computedClass, 'img_container']"
-			:section="container_num"
+		<div
+		:ref="'img_container_' + container_num"
+		:class="[computedClass, 'img_container']"
+		:section="container_num"
 		>
 			<div
 				class="img_wrapper"
@@ -34,6 +35,7 @@ export default {
 	data() {
 		return {
 		activeIndex: 0,
+		activeSection: 0,
 		keyPressed: "",
 		firstPositionIndex: [],
 		lastPositionIndex: [],
@@ -48,6 +50,9 @@ export default {
 		},
 		positionIndex (){
 			return this.activeIndex % 10;
+		},
+		activeContainer(){
+			return this.$refs[`img_container_${this.activeSection}`];
 		}
 	},
 	methods: {
@@ -78,11 +83,18 @@ export default {
 			}
 			this.keyPressed = "left";
 		} else if (e.key === "ArrowDown") {
-			this.activeIndex += 10;
+			this.activeSection += 10;
 			this.keyPressed = "down";
+			if (this.activeContainer) {
+				this.getFirstPosition(this.$refs.first_position);
+				this.activeIndex = this.firstPositionIndex;
+				console.log(this.activeIndex, this.firstPositionIndex);
+			}
+
 		} else if (e.key === "ArrowUp") {
 			this.activeIndex -= 10;
 			this.keyPressed = "up";
+
 		}
 		},
 
@@ -105,20 +117,20 @@ export default {
 				this.lastPositionIndex = index;
 			}
 			}
-		});
+			});
 		},
 		rightMove() {
 			console.log('exectued', this.activeIndex, this.positionIndex);
-			let container = this.$refs.img_container;
-			container.style.transform =`translateX(-${
+			//let container = this.$refs[`img_container_${this.activeSection}`];
+			this.activeContainer.style.transform =`translateX(-${
 				(this.wrapperWidth + this.gap) * (this.positionIndex - 2)
 			}px`;
 		},
 		leftMove() {
-			let container = this.$refs.img_container;
-			let currentPosition = container.getBoundingClientRect().left;
+			//let container = this.$refs[`img_container_${this.activeSection}`];
+			let currentPosition = this.activeContainer.getBoundingClientRect().left;
 			console.log('exectued', this.activeIndex, this.positionIndex, currentPosition);
-			container.style.transform = `translateX(-${
+			this.activeContainer.style.transform = `translateX(-${
 						(this.wrapperWidth + this.gap) * (this.positionIndex - 1)
 						}px`;
 		}
