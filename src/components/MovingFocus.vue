@@ -16,13 +16,16 @@
 </template>
 
 <script>
+import FocusFunction from '../mixins/FocusFunction';
 export default {
-	name: "ThumbnailImage",
+	name: "MovingFocus",
 	props: {
 		thumbnails: { type: Object },
 		container_num: { type: Number },
 		container_title: { type: String, default: "콘텐츠 모듈1" },
+		focus_type: {type: String, default: 'moving'}
 	},
+	mixins:[FocusFunction],
 	data() {
 		return {
 			activeIndex: 0,
@@ -33,12 +36,6 @@ export default {
 		};
 	},
 	computed: {
-		// computedClass() {
-		// 	return [{ active: this.isActiveContainer }]
-		// },
-		// computedFirst() {
-		// 	return [{ first: this.activeIndex == this.firstPositionIndex && this.activeSection === this.container_num }]
-		// },
 		isActiveContainer() {
 			return this.container_num == this.activeIndex - (this.activeIndex % 10)
 		},
@@ -76,9 +73,6 @@ export default {
 				}
 				this.keyPressed = "left";
 			} else if (e.key === "ArrowDown") {
-				// if(this.activeSection == 20 || this.activeSection == 50 || this.activeSection == 80) {
-				// 	this.updownSection();
-				// } 
 				this.activeSection += 10;
 				this.keyPressed = "down";
 				this.updownMove();
@@ -89,7 +83,6 @@ export default {
 				this.updownMove();
 			}
 		},
-
 		getFirstPosition(position) {
 			const positionRect = position.getBoundingClientRect();
 			const imgWrappers = this.$el.querySelectorAll('.img_wrapper');
@@ -119,7 +112,6 @@ export default {
 		},
 		leftMove() {
 			if (this.activeContainer) {
-				//let currentPosition = this.activeContainer.getBoundingClientRect().left;
 				this.activeContainer.style.transform = `translateX(-${(this.wrapperWidth + this.gap) * (this.positionIndex - 1)
 					}px`;
 			}
@@ -130,97 +122,7 @@ export default {
 				this.activeIndex = this.firstPositionIndex;
 			}
 		},
-		// updownSection() {
-		// 	this.module.style.transform = `translateY(-${this.wrapperHeight*(this.activeSection/10+2)+(40*2)
-		// 			}px`;
-		// }
-	},
-
-	mounted() {
-		window.addEventListener("keydown", this.handleArrowKey);
-		this.imgContainer = this.$el.querySelector(".img_container");
-		this.imgWrapper = this.$el.querySelector(".img_wrapper:not(.active)");
-		this.gap = parseInt(getComputedStyle(this.imgContainer).gap);
-		this.wrapperWidth = this.imgWrapper.offsetWidth;
-		this.wrapperHeight = this.imgWrapper.offsetHeight;
-		this.position = this.$el.querySelector(".postion_check_container");
-		this.module = this.$refs.module;
-
-		this.imgContainer.style.height = `${this.wrapperHeight}px`;
-		this.position.style.width = `${this.wrapperWidth * 4 + this.gap * 3}px`;
-		this.$refs.first_position.style.width = `${this.wrapperWidth}px`;
-		this.$refs.last_position.style.width = `${this.wrapperWidth}px`;
-
-		this.imgContainers = this.$el.querySelectorAll(".img_container");
-	},
-
-	beforeUnmount() {
-		window.removeEventListener("keydown", this.handleArrowKey);
 	},
 
 };
 </script>
-
-<style>
-.contents_module {
-	display: flex;
-	flex-direction: column;
-	gap: 16px;
-	font-weight: 500;
-	font-size: 32px;
-	line-height: 44px;
-	color: #eeeeee;
-	margin-left: 136px;
-	/*overflow-x: clip;*/
-	transition-delay: 400ms;
-	transition: 0.3s all ease-in-out;
-}
-
-.contents_module:nth-of-type(1) {
-	margin-top: 50px;
-}
-
-.img_container {
-	display: grid;
-	grid-auto-flow: column;
-	gap: 32px;
-	transition: 0.3s all ease-in-out;
-}
-
-.img_wrapper {
-	position: relative;
-	width: calc((100vw - (136px * 2) - (32px * 3)) / 4);
-	height: 0;
-	padding-top: 56.2%;
-	border: 1px solid rgba(238, 238, 238, 0.2);
-	border-radius: 12px;
-	overflow: hidden;
-	transition: 0.3s all ease-in-out;
-}
-
-.img_wrapper.active {
-	position: relative;
-	transform: scale(1.1);
-	visibility: visible;
-	border: 4px solid #eeeeee;
-	border-radius: 12px;
-	transition: 0.3s all ease-in-out;
-	box-shadow: 0px 0px 60px 4px rgba(238, 238, 238, 0.66);
-}
-
-.img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	position: absolute;
-	top: 0;
-	left: 0;
-}
-
-.postion_check_container {
-	position: absolute;
-	width: 100%;
-	display: flex;
-	justify-content: space-between;
-}
-</style>

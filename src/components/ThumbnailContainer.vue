@@ -1,22 +1,41 @@
 <template>
-	<ThumbnailImage
-		v-for="(slice, index) in slices"
-		:key="index"
-		:thumbnails="slice"
-		:container_num="index * 10"
-		:container_title="'콘텐츠 모듈 ' + (index + 1)"
-	>
-	</ThumbnailImage>
+	<div v-if="type=='moving'" class="contents_container">
+		<MovingFocus
+			v-for="(slice, index) in slices"
+			:key="index"
+			:thumbnails="slice"
+			:container_num="index * 10"
+			:container_title="'콘텐츠 모듈 ' + (index + 1)"
+			:focus_type="type"
+		>
+		</MovingFocus>
+	</div>
+	<div v-if="type=='fixed'" class="contents_container">
+		<FixedFocus
+			v-for="(slice, index) in slices"
+			:key="index"
+			:thumbnails="slice"
+			:container_num="index * 10"
+			:container_title="'콘텐츠 모듈 ' + (index + 1)"
+			:focus_type="type"
+		>
+		</FixedFocus>
+	</div>	
 </template>
 
 <script>
-import ThumbnailImage from "./ThumbnailImage.vue";
+import MovingFocus from "./MovingFocus.vue";
+import FixedFocus from "./FixedFocus.vue";
 
 export default {
 	name: "ThumbnailContainer",
-	props: {},
+	props: {
+		start: {type: Number, default: 1},
+		type: {type: String, default: 'moving'}
+	},
 	components: {
-		ThumbnailImage,
+		MovingFocus,
+		FixedFocus
 	},
 	data() {
 		return {
@@ -39,7 +58,7 @@ export default {
 		},
 	},
 	created() {
-		this.makeImgArray(1, this.thumbnails);
+		this.makeImgArray(this.start, this.thumbnails);
 		this.createSlices();
 	},
 };
