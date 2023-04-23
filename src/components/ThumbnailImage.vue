@@ -1,23 +1,14 @@
 <template>
-	<div ref="module" class="contents_module">
+	<div ref="module" :class="['contents_module']">
 		<div>{{ container_title }}</div>
-		<div :class= "[computedClass, 'postion_check_container']">
+		<div :class="['postion_check_container']">
 			<span ref="first_position"></span>
 			<span ref="last_position"></span>
 		</div>
-		<div
-		:ref="'img_container_' + container_num"
-		:class="[computedClass, 'img_container']"
-		:section="container_num"
-		>
-			<div
-				class="img_wrapper"
-				v-for="(thumbnail, index) in thumbnails"
-				:index="index + container_num"
-				:key="index + container_num"
-				:ref="'thumbnail-' + index"
-				:class="{ active: this.activeIndex === index + container_num }"
-			>
+		<div :ref="'img_container_' + container_num" :class="['img_container']" :section="container_num">
+			<div class="img_wrapper" v-for="(thumbnail, index) in thumbnails" :index="index + container_num"
+				:key="index + container_num" :ref="'thumbnail-' + index"
+				:class="{ active: this.activeIndex === index + container_num && this.activeSection === container_num }">
 				<img class="img" :src="thumbnail.src" />
 			</div>
 		</div>
@@ -34,106 +25,115 @@ export default {
 	},
 	data() {
 		return {
-		activeIndex: 0,
-		activeSection: 0,
-		keyPressed: "",
-		firstPositionIndex: [],
-		lastPositionIndex: [],
+			activeIndex: 0,
+			activeSection: 0,
+			keyPressed: "",
+			firstPositionIndex: 0,
+			lastPositionIndex: 0
 		};
 	},
 	computed: {
+		// computedClass() {
+		// 	return [{ active: this.isActiveContainer }]
+		// },
+		// computedFirst() {
+		// 	return [{ first: this.activeIndex == this.firstPositionIndex && this.activeSection === this.container_num }]
+		// },
 		isActiveContainer() {
-			return this.container_num == this.activeIndex - (this.activeIndex%10)
+			return this.container_num == this.activeIndex - (this.activeIndex % 10)
 		},
-		computedClass() {
-			return[{active : this.isActiveContainer}]
-		},
-		positionIndex (){
+		positionIndex() {
 			return this.activeIndex % 10;
 		},
-		activeContainer(){
+		activeContainer() {
 			return this.$refs[`img_container_${this.activeSection}`];
-		}
+		},
 	},
 	methods: {
 		handleArrowKey(e) {
 			this.getFirstPosition(this.$refs.first_position);
 			this.getFirstPosition(this.$refs.last_position);
+			if (e.key === "ArrowRight") {
+				if (
+					this.activeIndex % 10 != 0
+					&& this.activeIndex % 10 != 9
+					&& this.activeIndex == this.lastPositionIndex) {
+					this.rightMove();
+				}
+				if (this.activeIndex % 10 != 9) {
+					this.activeIndex += 1;
+				}
+				this.keyPressed = "right";
 
-		if (e.key === "ArrowRight") {
-			if(
-				this.activeIndex % 10 != 0
-				&& this.activeIndex % 10 != 9
-				&& this.activeIndex == this.lastPositionIndex) {
-				this.rightMove();
-			}
-			if(this.activeIndex % 10 != 9) {
-				this.activeIndex += 1;
-			}
-			this.keyPressed = "right";
+			} else if (e.key === "ArrowLeft") {
+				if (
+					this.activeIndex % 10 != 0
+					&& this.activeIndex == this.firstPositionIndex) {
+					this.leftMove();
+				}
+				if (this.activeIndex % 10 != 0) {
+					this.activeIndex -= 1;
+				}
+				this.keyPressed = "left";
+			} else if (e.key === "ArrowDown") {
+				// if(this.activeSection == 20 || this.activeSection == 50 || this.activeSection == 80) {
+				// 	this.updownSection();
+				// } 
+				this.activeSection += 10;
+				this.keyPressed = "down";
+				this.updownMove();
 
-		} else if (e.key === "ArrowLeft") {
-			if(
-				this.activeIndex % 10 != 0
-				&& this.activeIndex == this.firstPositionIndex) {
-				this.leftMove();
+			} else if (e.key === "ArrowUp") {
+				this.activeSection -= 10;
+				this.keyPressed = "up";
+				this.updownMove();
 			}
-			if(this.activeIndex % 10 != 0){
-				this.activeIndex -= 1;
-			}
-			this.keyPressed = "left";
-		} else if (e.key === "ArrowDown") {
-			this.activeSection += 10;
-			this.keyPressed = "down";
-			if (this.activeContainer) {
-				this.getFirstPosition(this.$refs.first_position);
-				this.activeIndex = this.firstPositionIndex;
-				console.log(this.activeIndex, this.firstPositionIndex);
-			}
-
-		} else if (e.key === "ArrowUp") {
-			this.activeIndex -= 10;
-			this.keyPressed = "up";
-
-		}
 		},
 
 		getFirstPosition(position) {
-		const positionRect = position.getBoundingClientRect();
-		const imgWrappers = this.$el.querySelectorAll('.img_wrapper');
-		let minDistance = Number.MAX_VALUE;
+			const positionRect = position.getBoundingClientRect();
+			const imgWrappers = this.$el.querySelectorAll('.img_wrapper');
+			let minDistance = Number.MAX_VALUE;
 
-		imgWrappers.forEach((thumbnail) => {
-			const rect = thumbnail.getBoundingClientRect();
-			const distance = Math.abs(positionRect.left - rect.left);
+			imgWrappers.forEach((thumbnail) => {
+				const rect = thumbnail.getBoundingClientRect();
+				const distance = Math.abs(positionRect.left - rect.left);
 
-			if (rect.left >= 0 && distance < minDistance) {
-			minDistance = distance;
-			const index = parseInt(thumbnail.getAttribute("index"));
+				if (rect.left >= 0 && distance < minDistance) {
+					minDistance = distance;
+					const index = parseInt(thumbnail.getAttribute("index"));
 
-			if (position === this.$refs.first_position) {
-				this.firstPositionIndex = index;
-			} else if (position === this.$refs.last_position) {
-				this.lastPositionIndex = index;
-			}
-			}
+					if (position === this.$refs.first_position) {
+						this.firstPositionIndex = index;
+					} else if (position === this.$refs.last_position) {
+						this.lastPositionIndex = index;
+					}
+				}
 			});
 		},
 		rightMove() {
-			console.log('exectued', this.activeIndex, this.positionIndex);
-			//let container = this.$refs[`img_container_${this.activeSection}`];
-			this.activeContainer.style.transform =`translateX(-${
-				(this.wrapperWidth + this.gap) * (this.positionIndex - 2)
-			}px`;
+			if (this.activeContainer) {
+				this.activeContainer.style.transform = `translateX(-${(this.wrapperWidth + this.gap) * (this.positionIndex - 2)
+					}px`;
+			}
 		},
 		leftMove() {
-			//let container = this.$refs[`img_container_${this.activeSection}`];
-			let currentPosition = this.activeContainer.getBoundingClientRect().left;
-			console.log('exectued', this.activeIndex, this.positionIndex, currentPosition);
-			this.activeContainer.style.transform = `translateX(-${
-						(this.wrapperWidth + this.gap) * (this.positionIndex - 1)
-						}px`;
-		}
+			if (this.activeContainer) {
+				//let currentPosition = this.activeContainer.getBoundingClientRect().left;
+				this.activeContainer.style.transform = `translateX(-${(this.wrapperWidth + this.gap) * (this.positionIndex - 1)
+					}px`;
+			}
+		},
+		updownMove() {
+			if (this.activeContainer) {
+				this.getFirstPosition(this.$refs.first_position);
+				this.activeIndex = this.firstPositionIndex;
+			}
+		},
+		// updownSection() {
+		// 	this.module.style.transform = `translateY(-${this.wrapperHeight*(this.activeSection/10+2)+(40*2)
+		// 			}px`;
+		// }
 	},
 
 	mounted() {
@@ -152,9 +152,6 @@ export default {
 		this.$refs.last_position.style.width = `${this.wrapperWidth}px`;
 
 		this.imgContainers = this.$el.querySelectorAll(".img_container");
-
-		this.leftMoveAmount = this.module.offsetWidth - this.position.offsetWidth;
-		console.log(this.module.offsetWidth, this.position.offsetWidth);
 	},
 
 	beforeUnmount() {
@@ -174,6 +171,9 @@ export default {
 	line-height: 44px;
 	color: #eeeeee;
 	margin-left: 136px;
+	/*overflow-x: clip;*/
+	transition-delay: 400ms;
+	transition: 0.3s all ease-in-out;
 }
 
 .contents_module:nth-of-type(1) {
@@ -199,11 +199,13 @@ export default {
 }
 
 .img_wrapper.active {
+	position: relative;
 	transform: scale(1.1);
+	visibility: visible;
 	border: 4px solid #eeeeee;
-	box-shadow: 0px 0px 60px 4px rgba(238, 238, 238, 0.66);
 	border-radius: 12px;
 	transition: 0.3s all ease-in-out;
+	box-shadow: 0px 0px 60px 4px rgba(238, 238, 238, 0.66);
 }
 
 .img {
