@@ -6,9 +6,11 @@
 			<span ref="last_position"></span>
 		</div>
 		<div :ref="'img_container_' + container_num" :class="['img_container']" :section="container_num">
-			<div class="img_wrapper" v-for="(thumbnail, index) in thumbnails" :index="index + container_num"
-				:key="index + container_num" :ref="'thumbnail-' + index"
-				:class="{ active: this.activeIndex === index + container_num && this.activeSection === container_num }">
+			<div class="img_wrapper" v-for="(thumbnail, index) in thumbnails"
+				:index="index + container_num"
+				:key="index + container_num"
+				ref="thumbnail"
+				>
 				<img class="img" :src="thumbnail.src" />
 			</div>
 		</div>
@@ -36,11 +38,9 @@ export default {
 		};
 	},
 	computed: {
-		isActiveContainer() {
-			return this.container_num == this.activeIndex - (this.activeIndex % 10)
-		},
 		positionIndex() {
-			return this.activeIndex % 10;
+			// return this.activeIndex % 10;
+			return this.activeIndex - this.container_num;
 		},
 		activeContainer() {
 			return this.$refs[`img_container_${this.activeSection}`];
@@ -51,19 +51,25 @@ export default {
 			this.getFirstPosition(this.$refs.first_position);
 			this.getFirstPosition(this.$refs.last_position);
 			if (e.key === "ArrowRight") {
-				if (this.activeIndex % 10 < 6) {
-					this.rightMove();
-				}
-				if(this.activeIndex % 10 != 9) {
-					this.activeIndex += 1;
-				}
+				// if (this.activeIndex % 10 < 6) {
+				// 	this.rightMove();
+				// }
+				// if(this.activeIndex % 10 != 9) {
+				// 	this.activeIndex += 1;
+				// }
+				this.rightMove();
+				this.activeIndex += 1;
 				this.keyPressed = "right";
 
 			} else if (e.key === "ArrowLeft") {
-				if(this.activeIndex % 10 <= 6) {
-					this.leftMove();
-				}
-				if(this.activeIndex % 10 != 0) {
+				// if(this.activeIndex % 10 <= 6) {
+				// 	this.leftMove();
+				// }
+				// if(this.activeIndex % 10 != 0) {
+				// 	this.activeIndex -= 1;
+				// }
+				this.leftMove();
+				if(this.positionIndex != 0) {
 					this.activeIndex -= 1;
 				}
 				this.keyPressed = "left";
@@ -77,6 +83,7 @@ export default {
 				this.keyPressed = "up";
 				this.updownMove();
 			}
+			this.setActiveClass();
 		},
 		getFirstPosition(position) {
 			const positionRect = position.getBoundingClientRect();
@@ -103,6 +110,20 @@ export default {
 			if (this.activeContainer) {
 				this.activeContainer.style.transform = `translateX(-${(this.wrapperWidth + this.gap) * (this.positionIndex + 1)
 					}px`;
+				if(this.activeIndex % 10 == 2) {
+					const imgWrappers = this.activeContainer.querySelectorAll('.img_wrapper');
+					const lastWrapperIndex = parseInt(imgWrappers[imgWrappers.length - 1].getAttribute('index'));
+					console.log(lastWrapperIndex);
+					imgWrappers.forEach((wrapper, i) => {
+						wrapper.classList.remove('active');
+						//const index = parseInt(wrapper.getAttribute('index'));
+						const clonedWrapper = wrapper.cloneNode(true);
+						clonedWrapper.setAttribute('index', lastWrapperIndex + i + 1);
+						if(this.activeContainer) {
+							this.activeContainer.appendChild(clonedWrapper);
+						}
+				});
+				}
 			}
 		},
 		leftMove() {
@@ -117,6 +138,29 @@ export default {
 				this.activeIndex = this.firstPositionIndex;
 			}
 		},
+		setActiveClass() {
+			//onsole.log(this.activeIndex);
+			const imgSections = this.$el.querySelectorAll('.img_container');
+			imgSections.forEach((e)=>{
+				const imgWrappers = e.querySelectorAll('.img_wrapper');
+				if(e.getAttribute('section') == this.activeSection) {
+					imgWrappers.forEach((x)=>{
+						if(x.getAttribute('index') == this.activeIndex) {
+							x.classList.add('active');
+						} else {
+							x.classList.remove('active');
+						}
+					})
+				} else {
+					imgWrappers.forEach((x)=> {
+						x.classList.remove('active');
+					})
+				}
+			})
+		}
 	},
+	mounted() {
+		this.setActiveClass();
+	}
 };
 </script>
