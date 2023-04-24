@@ -51,35 +51,33 @@ export default {
 			this.getFirstPosition(this.$refs.first_position);
 			this.getFirstPosition(this.$refs.last_position);
 			if (e.key === "ArrowRight") {
-				// if (this.activeIndex % 10 < 6) {
-				// 	this.rightMove();
-				// }
-				// if(this.activeIndex % 10 != 9) {
-				// 	this.activeIndex += 1;
-				// }
 				this.rightMove();
 				this.activeIndex += 1;
 				this.keyPressed = "right";
 
 			} else if (e.key === "ArrowLeft") {
-				// if(this.activeIndex % 10 <= 6) {
-				// 	this.leftMove();
-				// }
-				// if(this.activeIndex % 10 != 0) {
-				// 	this.activeIndex -= 1;
-				// }
 				this.leftMove();
 				if(this.positionIndex != 0) {
 					this.activeIndex -= 1;
 				}
 				this.keyPressed = "left";
 			} else if (e.key === "ArrowDown") {
-				this.activeSection += 10;
+				if(this.activeSection > 0 && this.activeSection < 80) {
+					this.downMove();
+				}
+				if(this.activeSection != 90) {
+					this.activeSection += 10;
+				}
 				this.keyPressed = "down";
 				this.updownMove();
 
 			} else if (e.key === "ArrowUp") {
-				this.activeSection -= 10;
+				if(this.activeSection > 10 && this.activeSection < 90) {
+					this.upMove();
+				}
+				if(this.activeSection != 0) {
+					this.activeSection -= 10;
+				}
 				this.keyPressed = "up";
 				this.updownMove();
 			}
@@ -116,7 +114,6 @@ export default {
 					console.log(lastWrapperIndex);
 					imgWrappers.forEach((wrapper, i) => {
 						wrapper.classList.remove('active');
-						//const index = parseInt(wrapper.getAttribute('index'));
 						const clonedWrapper = wrapper.cloneNode(true);
 						clonedWrapper.setAttribute('index', lastWrapperIndex + i + 1);
 						if(this.activeContainer) {
@@ -132,14 +129,21 @@ export default {
 					}px`;
 			}
 		},
-		updownMove() {
-			if (this.activeContainer) {
-				this.getFirstPosition(this.$refs.first_position);
-				this.activeIndex = this.firstPositionIndex;
-			}
-		},
+		// updownMove() {
+		// 	if (this.activeContainer) {
+		// 		this.getFirstPosition(this.$refs.first_position);
+		// 		this.activeIndex = this.firstPositionIndex;
+		// 	}
+		// },
+		// downMove() {
+		// 	this.module.style.transform = `translateY(-${(this.module.offsetHeight + 40) * (this.activeSection/10)
+		// 			}px`;
+		// },	
+		// upMove() {
+		// 	this.module.style.transform = `translateY(-${(this.module.offsetHeight + 40) * ((this.activeSection/10) -2)
+		// 			}px`;
+		// },	
 		setActiveClass() {
-			//onsole.log(this.activeIndex);
 			const imgSections = this.$el.querySelectorAll('.img_container');
 			imgSections.forEach((e)=>{
 				const imgWrappers = e.querySelectorAll('.img_wrapper');

@@ -73,12 +73,22 @@ export default {
 				}
 				this.keyPressed = "left";
 			} else if (e.key === "ArrowDown") {
-				this.activeSection += 10;
+				if(this.activeSection > 0 && this.activeSection < 80) {
+					this.downMove();
+				}
+				if(this.activeSection != 90) {
+					this.activeSection += 10;
+				}
 				this.keyPressed = "down";
 				this.updownMove();
 
 			} else if (e.key === "ArrowUp") {
-				this.activeSection -= 10;
+				if(this.activeSection > 10 && this.activeSection < 90) {
+					this.upMove();
+				}
+				if(this.activeSection != 0) {
+					this.activeSection -= 10;
+				}
 				this.keyPressed = "up";
 				this.updownMove();
 			}
@@ -116,12 +126,12 @@ export default {
 					}px`;
 			}
 		},
-		updownMove() {
-			if (this.activeContainer) {
-				this.getFirstPosition(this.$refs.first_position);
-				this.activeIndex = this.firstPositionIndex;
-			}
-		},
+		// updownMove() {
+		// 	if (this.activeContainer) {
+		// 		this.getFirstPosition(this.$refs.first_position);
+		// 		this.activeIndex = this.firstPositionIndex;
+		// 	}
+		// },
 	},
 
 };
