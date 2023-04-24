@@ -19,12 +19,20 @@
 		padding: 0;
 	}
 
+	body {
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+	}
 	#app {
-		width: 100vw;
-		height: 100vh;
+		/* width: 100vw;
+		height: 100vh; */
+		width: 1920px;
+		height: 1080px;
 		box-sizing: border-box;
 		background: #000000;
 		overflow-y: hidden;
+		overflow-x: hidden;
 	}
 
 	.contents_container {

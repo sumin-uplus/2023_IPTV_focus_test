@@ -7,7 +7,6 @@
       line-height: 44px;
       color: #eeeeee;
       margin-left: 136px;
-      /*overflow-x: clip;*/
       transition-delay: 400ms;
       transition: 0.3s all ease-in-out;
 }
@@ -25,7 +24,7 @@
 
 .img_wrapper {
       position: relative;
-      width: calc((100vw - (136px * 2) - (32px * 3)) / 4);
+      width: calc((1920px - (136px * 2) - (32px * 3)) / 4);
       height: 0;
       padding-top: 56.2%;
       border: 1px solid rgba(238, 238, 238, 0.2);
