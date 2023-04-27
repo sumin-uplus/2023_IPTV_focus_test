@@ -59,3 +59,46 @@
       display: flex;
       justify-content: space-between;
 }
+
+
+.index_container {
+      position: absolute;
+      width: max-content;
+      height: 36px;
+      box-sizing: border-box;
+      border-radius: 100px;
+      background-color: rgba(238, 238, 238, 0.2);
+      color: white;
+      font-size: 18px;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 14px;
+      gap: 6px;
+}
+
+.index_container div {
+      height: fit-content;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      margin-top: 2px;
+}
+
+.whole_number {
+      opacity: 0.3;
+}
+
+.index_container {
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.3s all;
+}
+
+.index_container.active {
+      visibility: visible;
+      opacity: 1;
+      transition: 0.3s all;
+}

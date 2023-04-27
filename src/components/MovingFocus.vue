@@ -3,7 +3,13 @@
 		<div>{{ container_title }}</div>
 		<div :class="['postion_check_container']">
 			<span ref="first_position"></span>
-			<span ref="last_position"></span>
+			<span ref="last_position">
+				<div class="index_container" :class="{active: this.activeSection == container_num}">
+					<div>{{ this.activeIndex % 10 + 1}}</div>
+					<div class="whole_number">|</div>
+					<div class="whole_number">10</div>
+				</div>
+			</span>
 		</div>
 		<div :ref="'img_container_' + container_num" :class="['img_container']" :section="container_num">
 			<div class="img_wrapper" v-for="(thumbnail, index) in thumbnails" :index="index + container_num"
@@ -76,7 +82,8 @@ export default {
 				if (this.activeIndex % 10 != 0) {
 					this.activeIndex -= 1;
 					this.setTransition();
-				} else {
+				}
+				else {
 					this.activeIndex = this.activeSection+9;
 					this.goLast();
 				}
