@@ -1,5 +1,5 @@
 <template>
-	<div ref="module" :class="['contents_module']">
+	<div ref="module" :class="['contents_module', 'fixed_focus']">
 		<div>{{ container_title }}</div>
 		<div :class="['postion_check_container']">
 			<span ref="first_position"></span>
@@ -11,6 +11,7 @@
 				</div>
 			</span>
 		</div>
+		<div class="focus_container" :class="{active: this.activeSection == container_num}"></div>
 		<div :ref="'img_container_' + container_num" :class="['img_container']" :section="container_num">
 			<div class="img_wrapper" v-for="(thumbnail, index) in thumbnails"
 				:index="index + container_num"
