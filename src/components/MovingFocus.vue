@@ -56,10 +56,15 @@ export default {
 					&& this.activeIndex % 10 != 9
 					&& this.activeIndex == this.lastPositionIndex) {
 					this.rightMove();
-				}
+				} 
 				if (this.activeIndex % 10 != 9) {
 					this.activeIndex += 1;
+					this.setTransition();
+				} else {
+					this.activeIndex = this.activeSection;
+					this.goFirst();
 				}
+				
 				this.keyPressed = "right";
 
 			} else if (e.key === "ArrowLeft") {
@@ -70,6 +75,10 @@ export default {
 				}
 				if (this.activeIndex % 10 != 0) {
 					this.activeIndex -= 1;
+					this.setTransition();
+				} else {
+					this.activeIndex = this.activeSection+9;
+					this.goLast();
 				}
 				this.keyPressed = "left";
 			} else if (e.key === "ArrowDown") {
@@ -81,6 +90,7 @@ export default {
 				}
 				this.keyPressed = "down";
 				this.updownMove();
+				this.setTransition();
 
 			} else if (e.key === "ArrowUp") {
 				if(this.activeSection > 10 && this.activeSection < 90) {
@@ -91,6 +101,7 @@ export default {
 				}
 				this.keyPressed = "up";
 				this.updownMove();
+				this.setTransition();
 			}
 		},
 		getFirstPosition(position) {
@@ -126,13 +137,33 @@ export default {
 					}px`;
 			}
 		},
-		// updownMove() {
-		// 	if (this.activeContainer) {
-		// 		this.getFirstPosition(this.$refs.first_position);
-		// 		this.activeIndex = this.firstPositionIndex;
-		// 	}
-		// },
+		goFirst() {
+			if (this.activeContainer) {
+				this.activeContainer.style.transform = `translateX(0px)`;
+				this.removeTransition();
+			}
+		},
+		goLast() {
+			if (this.activeContainer) {
+				this.activeContainer.style.transform = `translateX(-${(this.wrapperWidth + this.gap) * 6
+					}px`;
+				this.removeTransition();
+			}
+		},
+		removeTransition(){
+			this.activeContainer.style.transition = 'none';
+			//this.imgWrapper.forEach((e)=>{e.style.transition = 'none';});
+		},
+		setTransition() {
+			if(this.activeContainer) {
+				this.activeContainer.style.transition = '0.3s all ease-in-out';
+			}
+			this.imgWrapper.forEach((e)=>{e.style.transition = '0.3s all ease-in-out';});
+		}
 	},
+	mounted() {
+		this.imgWrapper = this.$el.querySelectorAll(".img_wrapper");
+	}
 
 };
 </script>
