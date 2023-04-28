@@ -11,7 +11,7 @@
 				</div>
 			</span>
 		</div>
-		<div class="focus_container" :class="{active: this.activeSection == container_num}"></div>
+		<div :ref="'focus_' + container_num" class="focus_container" :section="container_num"></div>
 		<div :ref="'img_container_' + container_num" :class="['img_container']" :section="container_num">
 			<div class="img_wrapper" v-for="(thumbnail, index) in thumbnails"
 				:index="index + container_num"
@@ -136,20 +136,6 @@ export default {
 					}px`;
 			}
 		},
-		// updownMove() {
-		// 	if (this.activeContainer) {
-		// 		this.getFirstPosition(this.$refs.first_position);
-		// 		this.activeIndex = this.firstPositionIndex;
-		// 	}
-		// },
-		// downMove() {
-		// 	this.module.style.transform = `translateY(-${(this.module.offsetHeight + 40) * (this.activeSection/10)
-		// 			}px`;
-		// },	
-		// upMove() {
-		// 	this.module.style.transform = `translateY(-${(this.module.offsetHeight + 40) * ((this.activeSection/10) -2)
-		// 			}px`;
-		// },	
 		setActiveClass() {
 			const imgSections = this.$el.querySelectorAll('.img_container');
 			imgSections.forEach((e)=>{
@@ -168,10 +154,37 @@ export default {
 					})
 				}
 			})
+		},
+		setFocusDown() {
+
 		}
 	},
 	mounted() {
 		this.setActiveClass();
+		// this.$refs.focus.style.width = `${this.imgWrapper.getBoundingClientRect().width}px`;
+		// this.$refs.focus.style.height = `${this.imgWrapper.getBoundingClientRect().height}px`;
+
+		// this.focus = this.$el.querySelectorAll('.focus_container');
+		// this.focus.forEach((e)=> {
+		// 	if(e.getAttribute('section') != 0 ) {
+		// 		e.style.display='none';
+		// 	}
+		// });
+		// for (let ref_name in this.$refs) {
+		// 	if (ref_name.startsWith("focus_0")) {
+		// 		let ref = this.$refs[ref_name];
+		// 		ref.style.width = `${this.imgWrapper.getBoundingClientRect().width}px`;
+		// 		ref.style.height = `${this.imgWrapper.getBoundingClientRect().height}px`;
+		// 		ref.style.display = 'block';
+		// 	}
+		// }
+
+		if(this.$refs["focus_0"]) {
+			let ref = this.$refs["focus_0"];
+			ref.style.width = `${this.imgWrapper.getBoundingClientRect().width}px`;
+			ref.style.height = `${this.imgWrapper.getBoundingClientRect().height}px`;
+			ref.style.display = 'block';
+		}
 	}
 };
 </script>

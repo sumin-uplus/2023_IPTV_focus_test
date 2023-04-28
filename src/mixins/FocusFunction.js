@@ -20,8 +20,8 @@ export default {
 	this.imgContainer = this.$el.querySelector(".img_container");
 	this.imgWrapper = this.$el.querySelector(".img_wrapper:not(.active)");
 	this.gap = parseInt(getComputedStyle(this.imgContainer).gap);
-	this.wrapperWidth = this.imgWrapper.offsetWidth;
-	this.wrapperHeight = this.imgWrapper.offsetHeight;
+	this.wrapperWidth = this.imgWrapper.getBoundingClientRect().width;
+	this.wrapperHeight = this.imgWrapper.getBoundingClientRect().height;
 	this.position = this.$el.querySelector(".postion_check_container");
 	this.module = this.$refs.module;
 
