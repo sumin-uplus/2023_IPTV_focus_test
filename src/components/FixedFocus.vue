@@ -77,6 +77,7 @@ export default {
 				}
 				this.keyPressed = "down";
 				this.updownMove();
+				this.setFocusPosition();
 
 			} else if (e.key === "ArrowUp") {
 				if(this.activeSection > 10 && this.activeSection < 90) {
@@ -87,6 +88,7 @@ export default {
 				}
 				this.keyPressed = "up";
 				this.updownMove();
+				this.setFocusPosition()
 			}
 			this.setActiveClass();
 		},
@@ -155,30 +157,16 @@ export default {
 				}
 			})
 		},
-		setFocusDown() {
-
-		}
+		setFocusPosition() {
+			if(this.$refs["focus_0"]) {
+				let ref = this.$refs["focus_0"];
+				let translateY = `translateY(${(this.module.getBoundingClientRect().height + 40) * (this.activeSection/10)}px) scale(1.03)`
+				ref.style.transform = translateY;
+			}
+		},
 	},
 	mounted() {
 		this.setActiveClass();
-		// this.$refs.focus.style.width = `${this.imgWrapper.getBoundingClientRect().width}px`;
-		// this.$refs.focus.style.height = `${this.imgWrapper.getBoundingClientRect().height}px`;
-
-		// this.focus = this.$el.querySelectorAll('.focus_container');
-		// this.focus.forEach((e)=> {
-		// 	if(e.getAttribute('section') != 0 ) {
-		// 		e.style.display='none';
-		// 	}
-		// });
-		// for (let ref_name in this.$refs) {
-		// 	if (ref_name.startsWith("focus_0")) {
-		// 		let ref = this.$refs[ref_name];
-		// 		ref.style.width = `${this.imgWrapper.getBoundingClientRect().width}px`;
-		// 		ref.style.height = `${this.imgWrapper.getBoundingClientRect().height}px`;
-		// 		ref.style.display = 'block';
-		// 	}
-		// }
-
 		if(this.$refs["focus_0"]) {
 			let ref = this.$refs["focus_0"];
 			ref.style.width = `${this.imgWrapper.getBoundingClientRect().width}px`;
