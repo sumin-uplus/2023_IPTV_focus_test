@@ -57,6 +57,8 @@ export default {
 		handleArrowKey(e) {
 			this.getFirstPosition(this.$refs.first_position);
 			this.getFirstPosition(this.$refs.last_position);
+			this.$emit('set-section', this.activeSection);
+
 			if (e.key === "ArrowRight") {
 				this.rightMove();
 				this.activeIndex += 1;
@@ -171,7 +173,23 @@ export default {
 			let ref = this.$refs["focus_0"];
 			ref.style.width = `${this.imgWrapper.getBoundingClientRect().width}px`;
 			ref.style.height = `${this.imgWrapper.getBoundingClientRect().height}px`;
-			ref.style.display = 'block';
+			// ref.style.display = 'block';
+			this.$emit('set-focus', {
+				width: ref.getBoundingClientRect().width,
+				height: ref.getBoundingClientRect().height,
+				top: ref.getBoundingClientRect().top,
+				left: ref.getBoundingClientRect().left
+			});
+		}
+
+		if(this.$refs.module) {
+			let module = this.$refs.module;
+			this.$emit('set-module', {
+				width: module.getBoundingClientRect().width,
+				height: module.getBoundingClientRect().height,
+				top: module.getBoundingClientRect().top,
+				left: module.getBoundingClientRect().left
+			});
 		}
 	}
 };
