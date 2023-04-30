@@ -63,30 +63,65 @@ export default {
 			this.slices.push(this.thumbnails.slice(i, i + 10));
 		}
 		},
-		setFocusPosition() {
-			if(this.$refs.focus) {
-				let ref = this.$refs.focus;
-				let translateY = `translateY(${(this.module.getBoundingClientRect().height + 40) * (this.activeSection/10)}px) scale(1.03)`
-				ref.style.transform = translateY;
-			}
+		// setFocusDown() {
+		// 	if(this.$refs.focus) {
+		// 		let ref = this.$refs.focus;
+		// 		let translateY;
+		// 		console.log(this.active_section);
+		// 		if (this.active_section/10 == 8) {
+		// 			translateY = `translateY(${(this.module_data.height + 40) * 2}px) scale(1.03)`
+		// 		} else if (this.active_section/10 != 9) {
+		// 			translateY = `translateY(${(this.module_data.height + 40)}px) scale(1.03)`
+		// 		}
+		// 		ref.style.transform = translateY;
+		// 	}
+		// },
+		setFocusDown() {
+			const ref = this.$refs.focus;
+				if (ref && this.active_section/10 != 9) {
+					const translateY = `translateY(${(this.module_data.height + 40) * (this.active_section/10 == 8 ? 2 : 1)}px) scale(1.03)`;
+					ref.style.transform = translateY;
+				}
 		},
+		// setFocusUp() {
+		// 	if(this.$refs.focus) {
+		// 		let ref = this.$refs.focus;
+		// 		let translateY;
+		// 		console.log(this.active_section);
+		// 		if (this.active_section/10 == 1) {
+		// 			translateY = `translateY(${(this.module_data.height + 40) * 0}px) scale(1.03)`
+		// 		} else if (this.active_section/10 != 0) {
+		// 			translateY = `translateY(${(this.module_data.height + 40)}px) scale(1.03)`
+		// 		}
+		// 		ref.style.transform = translateY;
+		// 	}
+		// },
+		setFocusUp() {
+			const ref = this.$refs.focus;
+				if (ref && this.active_section/10 != 0) {
+					const translateY = `translateY(${(this.module_data.height + 40) * (this.active_section/10 == 1 ? 0 : 1)}px) scale(1.03)`;
+					ref.style.transform = translateY;
+				}
+		},
+		handleArrowKey(e) {
+			if (e.key === "ArrowDown") {
+				this.setFocusDown();
+			} else if (e.key === "ArrowUp") {
+				this.setFocusUp();
+			}
+		}
 	},
 	created() {
 		this.makeImgArray(this.start, this.thumbnails);
 		this.createSlices();
 	},
 	mounted() {
+		window.addEventListener("keydown", this.handleArrowKey);
 		if(this.$refs.focus) {
-			// this.$refs.focus.style.width = `${this.focus_data.width}px`;
-			// this.$refs.focus.style.height = `${this.focus_data.height}px`;
-			// this.$refs.focus.style.top = `${this.focus_data.top}px`;
-			// this.$refs.focus.style.left = `${this.focus_data.left}px`;
-			// this.$refs.focus.style.transform = 'scale(1.03)';
 			const { width, height, top, left } = this.focus_data;
 			const { style } = this.$refs.focus || {};
 			Object.assign(style, { width: `${width}px`, height: `${height}px`, top: `${top}px`, left: `${left}px`, transform: 'scale(1.03)' });
 		}
-		
 	}
 };
 </script>

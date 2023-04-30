@@ -57,8 +57,7 @@ export default {
 		handleArrowKey(e) {
 			this.getFirstPosition(this.$refs.first_position);
 			this.getFirstPosition(this.$refs.last_position);
-			this.$emit('set-section', this.activeSection);
-
+			this.$emit('set-section', this.activeSection);		
 			if (e.key === "ArrowRight") {
 				this.rightMove();
 				this.activeIndex += 1;
