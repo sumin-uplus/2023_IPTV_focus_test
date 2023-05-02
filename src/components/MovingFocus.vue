@@ -64,10 +64,16 @@ export default {
 					this.rightMove();
 				} 
 				if (this.activeIndex % 10 != 9) {
-					this.activeIndex += 1;
+					//this.activeIndex += 1;
+					if (this.activeContainer) {
+						this.activeIndex += 1;
+					}
 					this.setTransition();
 				} else {
-					this.activeIndex = this.activeSection;
+					//this.activeIndex = this.activeSection;
+					if (this.activeContainer) {
+						this.activeIndex = this.activeSection;
+					}
 					this.goFirst();
 				}
 				
@@ -80,11 +86,17 @@ export default {
 					this.leftMove();
 				}
 				if (this.activeIndex % 10 != 0) {
-					this.activeIndex -= 1;
+					//this.activeIndex -= 1;
+					if (this.activeContainer) {
+						this.activeIndex -= 1;
+					}
 					this.setTransition();
 				}
 				else {
-					this.activeIndex = this.activeSection+9;
+					//this.activeIndex = this.activeSection+9;
+					if (this.activeContainer) {
+						this.activeIndex = this.activeSection+9;
+					}
 					this.goLast();
 				}
 				this.keyPressed = "left";
@@ -96,7 +108,12 @@ export default {
 					this.activeSection += 10;
 				}
 				this.keyPressed = "down";
-				this.updownMove();
+				//this.updownMove();
+				if(this.activeIndex / 10 == 0) {
+					if (this.activeContainer) {
+						this.activeIndex = this.activeSection;
+					}
+				}
 				this.setTransition();
 
 			} else if (e.key === "ArrowUp") {
@@ -107,7 +124,7 @@ export default {
 					this.activeSection -= 10;
 				}
 				this.keyPressed = "up";
-				this.updownMove();
+				//this.updownMove();
 				this.setTransition();
 			}
 		},
