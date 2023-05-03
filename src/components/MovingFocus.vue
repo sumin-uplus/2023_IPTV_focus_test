@@ -101,14 +101,12 @@ export default {
 					this.activeSection += 10;
 				}
 				this.keyPressed = "down";
-				// if(this.activeIndex / 10 == 0) {
-				// 	if (this.activeContainer) {
-				// 		this.activeIndex = this.activeSection;
-				// 	}
-				// }
-				if (this.activeContainer) {
+				//처음 로드 후 아래로 내릴때 처리
+				if(this.activeIndex / 10 == 0) {
+					if (this.activeContainer) {
 						this.activeIndex = this.activeSection;
 					}
+				}
 				this.setTransition();
 
 			} else if (e.key === "ArrowUp") {
