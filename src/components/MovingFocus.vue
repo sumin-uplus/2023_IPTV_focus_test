@@ -5,7 +5,7 @@
 			<span ref="first_position"></span>
 			<span ref="last_position">
 				<div class="index_container" :class="{active: this.activeSection == container_num}">
-					<div>{{ this.activeIndex % 20 + 1}}</div>
+					<div>{{ (this.activeIndex - container_num)%thumbnail_quantity + 1}}</div>
 					<div class="whole_number">|</div>
 					<div class="whole_number">{{thumbnail_quantity}}</div>
 				</div>
@@ -43,11 +43,9 @@ export default {
 		};
 	},
 	computed: {
-		isActiveContainer() {
-			return this.container_num == this.activeIndex - (this.activeIndex % 10)
-		},
 		positionIndex() {
-			return this.activeIndex % 10;
+			// return this.activeIndex % 10;
+			return (this.activeIndex - this.container_num)%this.thumbnail_quantity;
 		},
 		activeContainer() {
 			return this.$refs[`img_container_${this.activeSection}`];
@@ -57,21 +55,18 @@ export default {
 		handleArrowKey(e) {
 			this.getFirstPosition(this.$refs.first_position);
 			this.getFirstPosition(this.$refs.last_position);
+			let index = this.activeIndex - this.container_num;
 			if (e.key === "ArrowRight") {
-				if (
-					this.activeIndex % 10 != 0
-					&& this.activeIndex % 10 != 9
+				if (index != this.thumbnail_quantity - 1
 					&& this.activeIndex == this.lastPositionIndex) {
 					this.rightMove();
 				} 
-				if (this.activeIndex % 10 != 9) {
-					//this.activeIndex += 1;
+				if (index != this.thumbnail_quantity - 1) {
 					if (this.activeContainer) {
 						this.activeIndex += 1;
 					}
 					this.setTransition();
 				} else {
-					//this.activeIndex = this.activeSection;
 					if (this.activeContainer) {
 						this.activeIndex = this.activeSection;
 					}
@@ -81,22 +76,19 @@ export default {
 				this.keyPressed = "right";
 
 			} else if (e.key === "ArrowLeft") {
-				if (
-					this.activeIndex % 10 != 0
+				if (index != 0
 					&& this.activeIndex == this.firstPositionIndex) {
 					this.leftMove();
 				}
-				if (this.activeIndex % 10 != 0) {
-					//this.activeIndex -= 1;
+				if (index != 0) {
 					if (this.activeContainer) {
 						this.activeIndex -= 1;
 					}
 					this.setTransition();
 				}
 				else {
-					//this.activeIndex = this.activeSection+9;
 					if (this.activeContainer) {
-						this.activeIndex = this.activeSection+9;
+						this.activeIndex = this.activeSection + this.thumbnail_quantity - 1;
 					}
 					this.goLast();
 				}
@@ -109,12 +101,14 @@ export default {
 					this.activeSection += 10;
 				}
 				this.keyPressed = "down";
-				//this.updownMove();
-				if(this.activeIndex / 10 == 0) {
-					if (this.activeContainer) {
+				// if(this.activeIndex / 10 == 0) {
+				// 	if (this.activeContainer) {
+				// 		this.activeIndex = this.activeSection;
+				// 	}
+				// }
+				if (this.activeContainer) {
 						this.activeIndex = this.activeSection;
 					}
-				}
 				this.setTransition();
 
 			} else if (e.key === "ArrowUp") {
@@ -125,7 +119,6 @@ export default {
 					this.activeSection -= 10;
 				}
 				this.keyPressed = "up";
-				//this.updownMove();
 				this.setTransition();
 			}
 		},
@@ -170,7 +163,7 @@ export default {
 		},
 		goLast() {
 			if (this.activeContainer) {
-				this.activeContainer.style.transform = `translateX(-${(this.wrapperWidth + this.gap) * 6
+				this.activeContainer.style.transform = `translateX(-${(this.wrapperWidth + this.gap) * (this.thumbnail_quantity - 4)
 					}px`;
 				this.removeTransition();
 			}

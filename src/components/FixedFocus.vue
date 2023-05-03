@@ -5,7 +5,7 @@
 			<span ref="first_position"></span>
 			<span ref="last_position">
 				<div class="index_container" :class="{active: this.activeSection == container_num}">
-					<div>{{ this.activeIndex - container_num + 1}}</div>
+					<div>{{ (this.activeIndex - container_num)%thumbnail_quantity + 1}}</div>
 					<div class="whole_number">|</div>
 					<div class="whole_number">{{thumbnail_quantity}}</div>
 				</div>
