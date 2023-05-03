@@ -7,6 +7,7 @@
 			:container_num="index * 10"
 			:container_title="'콘텐츠 모듈 ' + (index + 1)"
 			:focus_type="type"
+			:thumbnail_quantity = thumbnail_quantity
 		>
 		</MovingFocus>
 	</div>
@@ -19,6 +20,7 @@
 			:container_num="index * 10"
 			:container_title="'콘텐츠 모듈 ' + (index + 1)"
 			:focus_type="type"
+			:thumbnail_quantity = thumbnail_quantity
 			@set-focus = "focus_data = $event"
 			@set-section = "active_section = $event"
 			@set-module = "module_data = $event"
@@ -43,39 +45,27 @@ export default {
 	},
 	data() {
 		return {
+			thumbnail_quantity: 20,
 			thumbnails: [],
 			slices: [],
 			focus_data: 0,
 			module_data: 0,
-			active_section: 0
+			active_section: 0,
 		};
 	},
 	methods: {
 		makeImgArray(startNum, array) {
-		for (let i = 0; i < 100; i++) {
+		for (let i = 0; i < 200; i++) {
 			const num = startNum + i;
 			const src = require(`@/assets/img/thumbnail_${num}.jpeg`);
 			array.push({ num, src });
 		}
 		},
 		createSlices() {
-		for (let i = 0; i < this.thumbnails.length; i += 10) {
-			this.slices.push(this.thumbnails.slice(i, i + 10));
+		for (let i = 0; i < this.thumbnails.length; i += this.thumbnail_quantity) {
+			this.slices.push(this.thumbnails.slice(i, i + this.thumbnail_quantity));
 		}
 		},
-		// setFocusDown() {
-		// 	if(this.$refs.focus) {
-		// 		let ref = this.$refs.focus;
-		// 		let translateY;
-		// 		console.log(this.active_section);
-		// 		if (this.active_section/10 == 8) {
-		// 			translateY = `translateY(${(this.module_data.height + 40) * 2}px) scale(1.03)`
-		// 		} else if (this.active_section/10 != 9) {
-		// 			translateY = `translateY(${(this.module_data.height + 40)}px) scale(1.03)`
-		// 		}
-		// 		ref.style.transform = translateY;
-		// 	}
-		// },
 		setFocusDown() {
 			const ref = this.$refs.focus;
 				if (ref && this.active_section/10 != 9) {
@@ -83,19 +73,6 @@ export default {
 					ref.style.transform = translateY;
 				}
 		},
-		// setFocusUp() {
-		// 	if(this.$refs.focus) {
-		// 		let ref = this.$refs.focus;
-		// 		let translateY;
-		// 		console.log(this.active_section);
-		// 		if (this.active_section/10 == 1) {
-		// 			translateY = `translateY(${(this.module_data.height + 40) * 0}px) scale(1.03)`
-		// 		} else if (this.active_section/10 != 0) {
-		// 			translateY = `translateY(${(this.module_data.height + 40)}px) scale(1.03)`
-		// 		}
-		// 		ref.style.transform = translateY;
-		// 	}
-		// },
 		setFocusUp() {
 			const ref = this.$refs.focus;
 				if (ref && this.active_section/10 != 0) {

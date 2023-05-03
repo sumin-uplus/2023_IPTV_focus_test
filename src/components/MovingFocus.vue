@@ -5,9 +5,9 @@
 			<span ref="first_position"></span>
 			<span ref="last_position">
 				<div class="index_container" :class="{active: this.activeSection == container_num}">
-					<div>{{ this.activeIndex % 10 + 1}}</div>
+					<div>{{ this.activeIndex % 20 + 1}}</div>
 					<div class="whole_number">|</div>
-					<div class="whole_number">10</div>
+					<div class="whole_number">{{thumbnail_quantity}}</div>
 				</div>
 			</span>
 		</div>
@@ -26,6 +26,7 @@ import FocusFunction from '../mixins/FocusFunction';
 export default {
 	name: "MovingFocus",
 	props: {
+		thumbnail_quantity: { type: Number, default : 20},
 		thumbnails: { type: Object },
 		container_num: { type: Number },
 		container_title: { type: String, default: "콘텐츠 모듈1" },

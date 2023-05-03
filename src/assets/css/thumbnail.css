@@ -108,6 +108,9 @@
 /*FF 디자인 변경*/
 .contents_module.fixed_focus {
       position: relative;
+      overflow-x: clip;
+      /* padding-left: 10px;
+      margin-left: 126px; */
 }
 
 .focus_container {
