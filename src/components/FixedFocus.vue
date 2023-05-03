@@ -58,16 +58,17 @@ export default {
 		handleArrowKey(e) {
 			this.getFirstPosition(this.$refs.first_position);
 			this.getFirstPosition(this.$refs.last_position);
-			this.$emit('set-section', this.activeSection);		
+			this.$emit('set-section', this.activeSection);
+			let index = (this.activeIndex - this.container_num)%this.thumbnail_quantity;	
 			if (e.key === "ArrowRight") {
 				this.rightMove();
 				this.activeIndex += 1;
 				this.keyPressed = "right";
 
 			} else if (e.key === "ArrowLeft") {
-				this.leftMove();
-				if(this.positionIndex != 0) {
+				if(index != 0) {
 					this.activeIndex -= 1;
+					this.leftMove();
 				}
 				this.keyPressed = "left";
 			} else if (e.key === "ArrowDown") {
