@@ -1,8 +1,8 @@
 <template>
 	<div class="intro_bg" v-if="$route.path == '/'">
 		<div class="router_container">
-			<!-- <router-link class="option" v-if="$route.path == '/'" to="/moving"></router-link>
-			<router-link class="option" v-if="$route.path == '/'" to="/fixed"></router-link> -->
+			<!-- <router-link class="option" v-if="$route.path == '/'" to="/moving/2"></router-link>
+			<router-link class="option" v-if="$route.path == '/'" to="/fixed/1"></router-link> -->
 			<div class="select_container">
 				<div class="focus_select">
 				Focus Selection
@@ -15,29 +15,44 @@
 					FF
 				</label>	
 			</div>
-			<div class="photo_select">
+			<div class="group_select">
 				Thumbnail Selection
-				<label class="option" v-for="photo in 4" :key="photo" :for="'photo_'+photo">
-					<input type="radio" :id="'photo_' + photo" :value="'photo_' + photo" name="photo" v-model="selectedPhoto">
-					{{ "group_" + photo }}
+				<label class="option" v-for="group in 4" :key="group" :for="'group_'+group">
+					<input type="radio" :id="'group_' + group" :value="group" name="group" v-model="selectedGroup">
+					{{ "group_" + group }}
 				</label>			
 			</div>
 			</div>
-			<button class="generate_btn">생성하기</button>
+			<router-link :to="'/' + selectedFocus.toLowerCase() + '/' + selectedGroup">
+				<button class="generate_btn" @click="generateCase">생성하기</button>
+			</router-link>
 		</div>
 	</div>
+	<!-- <ThumbnailContainer :type="selectedFocus" :group="selectedgroup"/> -->
 	<router-view></router-view>
 </template>
 
 <script>
+//import ThumbnailContainer from './components/ThumbnailContainer.vue';
 	export default {
 		name: 'App',
 		data() {
 			return {
 				selectedFocus: 'MF',
-				selectedPhoto: 'photo_1',
+				selectedGroup: '1',
 			};
 		},
+		components :{
+			//ThumbnailContainer
+		},
+		methods: {
+			generateCase() {
+			this.$emit('generate-thumbnails', {
+				type: this.selectedFocus,
+				start: this.selectedGroup,
+			});
+		},
+		}
 	}
 </script>
 
@@ -67,9 +82,6 @@
 	.intro_bg {
 		width: 100%;
 		height: 100%;
-		background-image: url('./assets/bg/download1_20220406101127.jpg');
-		background-size: cover;
-		background-repeat: no-repeat;
 	}
 
 	.contents_container {
@@ -121,7 +133,7 @@
 	}
 
 	.focus_select,
-	.photo_select {
+	.group_select {
 		width: fit-content;
 		display: flex;
 		flex-direction: column;

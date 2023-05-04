@@ -1,5 +1,5 @@
 <template>
-	<div v-if="type=='moving'" class="contents_container">
+	<div v-if="type=='MF'" class="contents_container">
 		<MovingFocus
 			v-for="(slice, index) in slices"
 			:key="index"
@@ -11,7 +11,7 @@
 		>
 		</MovingFocus>
 	</div>
-	<div v-if="type=='fixed'" class="contents_container">
+	<div v-if="type=='FF'" class="contents_container">
 		<span ref="focus" class="focus_container_body"></span>
 		<FixedFocus
 			v-for="(slice, index) in slices"
@@ -36,8 +36,8 @@ import FixedFocus from "./FixedFocus.vue";
 export default {
 	name: "ThumbnailContainer",
 	props: {
-		start: {type: Number, default: 1},
-		type: {type: String, default: 'moving'}
+		group: {type: String, default: 'imgset01'},
+		type: {type: String, default: 'MF'}
 	},
 	components: {
 		MovingFocus,
@@ -54,11 +54,11 @@ export default {
 		};
 	},
 	methods: {
-		makeImgArray(startNum, array) {
-		for (let i = 0; i < 200; i++) {
-			const num = startNum + i;
-			const src = require(`@/assets/img/thumbnail_${num}.jpeg`);
-			array.push({ num, src });
+		makeImgArray(group, array) {
+		for (let i = 1; i <= 200; i++) {
+			// const num = 1 + i;
+			const src = require(`@/assets/img/${group}/thumbnail_${i}.jpg`);
+			array.push({ i, src });
 		}
 		},
 		createSlices() {
@@ -155,7 +155,7 @@ export default {
 		}
 	},
 	created() {
-		this.makeImgArray(this.start, this.thumbnails);
+		this.makeImgArray(this.group, this.thumbnails);
 		this.createSlices();
 	},
 	mounted() {
