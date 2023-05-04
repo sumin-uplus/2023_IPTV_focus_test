@@ -1,5 +1,5 @@
 <template>
-	<div class="intro_bg" v-if="$route.path == '/'">
+	<div class="intro_bg" v-if="$route.path == '/'" ref="routerContainer">
 		<div class="router_container">
 			<div class="select_container">
 				<div class="focus_select">
@@ -15,14 +15,17 @@
 			</div>
 			<div class="group_select">
 				Thumbnail Selection
-				<label class="option" v-for="group in 4" :key="group" :for="'group_'+group">
-					<input type="radio" :id="'group_' + group" :value="group" name="group" v-model="selectedGroup">
-					{{ "group_" + group }}
+				<label class="option" v-for="i in 4" :key="i" :for="'group_'+i">
+					<input type="radio" :id="'group_' + i" :value="i" name="group" v-model="selectedGroup">
+					{{ "group " + i }}
 				</label>			
 			</div>
 			</div>
-			<router-link :to="'/' + selectedFocus.toLowerCase() + '/' + selectedGroup">
-				<button class="generate_btn" @click="generateCase">생성하기</button>
+			<router-link
+			class="generate_btn"
+			:to="'/' + selectedFocus.toLowerCase() + '/' + selectedGroup"
+			@click.prevent="goFullscreen">
+				생성하기
 			</router-link>
 		</div>
 	</div>
@@ -39,13 +42,18 @@
 			};
 		},
 		methods: {
-			generateCase() {
-			this.$emit('generate-thumbnails', {
-				type: this.selectedFocus,
-				start: this.selectedGroup,
-			});
+			goFullscreen() {
+				const container = this.$refs.routerContainer;
+				if (container.requestFullscreen) {
+					container.requestFullscreen();
+				} else if (container.webkitRequestFullscreen) {
+					container.webkitRequestFullscreen();
+				} else if (container.msRequestFullscreen) { 
+					container.msRequestFullscreen();
+				}
+			},
 		},
-		}
+		
 	}
 </script>
 
@@ -62,22 +70,23 @@
 		overflow: hidden;
 	}
 	#app {
-		/* width: 100vw;
-		height: 100vh; */
+		width: 100vw;
+		height: 100vh;
 		position: relative;
-		width: 1920px;
-		height: 1080px;
 		box-sizing: border-box;
 		background: #000000;
 		overflow-y: hidden;
 		overflow-x: hidden;
 	}
+	
 	.intro_bg {
 		width: 100%;
 		height: 100%;
 	}
 
 	.contents_container {
+		width: 1920px;
+		height: 1080px;
 		display: flex;
 		flex-direction: column;
 		gap: 40px;
@@ -105,16 +114,16 @@
 	.option {
 		color: white;
 		width: 100px;
-		height: 30px;
+		height: 40px;
 		/* background: white; */
-		/* border: 1px solid white; */
+		border: 1px solid gray;
 		padding: 6px 20px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		text-decoration: none;
 		border-radius: 6px;
-		gap: 5px;
+		gap: 7px;
 		cursor: pointer;
 		font-weight: 500;
 	}
@@ -131,7 +140,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 10px;
+		gap: 20px;
 		color: #1E93FF;
 		font-weight: 700;
 	}
@@ -147,6 +156,10 @@
 		grid-column-start: 1;
 		grid-column-end: 2;
 		font-size: 20px;
-		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-decoration: none;
+		margin-top: 10px;
 	}
 </style>

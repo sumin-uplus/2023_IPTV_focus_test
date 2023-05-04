@@ -11,7 +11,7 @@
 		>
 		</MovingFocus>
 	</div>
-	<div v-if="type=='FF'" class="contents_container">
+	<div v-else-if="type=='FF'" class="contents_container">
 		<span ref="focus" class="focus_container_body"></span>
 		<FixedFocus
 			v-for="(slice, index) in slices"
@@ -152,7 +152,7 @@ export default {
 			} else {
 				this.ffCustomKeyEvent(e);
 			}
-		}
+		},
 	},
 	created() {
 		this.makeImgArray(this.group, this.thumbnails);

@@ -53,8 +53,10 @@ export default {
 	},
 	methods: {
 		customKeyEvent(e) {
-			this.getFirstPosition(this.$refs.first_position);
-			this.getFirstPosition(this.$refs.last_position);
+			if(this.$refs.first_position && this.$refs.last_position) {
+				this.getFirstPosition(this.$refs.first_position);
+				this.getFirstPosition(this.$refs.last_position);				
+			}
 			let index = this.activeIndex - this.container_num;
 			if (e.key === "ArrowRight") {
 				if (index != this.thumbnail_quantity - 1
