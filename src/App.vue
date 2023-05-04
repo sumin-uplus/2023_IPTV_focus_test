@@ -1,28 +1,30 @@
 <template>
-	<div class="router_container" v-if="$route.path == '/'">
-		<router-link class="option" v-if="$route.path == '/'" to="/moving"></router-link>
-		<router-link class="option" v-if="$route.path == '/'" to="/fixed"></router-link>
-		<div class="select_container">
-			<div class="focus_select">
-			Focus Selection
-			<label class="option" for="MF">
-				<input type="radio" id="MF" value="MF" name="focus" v-model="selectedFocus">
-				MF
-			</label>	
-			<label class="option" for="FF">
-				<input type="radio" id="FF" value="FF" name="focus" v-model="selectedFocus">
-				FF
-			</label>	
+	<div class="intro_bg" v-if="$route.path == '/'">
+		<div class="router_container">
+			<!-- <router-link class="option" v-if="$route.path == '/'" to="/moving"></router-link>
+			<router-link class="option" v-if="$route.path == '/'" to="/fixed"></router-link> -->
+			<div class="select_container">
+				<div class="focus_select">
+				Focus Selection
+				<label class="option" for="MF">
+					<input type="radio" id="MF" value="MF" name="focus" v-model="selectedFocus">
+					MF
+				</label>	
+				<label class="option" for="FF">
+					<input type="radio" id="FF" value="FF" name="focus" v-model="selectedFocus">
+					FF
+				</label>	
+			</div>
+			<div class="photo_select">
+				Thumbnail Selection
+				<label class="option" v-for="photo in 4" :key="photo" :for="'photo_'+photo">
+					<input type="radio" :id="'photo_' + photo" :value="'photo_' + photo" name="photo" v-model="selectedPhoto">
+					{{ "group_" + photo }}
+				</label>			
+			</div>
+			</div>
+			<button class="generate_btn">생성하기</button>
 		</div>
-		<div class="photo_select">
-			Thumbnail Selection
-			<label class="option" v-for="photo in 4" :key="photo" :for="'photo_'+photo">
-				<input type="radio" :id="'photo_' + photo" :value="'photo_' + photo" name="photo" v-model="selectedPhoto">
-				{{ "group_" + photo }}
-			</label>			
-		</div>
-		</div>
-		<button class="generate_btn">생성하기</button>
 	</div>
 	<router-view></router-view>
 </template>
@@ -35,7 +37,7 @@
 				selectedFocus: 'MF',
 				selectedPhoto: 'photo_1',
 			};
-  },
+		},
 	}
 </script>
 
@@ -62,6 +64,13 @@
 		overflow-y: hidden;
 		overflow-x: hidden;
 	}
+	.intro_bg {
+		width: 100%;
+		height: 100%;
+		background-image: url('./assets/bg/download1_20220406101127.jpg');
+		background-size: cover;
+		background-repeat: no-repeat;
+	}
 
 	.contents_container {
 		display: flex;
@@ -85,6 +94,7 @@
 		left: 0;
 		right: 0;
 		margin: auto;
+		font-size: 22px;
 	}
 
 	.option {
@@ -122,7 +132,7 @@
 	}
 
 	.generate_btn {
-		height: 42px;
+		height: 50px;
 		background-color: #1E93FF;
 		outline: none;
 		border: 0px solid;
@@ -131,6 +141,7 @@
 		padding: 6px 20px;
 		grid-column-start: 1;
 		grid-column-end: 2;
+		font-size: 20px;
 		cursor: pointer;
 	}
 </style>

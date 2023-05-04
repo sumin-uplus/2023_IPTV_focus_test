@@ -84,11 +84,73 @@ export default {
 					this.setFocusAnimation(ref, translateY);
 				}
 		},
-		handleArrowKey(e) {
+		ffCustomKeyEvent(e) {
 			if (e.key === "ArrowDown") {
 				this.setFocusDown();
 			} else if (e.key === "ArrowUp") {
 				this.setFocusUp();
+			}
+		},
+		autoKeyEvent() {
+			// const eventLeft = new KeyboardEvent('keydown', {keyCode: 37});
+			// const eventUp = new KeyboardEvent('keydown', {keyCode: 38});
+			const eventRight = new KeyboardEvent('keydown', {key: 'ArrowRight'});
+			const eventDown = new KeyboardEvent('keydown', {key: 'ArrowDown'});
+			const delay = 1500;
+			// 7
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*0)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*1)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*2)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*3)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*4)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*5)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*6)
+			// 5
+			setTimeout(()=>{
+				window.dispatchEvent(eventDown);
+				this.ffCustomKeyEvent(eventDown);
+			},delay*7)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*8)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*9)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*10)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*11)
+			// 10
+			setTimeout(()=>{
+				window.dispatchEvent(eventDown);
+				this.ffCustomKeyEvent(eventDown);
+			},delay*12)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*13)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*14)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*15)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*16)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*17)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*18)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*19)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*20)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*21)
+			// 3
+			setTimeout(()=>{
+				window.dispatchEvent(eventDown);
+				this.ffCustomKeyEvent(eventDown);
+			},delay*22)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*23)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*24)
+			//5
+			setTimeout(()=>{
+				window.dispatchEvent(eventDown);
+				this.ffCustomKeyEvent(eventDown);
+			},delay*25)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*26)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*27)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*28)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*29)
+			
+		},
+		handleEvent(e) {
+			if(e.key === "Enter") {
+				this.autoKeyEvent();
+			} else {
+				this.ffCustomKeyEvent(e);
 			}
 		}
 	},
@@ -97,7 +159,7 @@ export default {
 		this.createSlices();
 	},
 	mounted() {
-		window.addEventListener("keydown", this.handleArrowKey);
+		window.addEventListener("keydown", this.handleEvent);
 		if(this.$refs.focus) {
 			const { width, height, top, left } = this.focus_data;
 			const { style } = this.$refs.focus || {};

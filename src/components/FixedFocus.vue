@@ -55,7 +55,7 @@ export default {
 		},
 	},
 	methods: {
-		handleArrowKey(e) {
+		customKeyEvent(e) {
 			this.getFirstPosition(this.$refs.first_position);
 			this.getFirstPosition(this.$refs.last_position);
 			this.$emit('set-section', this.activeSection);
