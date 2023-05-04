@@ -147,12 +147,16 @@ export default {
 			
 		},
 		handleEvent(e) {
-			if(e.key === "Enter") {
-				this.autoKeyEvent();
-			} else {
-				this.ffCustomKeyEvent(e);
+		if (e.key === 'Enter') {
+			this.autoKeyEvent();
+		} else if (e.key === 'Backspace') {
+			if (this.$route.path !== '/') {
+				this.$router.push('/');
 			}
-		},
+		} else {
+			this.ffCustomKeyEvent(e);
+		}
+		}
 	},
 	created() {
 		this.makeImgArray(this.group, this.thumbnails);
