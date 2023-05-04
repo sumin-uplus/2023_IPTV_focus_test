@@ -1,8 +1,6 @@
 <template>
 	<div class="intro_bg" v-if="$route.path == '/'">
 		<div class="router_container">
-			<!-- <router-link class="option" v-if="$route.path == '/'" to="/moving/2"></router-link>
-			<router-link class="option" v-if="$route.path == '/'" to="/fixed/1"></router-link> -->
 			<div class="select_container">
 				<div class="focus_select">
 				Focus Selection
@@ -28,12 +26,10 @@
 			</router-link>
 		</div>
 	</div>
-	<!-- <ThumbnailContainer :type="selectedFocus" :group="selectedgroup"/> -->
 	<router-view></router-view>
 </template>
 
 <script>
-//import ThumbnailContainer from './components/ThumbnailContainer.vue';
 	export default {
 		name: 'App',
 		data() {
@@ -41,9 +37,6 @@
 				selectedFocus: 'MF',
 				selectedGroup: '1',
 			};
-		},
-		components :{
-			//ThumbnailContainer
 		},
 		methods: {
 			generateCase() {
