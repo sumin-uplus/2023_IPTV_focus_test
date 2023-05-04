@@ -66,7 +66,8 @@ export default {
 						this.activeIndex += 1;
 					}
 					this.setTransition();
-				} else {
+				}
+				else {
 					if (this.activeContainer) {
 						this.activeIndex = this.activeSection;
 					}
@@ -86,12 +87,12 @@ export default {
 					}
 					this.setTransition();
 				}
-				else {
-					if (this.activeContainer) {
-						this.activeIndex = this.activeSection + this.thumbnail_quantity - 1;
-					}
-					this.goLast();
-				}
+				// else {
+				// 	if (this.activeContainer) {
+				// 		this.activeIndex = this.activeSection + this.thumbnail_quantity - 1;
+				// 	}
+				// 	this.goLast();
+				// }
 				this.keyPressed = "left";
 			} else if (e.key === "ArrowDown") {
 				if(this.activeSection > 0 && this.activeSection < 80) {

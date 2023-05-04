@@ -109,6 +109,8 @@
 .contents_module.fixed_focus {
       position: relative;
       overflow-x: clip;
+      margin-left: 130px;
+      padding-left: 6px;
 }
 
 .focus_container {

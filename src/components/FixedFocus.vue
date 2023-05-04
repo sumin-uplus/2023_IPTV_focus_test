@@ -137,7 +137,7 @@ export default {
 		},
 		leftMove() {
 			if (this.activeContainer) {
-				this.activeContainer.style.transform = `translateX(-${(this.wrapperWidth + this.gap) * (this.positionIndex - 1)
+				this.activeContainer.style.transform = `translateX(-${(this.wrapperWidth + this.gap) * (this.positionIndex)
 					}px`;
 			}
 		},
@@ -174,7 +174,6 @@ export default {
 			let ref = this.$refs["focus_0"];
 			ref.style.width = `${this.imgWrapper.getBoundingClientRect().width}px`;
 			ref.style.height = `${this.imgWrapper.getBoundingClientRect().height}px`;
-			// ref.style.display = 'block';
 			this.$emit('set-focus', {
 				width: ref.getBoundingClientRect().width,
 				height: ref.getBoundingClientRect().height,

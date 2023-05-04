@@ -66,18 +66,22 @@ export default {
 			this.slices.push(this.thumbnails.slice(i, i + this.thumbnail_quantity));
 		}
 		},
+		setFocusAnimation(target, value) {
+			target.style.transition = '0.3s all ease-in-out';
+			target.style.transform = value;
+		},
 		setFocusDown() {
 			const ref = this.$refs.focus;
 				if (ref && this.active_section/10 != 9) {
 					const translateY = `translateY(${(this.module_data.height + 40) * (this.active_section/10 == 8 ? 2 : 1)}px) scale(1.03)`;
-					ref.style.transform = translateY;
+					this.setFocusAnimation(ref, translateY);
 				}
 		},
 		setFocusUp() {
 			const ref = this.$refs.focus;
 				if (ref && this.active_section/10 != 0) {
 					const translateY = `translateY(${(this.module_data.height + 40) * (this.active_section/10 == 1 ? 0 : 1)}px) scale(1.03)`;
-					ref.style.transform = translateY;
+					this.setFocusAnimation(ref, translateY);
 				}
 		},
 		handleArrowKey(e) {
@@ -97,7 +101,16 @@ export default {
 		if(this.$refs.focus) {
 			const { width, height, top, left } = this.focus_data;
 			const { style } = this.$refs.focus || {};
-			Object.assign(style, { width: `${width}px`, height: `${height}px`, top: `${top}px`, left: `${left}px`, transform: 'scale(1.03)' });
+			Object.assign(style, {
+				transition: '0s',
+				paddingLeft: '130px',
+				marginLeft: '6px',
+				width: `${width}px`,
+				height: `${height}px`,
+				top: `${top}px`,
+				left: `${left}px`,
+				transform: 'scale(1.03)'
+			});
 		}
 	}
 };
