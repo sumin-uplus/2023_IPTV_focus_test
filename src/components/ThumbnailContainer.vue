@@ -32,6 +32,7 @@
 <script>
 import MovingFocus from "./MovingFocus.vue";
 import FixedFocus from "./FixedFocus.vue";
+import BaseURL from "../mixins/BaseURL";
 
 export default {
 	name: "ThumbnailContainer",
@@ -43,6 +44,7 @@ export default {
 		MovingFocus,
 		FixedFocus
 	},
+	mixins: [BaseURL],
 	data() {
 		return {
 			thumbnail_quantity: 20,
@@ -150,8 +152,8 @@ export default {
 		if (e.key === 'Enter') {
 			this.autoKeyEvent();
 		} else if (e.key === 'Backspace') {
-			if (this.$route.path !== '/') {
-				this.$router.push('/');
+			if (this.$route.path !== this.baseURL) {
+				this.$router.push(this.baseURL);
 			}
 		} else {
 			this.ffCustomKeyEvent(e);

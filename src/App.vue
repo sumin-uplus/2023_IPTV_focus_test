@@ -1,5 +1,5 @@
 <template>
-	<div class="intro_bg" v-if="$route.path == '/'" ref="routerContainer">
+	<div class="intro_bg" v-if="$route.path == baseURL" ref="routerContainer">
 		<div class="router_container">
 			<div class="select_container">
 				<div class="focus_select">
@@ -23,7 +23,7 @@
 			</div>
 			<router-link
 			class="generate_btn"
-			:to="'/' + selectedFocus.toLowerCase() + '/' + selectedGroup"
+			:to="baseURL + selectedFocus.toLowerCase() + '/' + selectedGroup"
 			@click.prevent="goFullscreen">
 				생성하기
 			</router-link>
@@ -33,8 +33,10 @@
 </template>
 
 <script>
+import BaseURL from "./mixins/BaseURL";
 	export default {
 		name: 'App',
+		mixins: [BaseURL],
 		data() {
 			return {
 				selectedFocus: 'MF',
