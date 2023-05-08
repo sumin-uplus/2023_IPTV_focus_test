@@ -33,6 +33,7 @@
 import MovingFocus from "./MovingFocus.vue";
 import FixedFocus from "./FixedFocus.vue";
 import BaseURL from "../mixins/BaseURL";
+import MakeLog from "../mixins/MakeLog";
 
 export default {
 	name: "ThumbnailContainer",
@@ -44,7 +45,10 @@ export default {
 		MovingFocus,
 		FixedFocus
 	},
-	mixins: [BaseURL],
+	mixins: [
+		BaseURL,
+		MakeLog
+	],
 	data() {
 		return {
 			thumbnail_quantity: 20,
