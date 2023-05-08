@@ -32,4 +32,7 @@ export default {
 
 		this.imgContainers = this.$el.querySelectorAll(".img_container");
 	},
+	unmounted() {
+		window.removeEventListener("keydown", this.customKeyEvent);
+	}
 }

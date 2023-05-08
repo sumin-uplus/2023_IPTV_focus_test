@@ -7,20 +7,15 @@ export default {
 		};
 	},
 	methods:{
-		loggingData(event){
-            let current_path = window.location.pathname.substring(process.env.BASE_URL.length);
-            if(this.url_pathname == current_path) {
-                if(event.key !== 'Backspace') {
-                    var temp_log = '[' + this.getCurDt() + ']' + this.url_pathname + '||' + event.key + '\n';
-                    this.data_log.push(temp_log);
-                }
-    
-                if(event.key === '=') {
-                    this.data_log.push('=========== task 종료 ===========\n');
-                    // this.task_num++;
-                    this.makeLog();
-                    console.log(this.data_log);
-                }
+		loggingData(event) {
+            var temp_log = '[' + this.getCurDt() + ']' + this.url_pathname + '||' + event.key + '\n';
+            this.data_log.push(temp_log);
+
+            if(event.key === '=') {
+                this.data_log.push('=========== task 종료 ===========\n');
+                // this.task_num++;
+                this.makeLog();
+                console.log(this.data_log);
             }
 		},
 		makeLog(){
@@ -59,5 +54,8 @@ export default {
 	mounted() {
 		this.url_pathname = window.location.pathname.substring(process.env.BASE_URL.length);
         window.addEventListener('keydown', this.loggingData);
+	},
+    unmounted() {
+        window.removeEventListener('keydown', this.loggingData);
 	},
 }

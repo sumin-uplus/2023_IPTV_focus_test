@@ -56,10 +56,11 @@ export default {
 	},
 	methods: {
 		customKeyEvent(e) {
-			if(this.$refs.first_position && this.$refs.last_position) {
-				this.getFirstPosition(this.$refs.first_position);
-				this.getFirstPosition(this.$refs.last_position);				
-			}
+			// if(this.$refs.first_position && this.$refs.last_position) {
+			// 	this.getFirstPosition(this.$refs.first_position);
+			// 	this.getFirstPosition(this.$refs.last_position);				
+			// }
+
 			this.$emit('set-section', this.activeSection);
 			let index = (this.activeIndex - this.container_num)%this.thumbnail_quantity;	
 			if (e.key === "ArrowRight") {
@@ -193,6 +194,6 @@ export default {
 				left: module.getBoundingClientRect().left
 			});
 		}
-	}
+	},
 };
 </script>
