@@ -23,10 +23,12 @@
 			</div>
 			<router-link
 			class="generate_btn"
+			@click.prevent="isFullScreen == false ? goFullscreen() : ''"
 			:to="baseURL + selectedFocus.toLowerCase() + '/' + selectedGroup"
-			@click.prevent="goFullscreen">
+			>
 				생성하기
 			</router-link>
+			<!-- <button class="generate_btn" @click="goLink">생성하기</button> -->
 		</div>
 	</div>
 	<router-view></router-view>
@@ -41,6 +43,7 @@ import BaseURL from "./mixins/BaseURL";
 			return {
 				selectedFocus: 'MF',
 				selectedGroup: '1',
+				isFullScreen: false
 			};
 		},
 		methods: {
@@ -48,12 +51,23 @@ import BaseURL from "./mixins/BaseURL";
 				const container = this.$refs.routerContainer;
 				if (container.requestFullscreen) {
 					container.requestFullscreen();
+					this.isFullScreen = true;
 				} else if (container.webkitRequestFullscreen) {
 					container.webkitRequestFullscreen();
-				} else if (container.msRequestFullscreen) { 
+					this.isFullScreen = true;
+				} else if (container.msRequestFullscreen) {
 					container.msRequestFullscreen();
+					this.isFullScreen = true;
 				}
 			},
+			// goLink() {
+			// 	let path = this.baseURL + this.selectedFocus.toLowerCase() + '/' + this.selectedGroup
+			// 	this.$router.push(path);
+			// 	if(this.isFullScreen == false) {
+			// 		this.goFullscreen();
+			// 	}
+			// }
+
 		},
 		
 	}
