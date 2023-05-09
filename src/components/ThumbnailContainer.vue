@@ -153,13 +153,15 @@ export default {
 			
 		},
 		handleEvent(e) {
-		if (e.key === 'Enter') {
-			this.autoKeyEvent();
-		} else if (e.key === 'Backspace') {
+		if (e.key === 'Backspace') {
 			if (this.$route.path !== this.baseURL) {
 				this.$router.push(this.baseURL);
 			}
-		} else {
+		}
+		// else if (e.key === 'Enter') {
+		// 	this.autoKeyEvent();
+		// }
+		else {
 			this.ffCustomKeyEvent(e);
 		}
 		}
@@ -184,6 +186,9 @@ export default {
 				transform: 'scale(1.03)'
 			});
 		}
+	},
+	unmounted() {
+		window.removeEventListener("keydown", this.handleEvent);
 	}
 };
 </script>
