@@ -146,14 +146,22 @@ export default {
 		},
 		rightMove() {
 			if (this.activeContainer) {
+				window.removeEventListener('keydown', this.customKeyEvent);
 				this.activeContainer.style.transform = `translateX(-${(this.wrapperWidth + this.gap) * (this.positionIndex - 2)
 					}px`;
+				setTimeout(() => {
+					window.addEventListener('keydown', this.customKeyEvent);
+				}, 300);
 			}
 		},
 		leftMove() {
 			if (this.activeContainer) {
+				window.removeEventListener('keydown', this.customKeyEvent);
 				this.activeContainer.style.transform = `translateX(-${(this.wrapperWidth + this.gap) * (this.positionIndex - 1)
 					}px`;
+				setTimeout(() => {
+					window.addEventListener('keydown', this.customKeyEvent);
+				}, 300);
 			}
 		},
 		goFirst() {
@@ -178,7 +186,7 @@ export default {
 				this.activeContainer.style.transition = '0.3s all ease-in-out';
 			}
 			this.imgWrapper.forEach((e)=>{e.style.transition = '0.3s all ease-in-out';});
-		}
+		}	
 	},
 	mounted() {
 		this.imgWrapper = this.$el.querySelectorAll(".img_wrapper");
