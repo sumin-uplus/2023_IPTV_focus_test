@@ -104,29 +104,27 @@ export default {
 			const eventDown = new KeyboardEvent('keydown', {key: 'ArrowDown'});
 			const delay = 1500;
 			// 7
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*0)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*1)
 			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*2)
 			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*3)
 			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*4)
 			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*5)
 			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*6)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*7)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*8)
 			// 5
 			setTimeout(()=>{
 				window.dispatchEvent(eventDown);
 				this.ffCustomKeyEvent(eventDown);
-			},delay*7)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*8)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*9)
+			},delay*9)
 			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*10)
 			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*11)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*12)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*13)
 			// 10
 			setTimeout(()=>{
 				window.dispatchEvent(eventDown);
 				this.ffCustomKeyEvent(eventDown);
-			},delay*12)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*13)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*14)
+			},delay*14)
 			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*15)
 			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*16)
 			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*17)
@@ -134,22 +132,24 @@ export default {
 			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*19)
 			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*20)
 			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*21)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*22)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*23)
 			// 3
 			setTimeout(()=>{
 				window.dispatchEvent(eventDown);
 				this.ffCustomKeyEvent(eventDown);
-			},delay*22)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*23)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*24)
+			},delay*24)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*25)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*26)
 			//5
 			setTimeout(()=>{
 				window.dispatchEvent(eventDown);
 				this.ffCustomKeyEvent(eventDown);
-			},delay*25)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*26)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*27)
+			},delay*27)
 			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*28)
 			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*29)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*30)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*31)
 			
 		},
 		handleEvent(e) {
