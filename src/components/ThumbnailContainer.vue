@@ -73,7 +73,7 @@ export default {
 		}
 		},
 		setFocusAnimation(target, value) {
-			target.style.transition = '0.3s all ease-in-out';
+			target.style.transition = '0.2s all ease-in-out';
 			target.style.transform = value;
 		},
 		setFocusDown() {

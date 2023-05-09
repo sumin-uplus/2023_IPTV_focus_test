@@ -151,7 +151,7 @@ export default {
 					}px`;
 				setTimeout(() => {
 					window.addEventListener('keydown', this.customKeyEvent);
-				}, 300);
+				}, 200);
 			}
 		},
 		leftMove() {
@@ -161,7 +161,7 @@ export default {
 					}px`;
 				setTimeout(() => {
 					window.addEventListener('keydown', this.customKeyEvent);
-				}, 300);
+				}, 200);
 			}
 		},
 		goFirst() {
@@ -183,9 +183,9 @@ export default {
 		},
 		setTransition() {
 			if(this.activeContainer) {
-				this.activeContainer.style.transition = '0.3s all ease-in-out';
+				this.activeContainer.style.transition = '0.2s all ease-in-out';
 			}
-			this.imgWrapper.forEach((e)=>{e.style.transition = '0.3s all ease-in-out';});
+			this.imgWrapper.forEach((e)=>{e.style.transition = '0.2s all ease-in-out';});
 		}	
 	},
 	mounted() {
