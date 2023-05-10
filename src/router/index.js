@@ -6,13 +6,13 @@ const routes = [
             path: process.env.BASE_URL + '/mf',
             name: 'MF',
             component: ThumbnailContainer,
-            props: { group: 'imgset01', type: 'MF'}
+            props: { group: 'imgset05', type: 'MF'}
       },
       {
             path: process.env.BASE_URL + '/ff',
             name: 'FF',
             component: ThumbnailContainer,
-            props: { group: 'imgset02', type: 'FF' }
+            props: { group: 'imgset05', type: 'FF' }
       },
 
       //MF : 이미지 그룹별 맵핑

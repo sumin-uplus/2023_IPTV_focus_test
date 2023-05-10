@@ -21,14 +21,23 @@
 				</label>			
 			</div>
 			</div>
-			<router-link
-			class="generate_btn"
-			@click.prevent="isFullScreen == false ? goFullscreen() : ''"
-			:to="baseURL + selectedFocus.toLowerCase() + '/' + selectedGroup"
-			>
+			<div class="btn_container">
+				<router-link
+				class="generate_btn test_btn"
+				@click.prevent="isFullScreen == false ? goFullscreen() : ''"
+				to="mf"
+				>
+				Simulation
+				</router-link>
+				<router-link
+				class="generate_btn"
+				@click.prevent="isFullScreen == false ? goFullscreen() : ''"
+				:to="baseURL + selectedFocus.toLowerCase() + '/' + selectedGroup"
+				>
 				생성하기
-			</router-link>
+				</router-link>
 			<!-- <button class="generate_btn" @click="goLink">생성하기</button> -->
+			</div>		
 		</div>
 	</div>
 	<router-view></router-view>
@@ -161,21 +170,34 @@ import BaseURL from "./mixins/BaseURL";
 		font-weight: 700;
 	}
 
+	.btn_container {
+		width: 100%;
+		height: 100%;
+		grid-column-start: 1;
+		grid-column-end: 2;
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+	}
+
 	.generate_btn {
-		height: 50px;
+		box-sizing: border-box;
+		height: 60px;
 		background-color: #1E93FF;
 		outline: none;
 		border: 0px solid;
 		color: white;
 		border-radius: 6px;
 		padding: 6px 20px;
-		grid-column-start: 1;
-		grid-column-end: 2;
 		font-size: 20px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		text-decoration: none;
-		margin-top: 10px;
 	}
+
+	.generate_btn.test_btn {
+		background-color: #9e9e9e;
+	}
+
 </style>
