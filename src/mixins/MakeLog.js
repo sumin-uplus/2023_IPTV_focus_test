@@ -11,7 +11,7 @@ export default {
             var temp_log = '[' + this.getCurDt() + ']' + this.url_pathname + '||' + event.key + '\n';
             this.data_log.push(temp_log);
 
-            if(event.key === 'Backspace') {
+            if(event.key === 'Backspace' || event.key === '=') {
                 this.data_log.push('=========== task 종료 ===========\n');
                 // this.task_num++;
                 this.makeLog();
