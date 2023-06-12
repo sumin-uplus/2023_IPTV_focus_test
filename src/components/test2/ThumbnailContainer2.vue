@@ -8,42 +8,26 @@
 			:container_title="'콘텐츠 모듈 ' + (index + 1)"
 			:focus_type="type"
 			:thumbnail_quantity = thumbnail_quantity
+			:updown_type="updown"
 		>
 		</MovingFocus>
 	</div>
-	<div v-else-if="type=='FF'" class="contents_container">
-		<span ref="focus" class="focus_container_body"></span>
-		<FixedFocus
-			v-for="(slice, index) in slices"
-			:key="index"
-			:thumbnails="slice"
-			:container_num="index * 10"
-			:container_title="'콘텐츠 모듈 ' + (index + 1)"
-			:focus_type="type"
-			:thumbnail_quantity = thumbnail_quantity
-			@set-focus = "focus_data = $event"
-			@set-section = "active_section = $event"
-			@set-module = "module_data = $event"
-		>
-		</FixedFocus>
-	</div>	
 </template>
 
 <script>
-import MovingFocus from "./MovingFocus.vue";
-import FixedFocus from "./FixedFocus.vue";
-import BaseURL from "../mixins/BaseURL";
-import MakeLog from "../mixins/MakeLog";
+import MovingFocus from "./MovingFocus2.vue";
+import BaseURL from "../../mixins/BaseURL";
+import MakeLog from "../../mixins/MakeLog";
 
 export default {
-	name: "ThumbnailContainer",
+	name: "ThumbnailContainer2",
 	props: {
 		group: {type: String, default: 'imgset01'},
 		type: {type: String, default: 'MF'},
+		updown: {type: String, default: 'A'}
 	},
 	components: {
 		MovingFocus,
-		FixedFocus
 	},
 	mixins: [
 		BaseURL,

@@ -1,6 +1,8 @@
 // routes.js
 import ThumbnailContainer from '../components/ThumbnailContainer.vue';
-
+import ThumbnailContainer2 from '../components/test2/ThumbnailContainer2.vue';
+import App from '@/App.vue';
+import App2 from '@/App2.vue';
 const routes = [
       {
             path: process.env.BASE_URL + '/mf',
@@ -14,57 +16,50 @@ const routes = [
             component: ThumbnailContainer,
             props: { group: 'imgset05', type: 'FF' }
       },
-
-      //MF : 이미지 그룹별 맵핑
       {
-            path: process.env.BASE_URL + '/mf/1',
-            name: 'MF-1',
-            component: ThumbnailContainer,
-            props: { group: 'imgset01', type: 'MF'}
+            path: process.env.BASE_URL + '/test1',
+            name: 'test1',
+            component: App
       },
       {
-            path: process.env.BASE_URL + '/mf/2',
-            name: 'MF-2',
-            component: ThumbnailContainer,
-            props: { group: 'imgset02', type: 'MF'}
-      },
-      {
-            path: process.env.BASE_URL + '/mf/3',
-            name: 'MF-3',
-            component: ThumbnailContainer,
-            props: { group: 'imgset03', type: 'MF'}
-      },
-      {
-            path: process.env.BASE_URL + '/mf/4',
-            name: 'MF-4',
-            component: ThumbnailContainer,
-            props: { group: 'imgset04', type: 'MF'}
-      },
-      //FF : 이미지 그룹별 맵핑
-      {
-            path: process.env.BASE_URL + '/ff/1',
-            name: 'FF-1',
-            component: ThumbnailContainer,
-            props: { group: 'imgset01', type: 'FF' }
-      },
-      {
-            path: process.env.BASE_URL + '/ff/2',
-            name: 'FF-2',
-            component: ThumbnailContainer,
-            props: { group: 'imgset02', type: 'FF' }
-      },
-      {
-            path: process.env.BASE_URL + '/ff/3',
-            name: 'FF-3',
-            component: ThumbnailContainer,
-            props: { group: 'imgset03', type: 'FF' }
-      },
-      {
-            path: process.env.BASE_URL + '/ff/4',
-            name: 'FF-4',
-            component: ThumbnailContainer,
-            props: { group: 'imgset04', type: 'FF' }
+            path: process.env.BASE_URL,
+            name: 'test2',
+            component: App2
       },
 ]
+
+//상하이동 정책 테스트
+const groups = ['imgset01', 'imgset02', 'imgset03', 'imgset04', 'imgset05'];
+const types = ['MF', 'FF'];
+const updowns = ['A', 'B', 'C'];
+
+types.forEach((type) => {
+      groups.forEach((group, index) => {
+        const path = `${process.env.BASE_URL}/${type.toLowerCase()}/${index + 1}`;
+        const name = `${type}-${index + 1}`;
+    
+        routes.push({
+          path,
+          name,
+          component: ThumbnailContainer,
+          props: { group, type },
+        });
+      });
+    });
+
+updowns.forEach((updown) => {
+  groups.forEach((group, index) => {
+    const path = `${process.env.BASE_URL}/mf/${updown.toLowerCase()}/${index + 1}`;
+    const name = `MF-${updown}-${index + 1}`;
+
+    routes.push({
+      path,
+      name,
+      component: ThumbnailContainer2,
+      props: { group, type: 'MF', updown },
+    });
+  });
+});
+
 
 export default routes

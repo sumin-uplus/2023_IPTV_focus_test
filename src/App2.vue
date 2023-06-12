@@ -1,16 +1,20 @@
 <template>
-	<div class="intro_bg" v-if="$route.path == baseURL + 'test1'" ref="routerContainer">
+	<div class="intro_bg" v-if="$route.path == baseURL" ref="routerContainer">
 		<div class="router_container">
 			<div class="select_container">
 				<div class="focus_select">
-				Focus Selection
-				<label class="option" for="MF">
-					<input type="radio" id="MF" value="MF" name="focus" v-model="selectedFocus">
-					MF
+				Updown Selection
+				<label class="option" for="A">
+					<input type="radio" id="A" value="A" name="focus" v-model="selectedFocus">
+					A
 				</label>	
-				<label class="option" for="FF">
-					<input type="radio" id="FF" value="FF" name="focus" v-model="selectedFocus">
-					FF
+				<label class="option" for="B">
+					<input type="radio" id="B" value="B" name="focus" v-model="selectedFocus">
+					B
+				</label>
+				<label class="option" for="C">
+					<input type="radio" id="C" value="C" name="focus" v-model="selectedFocus">
+					C
 				</label>	
 			</div>
 			<div class="group_select">
@@ -32,7 +36,7 @@
 				<router-link
 				class="generate_btn"
 				@click.prevent="isFullScreen == false ? goFullscreen() : ''"
-				:to="baseURL + selectedFocus.toLowerCase() + '/' + selectedGroup"
+				:to="baseURL + 'mf/' + selectedFocus.toLowerCase() + '/' + selectedGroup"
 				>
 				생성하기
 				</router-link>
@@ -45,11 +49,11 @@
 <script>
 import BaseURL from "./mixins/BaseURL";
 	export default {
-		name: 'App',
+		name: 'App_2',
 		mixins: [BaseURL],
 		data() {
 			return {
-				selectedFocus: 'MF',
+				selectedFocus: 'A',
 				selectedGroup: '1',
 				isFullScreen: false
 			};
@@ -68,14 +72,6 @@ import BaseURL from "./mixins/BaseURL";
 					this.isFullScreen = true;
 				}
 			},
-			// goLink() {
-			// 	let path = this.baseURL + this.selectedFocus.toLowerCase() + '/' + this.selectedGroup
-			// 	this.$router.push(path);
-			// 	if(this.isFullScreen == false) {
-			// 		this.goFullscreen();
-			// 	}
-			// }
-
 		},
 		
 	}
