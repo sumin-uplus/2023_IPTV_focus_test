@@ -3,6 +3,8 @@
 		<div>{{ container_title }}</div>
 		<div :class="['postion_check_container']">
 			<span ref="first_position"></span>
+			<span ref="second_position"></span>
+			<span ref="third_position"></span>
 			<span ref="last_position">
 				<div class="index_container" :class="{active: this.activeSection == container_num}">
 					<div>{{ (this.activeIndex - container_num)%thumbnail_quantity + 1}}</div>
@@ -42,6 +44,8 @@ export default {
 			activeSection: 0,
 			keyPressed: "",
 			firstPositionIndex: 0,
+			secondPositionIndex: 0,
+			thirdPositionIndex: 0,
 			lastPositionIndex: 0
 		};
 	},
@@ -55,10 +59,13 @@ export default {
 	},
 	methods: {
 		customKeyEvent(e) {
-			if(this.$refs.first_position && this.$refs.last_position) {
-				this.getFirstPosition(this.$refs.first_position);
-				this.getFirstPosition(this.$refs.last_position);				
+			const positions = ['first_position', 'second_position', 'third_position', 'last_position'];
+			positions.forEach(position => {
+			if (this.$refs[position]) {
+				this.getFirstPosition(this.$refs[position]);
 			}
+			});
+
 			let index = this.activeIndex - this.container_num;
 			if (e.key === "ArrowRight") {
 				if (index != this.thumbnail_quantity - 1
@@ -69,9 +76,9 @@ export default {
 					if (this.activeContainer) {
 						this.activeIndex += 1;
 					}
+					this.controlKey();
 					this.setTransition();
-				}
-				else {
+				} else {
 					if (this.activeContainer) {
 						this.activeIndex = this.activeSection;
 					}
@@ -89,6 +96,7 @@ export default {
 					if (this.activeContainer) {
 						this.activeIndex -= 1;
 					}
+					this.controlKey();
 					this.setTransition();
 				}
 				this.keyPressed = "left";
@@ -136,30 +144,26 @@ export default {
 
 					if (position === this.$refs.first_position) {
 						this.firstPositionIndex = index;
-					} else if (position === this.$refs.last_position) {
+					} else if (position === this.$refs.second_position) {
+						this.secondPositionIndex = index;
+					}  else if (position === this.$refs.third_position) {
+						this.thirdPositionIndex = index;
+					}  else if (position === this.$refs.last_position) {
 						this.lastPositionIndex = index;
-					}
+					} 
 				}
 			});
 		},
 		rightMove() {
 			if (this.activeContainer) {
-				window.removeEventListener('keydown', this.customKeyEvent);
 				this.activeContainer.style.transform = `translateX(-${(this.wrapperWidth + this.gap) * (this.positionIndex - 2)
 					}px`;
-				setTimeout(() => {
-					window.addEventListener('keydown', this.customKeyEvent);
-				}, 200);
 			}
 		},
 		leftMove() {
 			if (this.activeContainer) {
-				window.removeEventListener('keydown', this.customKeyEvent);
 				this.activeContainer.style.transform = `translateX(-${(this.wrapperWidth + this.gap) * (this.positionIndex - 1)
 					}px`;
-				setTimeout(() => {
-					window.addEventListener('keydown', this.customKeyEvent);
-				}, 200);
 			}
 		},
 		goFirst() {
@@ -184,7 +188,15 @@ export default {
 				this.activeContainer.style.transition = '0.2s all ease-in-out';
 			}
 			this.imgWrapper.forEach((e)=>{e.style.transition = '0.2s all ease-in-out';});
-		}	
+		},
+		controlKey() {
+			if (this.activeContainer) {
+				window.removeEventListener('keydown', this.customKeyEvent);
+				setTimeout(() => {
+					window.addEventListener('keydown', this.customKeyEvent);
+				}, 200);
+			}
+		}
 	},
 	mounted() {
 		this.imgWrapper = this.$el.querySelectorAll(".img_wrapper");

@@ -27,9 +27,11 @@ export default {
 
 		this.imgContainer.style.height = `${this.wrapperHeight}px`;
 		this.position.style.width = `${this.wrapperWidth * 4 + this.gap * 3}px`;
-		this.$refs.first_position.style.width = `${this.wrapperWidth}px`;
-		this.$refs.last_position.style.width = `${this.wrapperWidth}px`;
 
+		const positions = ['first_position', 'second_position', 'third_position', 'last_position'];
+		positions.forEach(position => {
+			this.$refs[position].style.width = `${this.wrapperWidth}px`;
+		});
 		this.imgContainers = this.$el.querySelectorAll(".img_container");
 	},
 	unmounted() {
