@@ -26,6 +26,7 @@
 <script>
 import FocusFunction from '../../mixins/FocusFunction';
 import UpdownFunction from '../../mixins/UpdownFunction';
+import eventBus from './EventBus';
 
 export default {
 	name: "MovingFocus2",
@@ -61,9 +62,9 @@ export default {
 		customKeyEvent(e) {
 			const positions = ['first_position', 'second_position', 'third_position', 'last_position'];
 			positions.forEach(position => {
-			if (this.$refs[position]) {
-				this.getFirstPosition(this.$refs[position]);
-			}
+				if (this.$refs[position]) {
+					this.getClosestPosition(this.$refs[position]);
+				}
 			});
 
 			let index = this.activeIndex - this.container_num;
@@ -104,16 +105,15 @@ export default {
 				if(this.activeSection > 0 && this.activeSection < 80) {
 					this.downMove();
 				}
-				if(this.activeSection != 90) {
-					this.activeSection += 10;
-				}
+				// if(this.activeSection != 90) {
+				// 	this.activeSection += 10;
+				// }
 				this.keyPressed = "down";
-				
 				if(this.updown_type == 'A') {
 					this.downA();
 				} else if(this.updown_type == 'B') {
 					this.downB();
-				} else {
+				} else if(this.updown_type == 'C') {
 					this.downC();
 				}
 				this.setTransition();
@@ -129,28 +129,26 @@ export default {
 				this.setTransition();
 			}
 		},
-		getFirstPosition(position) {
-			const positionRect = position.getBoundingClientRect();
-			const imgWrappers = this.$el.querySelectorAll('.img_wrapper');
-			let minDistance = Number.MAX_VALUE;
+		getClosestPosition(position) {
+		const positionRect = position.getBoundingClientRect();
+		const imgWrappers = this.$el.querySelectorAll('.img_wrapper');
+		let minDistance = Number.MAX_VALUE;
+		let positionRefs = [this.$refs.first_position, this.$refs.second_position, this.$refs.third_position, this.$refs.last_position];
+		let positionIndexes = ['firstPositionIndex', 'secondPositionIndex', 'thirdPositionIndex', 'lastPositionIndex'];
 
-			imgWrappers.forEach((thumbnail) => {
-				const rect = thumbnail.getBoundingClientRect();
-				const distance = Math.abs(positionRect.left - rect.left);
+		imgWrappers.forEach((thumbnail) => {
+			const rect = thumbnail.getBoundingClientRect();
+			const distance = Math.abs(positionRect.left - rect.left);
 
 				if (rect.left >= 0 && distance < minDistance) {
 					minDistance = distance;
 					const index = parseInt(thumbnail.getAttribute("index"));
 
-					if (position === this.$refs.first_position) {
-						this.firstPositionIndex = index;
-					} else if (position === this.$refs.second_position) {
-						this.secondPositionIndex = index;
-					}  else if (position === this.$refs.third_position) {
-						this.thirdPositionIndex = index;
-					}  else if (position === this.$refs.last_position) {
-						this.lastPositionIndex = index;
-					} 
+					positionRefs.forEach((ref, i) => {
+						if (position === ref) {
+						this[positionIndexes[i]] = index;
+						}
+					});
 				}
 			});
 		},
@@ -200,6 +198,12 @@ export default {
 	},
 	mounted() {
 		this.imgWrapper = this.$el.querySelectorAll(".img_wrapper");
+		eventBus.on('section-changed', this.nextSection);
+		eventBus.on('index-changed', ()=>{
+			if(this.activeContainer) {
+				this.activeIndex = this.firstPositionIndex;
+			}
+		});
 	}
 
 };
