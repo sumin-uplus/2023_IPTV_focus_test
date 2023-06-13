@@ -48,7 +48,7 @@ export default {
 			secondPositionIndex: 0,
 			thirdPositionIndex: 0,
 			lastPositionIndex: 0,
-			movingPosition: ''
+			movingPosition: 'first'
 		};
 	},
 	computed: {
@@ -69,6 +69,7 @@ export default {
 			});
 
 			let index = this.activeIndex - this.container_num;
+
 			if (e.key === "ArrowRight") {
 				if (index != this.thumbnail_quantity - 1
 					&& this.activeIndex == this.lastPositionIndex) {
@@ -198,18 +199,28 @@ export default {
 		}
 	},
 	watch: {
-		active_section(newActiveSection) {
-			this.activeSection = newActiveSection;
+		activeIndex(newIndex) {
+			const positions = [
+				{ index: this.firstPositionIndex, position: 'first' },
+				{ index: this.secondPositionIndex, position: 'second' },
+				{ index: this.thirdPositionIndex, position: 'third' },
+				{ index: this.lastPositionIndex, position: 'last' }
+			];
+			const matchingPosition = positions.find(position => newIndex === position.index);
+			if (matchingPosition) {
+				eventBus.emit('position', matchingPosition.position);
+			}
 		}
 	},
 	mounted() {
 		this.imgWrapper = this.$el.querySelectorAll(".img_wrapper");
 		const positions = ['first_position', 'second_position', 'third_position', 'last_position'];
-			positions.forEach(position => {
-				if (this.$refs[position]) {
-					this.getClosestPosition(this.$refs[position]);
-				}
-			});
+		positions.forEach(position => {
+			if (this.$refs[position]) {
+				this.getClosestPosition(this.$refs[position]);
+			}
+		});
+
 		eventBus.on('position', (e)=>{
 			this.movingPosition = e;
 		});
