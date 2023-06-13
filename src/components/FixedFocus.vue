@@ -3,6 +3,8 @@
 		<div>{{ container_title }}</div>
 		<div :class="['postion_check_container']">
 			<span ref="first_position"></span>
+			<span ref="second_position"></span>
+			<span ref="third_position"></span>
 			<span ref="last_position">
 				<div class="index_container" :class="{active: this.activeSection == container_num}">
 					<div>{{ (this.activeIndex - container_num)%thumbnail_quantity + 1}}</div>
