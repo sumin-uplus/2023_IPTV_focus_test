@@ -61,13 +61,7 @@ export default {
 	},
 	methods: {
 		customKeyEvent(e) {
-			const positions = ['first_position', 'second_position', 'third_position', 'last_position'];
-			positions.forEach(position => {
-				if (this.$refs[position]) {
-					this.getClosestPosition(this.$refs[position]);
-				}
-			});
-
+			this.getPosition();
 			let index = this.activeIndex - this.container_num;
 
 			if (e.key === "ArrowRight") {
@@ -79,7 +73,7 @@ export default {
 					if (this.activeContainer) {
 						this.activeIndex += 1;
 					}
-					this.controlKey();
+					this.controlKeyRightLeft();
 					this.setTransition();
 				} else {
 					if (this.activeContainer) {
@@ -99,7 +93,7 @@ export default {
 					if (this.activeContainer) {
 						this.activeIndex -= 1;
 					}
-					this.controlKey();
+					this.controlKeyRightLeft();
 					this.setTransition();
 				}
 				this.keyPressed = "left";
@@ -118,18 +112,28 @@ export default {
 				} else if(this.updown_type == 'C') {
 					this.downC();
 				}
+				this.controlKeyUpDown();
 				this.setTransition();
 
 			} else if (e.key === "ArrowUp") {
 				if(this.activeSection > 10 && this.activeSection < 90) {
 					this.upMove();
 				}
-				if(this.activeSection != 0) {
-					this.activeSection -= 10;
-				}
+				// if(this.activeSection != 0) {
+				// 	this.activeSection -= 10;
+				// }
 				this.keyPressed = "up";
+				if(this.updown_type == 'A') {
+					this.prevSection();
+				} else if(this.updown_type == 'B') {
+					this.prevSection();
+				} else if(this.updown_type == 'C') {
+					this.upC();
+				}
+				this.controlKeyUpDown();
 				this.setTransition();
 			}
+			this.getPosition();
 		},
 		getClosestPosition(position) {
 		const positionRect = position.getBoundingClientRect();
@@ -181,7 +185,6 @@ export default {
 		},
 		removeTransition() {
 			this.activeContainer.style.transition = 'none';
-			//this.imgWrapper.forEach((e)=>{e.style.transition = 'none';});
 		},
 		setTransition() {
 			if(this.activeContainer) {
@@ -189,13 +192,27 @@ export default {
 			}
 			this.imgWrapper.forEach((e)=>{e.style.transition = '0.2s all ease-in-out';});
 		},
-		controlKey() {
+		controlKeyRightLeft() {
 			if (this.activeContainer) {
 				window.removeEventListener('keydown', this.customKeyEvent);
 				setTimeout(() => {
 					window.addEventListener('keydown', this.customKeyEvent);
 				}, 200);
 			}
+		},
+		controlKeyUpDown() {
+			window.removeEventListener('keydown', this.customKeyEvent);
+			setTimeout(() => {
+				window.addEventListener('keydown', this.customKeyEvent);
+			}, 100);
+		},
+		getPosition() {
+			const positions = ['first_position', 'second_position', 'third_position', 'last_position'];
+			positions.forEach(position => {
+				if (this.$refs[position]) {
+					this.getClosestPosition(this.$refs[position]);
+				}
+			});
 		}
 	},
 	watch: {
@@ -210,20 +227,15 @@ export default {
 			if (matchingPosition) {
 				eventBus.emit('position', matchingPosition.position);
 			}
+
 		}
 	},
 	mounted() {
 		this.imgWrapper = this.$el.querySelectorAll(".img_wrapper");
-		const positions = ['first_position', 'second_position', 'third_position', 'last_position'];
-		positions.forEach(position => {
-			if (this.$refs[position]) {
-				this.getClosestPosition(this.$refs[position]);
-			}
-		});
-
 		eventBus.on('position', (e)=>{
 			this.movingPosition = e;
 		});
+		this.getPosition();
 	},
 	unmounted() {
 		eventBus.off('position');

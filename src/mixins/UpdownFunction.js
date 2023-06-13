@@ -15,9 +15,7 @@ export default {
                 }
             }
         },
-        downC() {
-            //최단거리 이동
-            this.nextSection();
+        focusC(){
             const positionMap = {
                 first: this.firstPositionIndex,
                 second: this.secondPositionIndex,
@@ -26,9 +24,23 @@ export default {
             };
             this.activeIndex = positionMap[this.movingPosition];
         },
+        downC() {
+            //최단거리 이동
+            this.nextSection();
+            this.focusC();
+        },
+        upC() {
+            this.prevSection();
+            this.focusC();
+        },
         nextSection() {
             if(this.activeSection != 90) {
                 this.activeSection += 10;
+            }
+        },
+        prevSection() {
+            if(this.activeSection != 0) {
+                this.activeSection -= 10;
             }
         }
     }
