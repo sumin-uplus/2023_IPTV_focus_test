@@ -40,7 +40,6 @@ export default {
 			slices: [],
 			focus_data: 0,
 			module_data: 0,
-			active_section: 0,
 		};
 	},
 	methods: {
@@ -148,6 +147,9 @@ export default {
 		else {
 			this.ffCustomKeyEvent(e);
 		}
+		},
+		updateSection(section) {
+			this.active_section = section;
 		}
 	},
 	created() {

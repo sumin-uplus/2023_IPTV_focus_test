@@ -36,7 +36,7 @@ export default {
 		container_num: { type: Number },
 		container_title: { type: String, default: "콘텐츠 모듈1" },
 		focus_type: {type: String, default: 'moving'},
-		updown_type: {type: String, default: 'A'}
+		updown_type: {type: String, default: 'A'},
 	},
 	mixins:[FocusFunction, UpdownFunction],
 	data() {
@@ -47,7 +47,8 @@ export default {
 			firstPositionIndex: 0,
 			secondPositionIndex: 0,
 			thirdPositionIndex: 0,
-			lastPositionIndex: 0
+			lastPositionIndex: 0,
+			movingPosition: ''
 		};
 	},
 	computed: {
@@ -196,14 +197,25 @@ export default {
 			}
 		}
 	},
+	watch: {
+		active_section(newActiveSection) {
+			this.activeSection = newActiveSection;
+		}
+	},
 	mounted() {
 		this.imgWrapper = this.$el.querySelectorAll(".img_wrapper");
-		eventBus.on('section-changed', this.nextSection);
-		eventBus.on('index-changed', ()=>{
-			if(this.activeContainer) {
-				this.activeIndex = this.firstPositionIndex;
-			}
+		const positions = ['first_position', 'second_position', 'third_position', 'last_position'];
+			positions.forEach(position => {
+				if (this.$refs[position]) {
+					this.getClosestPosition(this.$refs[position]);
+				}
+			});
+		eventBus.on('position', (e)=>{
+			this.movingPosition = e;
 		});
+	},
+	unmounted() {
+		eventBus.off('position');
 	}
 
 };

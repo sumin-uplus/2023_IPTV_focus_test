@@ -19,10 +19,16 @@ export default {
             //최단거리 이동
             if(this.activeContainer) {
                 if(this.activeIndex === this.firstPositionIndex) {
-                    console.log(this.activeIndex);
-                    eventBus.emit('section-changed', 'next-section');
-                    eventBus.emit('index-changed', 'next-index');
+                    eventBus.emit('position', 'first');
+                } else if (this.activeIndex === this.secondPositionIndex) {
+                    eventBus.emit('position', 'second');
                 }
+            }
+            this.nextSection();
+            if(this.movingPosition == 'first') {
+                this.activeIndex = this.firstPositionIndex;
+            } else if (this.movingPosition == 'second') {
+                this.activeIndex = this.secondPositionIndex;
             }
         },
         nextSection() {
@@ -30,5 +36,8 @@ export default {
                 this.activeSection += 10;
             }
         },
+        nextIndex() {
+            this.activeIndex = this.firstPositionIndex;
+        }
     }
 }
