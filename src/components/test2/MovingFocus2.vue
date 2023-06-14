@@ -76,8 +76,10 @@ export default {
 					this.controlKeyRightLeft();
 					this.setTransition();
 				} else {
+					//끝에서 처음으로 갈 때 처리
 					if (this.activeContainer) {
 						this.activeIndex = this.activeSection;
+						this.firstPositionIndex = this.activeIndex;
 					}
 					this.goFirst();
 				}
@@ -101,9 +103,6 @@ export default {
 				if(this.activeSection > 0 && this.activeSection < 80) {
 					this.downMove();
 				}
-				// if(this.activeSection != 90) {
-				// 	this.activeSection += 10;
-				// }
 				this.keyPressed = "down";
 				if(this.updown_type == 'A') {
 					this.downA();
@@ -119,9 +118,6 @@ export default {
 				if(this.activeSection > 10 && this.activeSection < 90) {
 					this.upMove();
 				}
-				// if(this.activeSection != 0) {
-				// 	this.activeSection -= 10;
-				// }
 				this.keyPressed = "up";
 				if(this.updown_type == 'A') {
 					this.prevSection();
@@ -132,8 +128,22 @@ export default {
 				}
 				this.controlKeyUpDown();
 				this.setTransition();
+			} else if (e.key === "Enter") {
+				this.module.style.transform = `translateY(0px)`;
+				this.module.style.transition = 'none';
+				this.imgContainers.forEach((e)=>{
+					e.style.transform = 'translateX(0px)';
+					e.style.transition = 'none';
+				});
+				setTimeout(()=>{
+					this.setTransition();
+				},1);
+				this.activeSection = 0;
+				this.activeIndex = this.container_num;
+				eventBus.emit('position', 'first');
+			} else if (e.key === "Escape") {
+				this.$router.push(process.env.BASE_URL + 'mf/c/1'); 
 			}
-			this.getPosition();
 		},
 		getClosestPosition(position) {
 		const positionRect = position.getBoundingClientRect();
@@ -191,6 +201,7 @@ export default {
 				this.activeContainer.style.transition = '0.2s all ease-in-out';
 			}
 			this.imgWrapper.forEach((e)=>{e.style.transition = '0.2s all ease-in-out';});
+			this.module.style.transition = '0.2s all ease-in-out';
 		},
 		controlKeyRightLeft() {
 			if (this.activeContainer) {
@@ -227,7 +238,7 @@ export default {
 			if (matchingPosition) {
 				eventBus.emit('position', matchingPosition.position);
 			}
-
+			this.getPosition();
 		}
 	},
 	mounted() {
