@@ -16,6 +16,7 @@ export default {
             }
         },
         focusC(){
+            //최단거리 이동
             const positionMap = {
                 first: this.firstPositionIndex,
                 second: this.secondPositionIndex,
@@ -25,7 +26,6 @@ export default {
             this.activeIndex = positionMap[this.movingPosition];
         },
         downC() {
-            //최단거리 이동
             this.nextSection();
             this.focusC();
         },

@@ -28,7 +28,6 @@ const routes = [
       },
 ]
 
-//상하이동 정책 테스트
 const groups = ['imgset01', 'imgset02', 'imgset03', 'imgset04', 'imgset05'];
 const types = ['MF', 'FF'];
 const updowns = ['A', 'B', 'C'];

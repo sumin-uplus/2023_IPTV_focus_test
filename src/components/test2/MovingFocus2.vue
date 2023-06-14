@@ -48,7 +48,8 @@ export default {
 			secondPositionIndex: 0,
 			thirdPositionIndex: 0,
 			lastPositionIndex: 0,
-			movingPosition: 'first'
+			movingPosition: 'first',
+			isEventHandling: false
 		};
 	},
 	computed: {
@@ -63,7 +64,14 @@ export default {
 		customKeyEvent(e) {
 			this.getPosition();
 			let index = this.activeIndex - this.container_num;
-
+			if (this.isEventHandling) {
+				return;
+			}
+			let eventDuration = 100; 
+			// if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+			// 	eventDuration = 200;
+			// }
+			this.isEventHandling = true;
 			if (e.key === "ArrowRight") {
 				if (index != this.thumbnail_quantity - 1
 					&& this.activeIndex == this.lastPositionIndex) {
@@ -73,7 +81,7 @@ export default {
 					if (this.activeContainer) {
 						this.activeIndex += 1;
 					}
-					this.controlKeyRightLeft();
+					//this.controlKeyRightLeft();
 					this.setTransition();
 				} else {
 					//끝에서 처음으로 갈 때 처리
@@ -95,7 +103,7 @@ export default {
 					if (this.activeContainer) {
 						this.activeIndex -= 1;
 					}
-					this.controlKeyRightLeft();
+					//this.controlKeyRightLeft();
 					this.setTransition();
 				}
 				this.keyPressed = "left";
@@ -111,7 +119,7 @@ export default {
 				} else if(this.updown_type == 'C') {
 					this.downC();
 				}
-				this.controlKeyUpDown();
+				//this.controlKeyUpDown();
 				this.setTransition();
 
 			} else if (e.key === "ArrowUp") {
@@ -126,7 +134,7 @@ export default {
 				} else if(this.updown_type == 'C') {
 					this.upC();
 				}
-				this.controlKeyUpDown();
+				//this.controlKeyUpDown();
 				this.setTransition();
 			} else if (e.key === "Enter") {
 				this.module.style.transform = `translateY(0px)`;
@@ -141,9 +149,10 @@ export default {
 				this.activeSection = 0;
 				this.activeIndex = this.container_num;
 				eventBus.emit('position', 'first');
-			} else if (e.key === "Escape") {
-				this.$router.push(process.env.BASE_URL + 'mf/c/1'); 
 			}
+			setTimeout(() => {
+				this.isEventHandling = false;
+			}, eventDuration);
 		},
 		getClosestPosition(position) {
 		const positionRect = position.getBoundingClientRect();
@@ -203,20 +212,20 @@ export default {
 			this.imgWrapper.forEach((e)=>{e.style.transition = '0.2s all ease-in-out';});
 			this.module.style.transition = '0.2s all ease-in-out';
 		},
-		controlKeyRightLeft() {
-			if (this.activeContainer) {
-				window.removeEventListener('keydown', this.customKeyEvent);
-				setTimeout(() => {
-					window.addEventListener('keydown', this.customKeyEvent);
-				}, 200);
-			}
-		},
-		controlKeyUpDown() {
-			window.removeEventListener('keydown', this.customKeyEvent);
-			setTimeout(() => {
-				window.addEventListener('keydown', this.customKeyEvent);
-			}, 100);
-		},
+		// controlKeyRightLeft() {
+		// 	if (this.activeContainer) {
+		// 		window.removeEventListener('keydown', this.customKeyEvent);
+		// 		setTimeout(() => {
+		// 			window.addEventListener('keydown', this.customKeyEvent);
+		// 		}, 200);
+		// 	}
+		// },
+		// controlKeyUpDown() {
+		// 	window.removeEventListener('keydown', this.customKeyEvent);
+		// 	setTimeout(() => {
+		// 		window.addEventListener('keydown', this.customKeyEvent);
+		// 	}, 100);
+		// },
 		getPosition() {
 			const positions = ['first_position', 'second_position', 'third_position', 'last_position'];
 			positions.forEach(position => {
