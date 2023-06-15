@@ -1,7 +1,7 @@
 <template>
-    <div class="nav_item_container">
+    <div class="nav_item_container" :class="{active: active}" :index="index">
         <div class="indicator"></div>
-        <img class="icon" :src="{ icon }">
+        <img class="icon" :src="src">
         <div class="text">{{ text }}</div>
     </div>
 </template>
@@ -9,8 +9,10 @@
     export default {
         name: "LeftNavItem",
         props: {
-            icon: { type: String },
-            text: { type: Text }
+            src: { type: String },
+            text: { type: String },
+            active: { type: Boolean, default: false },
+            index: { type: Number }
         }
     }
 </script>

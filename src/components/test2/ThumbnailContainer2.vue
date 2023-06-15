@@ -1,5 +1,15 @@
 <template>
-	<div v-if="type=='MF'" class="contents_container">
+	<div class="nav_container">
+		<LeftNavItem
+			v-for="(icon, i) in nav_data"
+			:key="i"
+			:index="(i*-1)-1"
+			:src="icon.src"
+			:text="icon.text"
+		>
+		</LeftNavItem>
+	</div>
+	<div class="contents_container">
 		<MovingFocus
 			v-for="(slice, index) in slices"
 			:key="index"
@@ -18,6 +28,7 @@
 import MovingFocus from "./MovingFocus2.vue";
 import BaseURL from "../../mixins/BaseURL";
 import MakeLog from "../../mixins/MakeLog";
+import LeftNavItem from "./LeftNavItem.vue";
 
 export default {
 	name: "ThumbnailContainer2",
@@ -28,6 +39,7 @@ export default {
 	},
 	components: {
 		MovingFocus,
+		LeftNavItem
 	},
 	mixins: [
 		BaseURL,
@@ -40,20 +52,21 @@ export default {
 			slices: [],
 			focus_data: 0,
 			module_data: 0,
+			nav_data:[],
+			nav_text: ['마이메뉴', '검색', '홈', '나의 구독', '전체 메뉴 보기', '알림', '설정', '고객지원']
 		};
 	},
 	methods: {
 		makeImgArray(group, array) {
-		for (let i = 1; i <= 200; i++) {
-			// const num = 1 + i;
-			const src = require(`@/assets/img/${group}/thumbnail_${i}.jpg`);
-			array.push({ i, src });
-		}
+			for (let i = 1; i <= 200; i++) {
+				const src = require(`@/assets/img/${group}/thumbnail_${i}.jpg`);
+				array.push({ i, src });
+			}
 		},
 		createSlices() {
-		for (let i = 0; i < this.thumbnails.length; i += this.thumbnail_quantity) {
-			this.slices.push(this.thumbnails.slice(i, i + this.thumbnail_quantity));
-		}
+			for (let i = 0; i < this.thumbnails.length; i += this.thumbnail_quantity) {
+				this.slices.push(this.thumbnails.slice(i, i + this.thumbnail_quantity));
+			}
 		},
 		setFocusAnimation(target, value) {
 			target.style.transition = '0.2s all ease-in-out';
@@ -150,11 +163,18 @@ export default {
 		},
 		updateSection(section) {
 			this.active_section = section;
-		}
+		},
+		makeIconArray() {
+			for (let i = 0; i < this.nav_text.length; i++) {
+				let src = require(`@/assets/svg/menu-${i}.svg`);
+				this.nav_data.push({ text: this.nav_text[i], src: src });
+			}
+		},
 	},
 	created() {
 		this.makeImgArray(this.group, this.thumbnails);
 		this.createSlices();
+		this.makeIconArray();
 	},
 	mounted() {
 		window.addEventListener("keydown", this.handleEvent);
