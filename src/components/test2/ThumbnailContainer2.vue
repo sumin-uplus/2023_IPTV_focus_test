@@ -1,5 +1,5 @@
 <template>
-	<div class="nav_container">
+	<div :class="['nav_container', {'active': nav_active}]">
 		<LeftNavItem
 			v-for="(icon, i) in nav_data"
 			:key="i"
@@ -20,6 +20,7 @@
 			:focus_type="type"
 			:thumbnail_quantity = thumbnail_quantity
 			:updown_type="updown"
+			@nav-open="navOpen"
 		>
 		</MovingFocus>
 	</div>
@@ -54,7 +55,8 @@ export default {
 			focus_data: 0,
 			module_data: 0,
 			nav_data:[],
-			nav_text: ['마이메뉴', '검색', '홈', '나의 구독', '전체 메뉴 보기', '알림', '설정', '고객지원']
+			nav_text: ['마이메뉴', '검색', '홈', '나의 구독', '전체 메뉴 보기', '알림', '설정', '고객지원'],
+			nav_active: false
 		};
 	},
 	methods: {
@@ -172,6 +174,9 @@ export default {
 				this.nav_data.push({ type: type, text: this.nav_text[i], src: i });
 			}
 		},
+		navOpen() {
+			this.nav_active = !this.nav_active;
+		}
 	},
 	created() {
 		this.makeImgArray(this.group, this.thumbnails);

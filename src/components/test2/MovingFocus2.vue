@@ -105,6 +105,12 @@ export default {
 					}
 					//this.controlKeyRightLeft();
 					this.setTransition();
+				} else {
+					//LNB 열기
+					this.activeIndex = false;
+					eventBus.emit(false, this.activeIndex);
+					this.$emit('nav-open', true);
+					return;
 				}
 				this.keyPressed = "left";
 			} else if (e.key === "ArrowDown") {

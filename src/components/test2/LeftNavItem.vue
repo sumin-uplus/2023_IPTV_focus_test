@@ -23,7 +23,7 @@
         },
         data() {
             return {
-                activeIndex: false,
+                activeIndex: -3,
             }
         },
         computed: {
