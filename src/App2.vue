@@ -80,4 +80,5 @@ import BaseURL from "./mixins/BaseURL";
 <style>
 	@import './assets/css/thumbnail.css';
 	@import './assets/css/intro.css';
+	@import './assets/css/nav.scss';
 </style>

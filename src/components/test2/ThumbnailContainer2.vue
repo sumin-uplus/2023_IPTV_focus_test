@@ -6,6 +6,7 @@
 			:index="(i*-1)-1"
 			:src="icon.src"
 			:text="icon.text"
+			:type="i == 0 ? 'profile':'icon'" 
 		>
 		</LeftNavItem>
 	</div>
@@ -166,8 +167,9 @@ export default {
 		},
 		makeIconArray() {
 			for (let i = 0; i < this.nav_text.length; i++) {
-				let src = require(`@/assets/svg/menu-${i}.svg`);
-				this.nav_data.push({ text: this.nav_text[i], src: src });
+				//let src = require(`@/assets/svg/menu-${i}.svg`);
+				let type = '';
+				this.nav_data.push({ type: type, text: this.nav_text[i], src: i });
 			}
 		},
 	},

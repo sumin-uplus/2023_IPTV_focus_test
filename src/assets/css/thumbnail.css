@@ -141,8 +141,3 @@
       transition: var(--duration) all ease-in-out;
       z-index: 100000;
 }
-
-.nav_container {
-      position: absolute;
-      left: 0;
-}
