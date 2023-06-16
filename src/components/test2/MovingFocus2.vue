@@ -49,7 +49,8 @@ export default {
 			thirdPositionIndex: 0,
 			lastPositionIndex: 0,
 			movingPosition: 'first',
-			isEventHandling: false
+			isEventHandling: false,
+			isNavOpen: false
 		};
 	},
 	computed: {
@@ -64,7 +65,7 @@ export default {
 		customKeyEvent(e) {
 			this.getPosition();
 			let index = this.activeIndex - this.container_num;
-			if (this.isEventHandling) {
+			if (this.isEventHandling || this.isNavOpen) {
 				return;
 			}
 			let eventDuration = 100; 
@@ -81,7 +82,6 @@ export default {
 					if (this.activeContainer) {
 						this.activeIndex += 1;
 					}
-					//this.controlKeyRightLeft();
 					this.setTransition();
 				} else {
 					//끝에서 처음으로 갈 때 처리
@@ -103,14 +103,12 @@ export default {
 					if (this.activeContainer) {
 						this.activeIndex -= 1;
 					}
-					//this.controlKeyRightLeft();
 					this.setTransition();
-				} else {
+				} else if (this.activeContainer && index == 0) {
 					//LNB 열기
 					this.activeIndex = false;
-					eventBus.emit(false, this.activeIndex);
+					eventBus.emit('nav-open', true);
 					this.$emit('nav-open', true);
-					return;
 				}
 				this.keyPressed = "left";
 			} else if (e.key === "ArrowDown") {
@@ -125,7 +123,6 @@ export default {
 				} else if(this.updown_type == 'C') {
 					this.downC();
 				}
-				//this.controlKeyUpDown();
 				this.setTransition();
 
 			} else if (e.key === "ArrowUp") {
@@ -140,7 +137,6 @@ export default {
 				} else if(this.updown_type == 'C') {
 					this.upC();
 				}
-				//this.controlKeyUpDown();
 				this.setTransition();
 			} else if (e.key === "Enter") {
 				this.module.style.transform = `translateY(0px)`;
@@ -218,20 +214,6 @@ export default {
 			this.imgWrapper.forEach((e)=>{e.style.transition = '0.2s all ease-in-out';});
 			this.module.style.transition = '0.2s all ease-in-out';
 		},
-		// controlKeyRightLeft() {
-		// 	if (this.activeContainer) {
-		// 		window.removeEventListener('keydown', this.customKeyEvent);
-		// 		setTimeout(() => {
-		// 			window.addEventListener('keydown', this.customKeyEvent);
-		// 		}, 200);
-		// 	}
-		// },
-		// controlKeyUpDown() {
-		// 	window.removeEventListener('keydown', this.customKeyEvent);
-		// 	setTimeout(() => {
-		// 		window.addEventListener('keydown', this.customKeyEvent);
-		// 	}, 100);
-		// },
 		getPosition() {
 			const positions = ['first_position', 'second_position', 'third_position', 'last_position'];
 			positions.forEach(position => {
@@ -258,13 +240,17 @@ export default {
 	},
 	mounted() {
 		this.imgWrapper = this.$el.querySelectorAll(".img_wrapper");
+		this.getPosition();
 		eventBus.on('position', (e)=>{
 			this.movingPosition = e;
 		});
-		this.getPosition();
+		eventBus.on('nav-open', (e)=>{
+			this.isNavOpen = e;
+		});
 	},
 	unmounted() {
 		eventBus.off('position');
+		eventBus.off('nav-open');
 	}
 
 };
