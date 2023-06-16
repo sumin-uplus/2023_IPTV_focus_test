@@ -25,19 +25,11 @@
         data() {
             return {
                 activeIndex: 2,
+                isEventHandling: false,
+                isNavOpen: false
             }
         },
         computed: {
-            // modifiedSrc() {
-            //     let modifiedSrc = '';
-            //     if (this.index == this.activeIndex) {
-            //         modifiedSrc = require(`@/assets/svg/menu-${this.src}-active.svg`);
-            //         return modifiedSrc;
-            //     } else {
-            //         modifiedSrc = require(`@/assets/svg/menu-${this.src}.svg`);
-            //         return modifiedSrc;
-            //     }
-            // },
             normIcon () {
                 return require(`@/assets/svg/menu-${this.src}.svg`);
             },
@@ -47,17 +39,28 @@
         },
         methods: {
             customKeyEvent(e) {
-                if (e.key === "ArrowDown") {
-                    this.activeIndex += 1;
-                } else if (e.key === "ArrowUp") {
-                    this.activeIndex -= 1;
+                if (this.isEventHandling || !this.isNavOpen) {
+                    return;
                 }
+
+                if (e.key === "ArrowDown" && this.activeIndex !== 7) {
+                    this.activeIndex += 1;
+                } else if (e.key === "ArrowUp" && this.activeIndex !== 0) {
+                    this.activeIndex -= 1;
+                } else if (e.key === "ArrowRight") {
+                    this.isNavClose = true;
+                    this.$emit('nav-open', false);
+                }
+
+                setTimeout(() => {
+                    this.isEventHandling = false;
+                }, 200);
             }
         },
         watch: {
-            valid(newVal) {
-                if(newVal) {
-                    console.log(this.activeIndex);
+            valid(valid) {
+                this.isNavOpen = valid;
+                if(valid) {
                     window.addEventListener("keydown", this.customKeyEvent);
                 }
             }

@@ -10,7 +10,7 @@
 				class="index_container"
 				:class="{active: this.activeSection == container_num}"
 				>
-					<div>{{ (this.activeIndex - container_num)%thumbnail_quantity + 1}}</div>
+					<div>{{ (this.activeIndex - container_num) % thumbnail_quantity + 1 }}</div>
 					<div class="whole_number">|</div>
 					<div class="whole_number">{{thumbnail_quantity}}</div>
 				</div>
@@ -48,6 +48,7 @@ export default {
 		container_title: { type: String, default: "콘텐츠 모듈1" },
 		focus_type: {type: String, default: 'moving'},
 		updown_type: {type: String, default: 'A'},
+		nav_active: { type: Boolean, default: false }
 	},
 	mixins:[FocusFunction, UpdownFunction],
 	data() {
@@ -247,6 +248,12 @@ export default {
 				eventBus.emit('position', matchingPosition.position);
 			}
 			this.getPosition();
+		},
+		nav_active(status) {
+			this.isNavOpen = status;
+			if(!status) {
+				this.activeIndex = this.container_num;
+			}
 		}
 	},
 	mounted() {

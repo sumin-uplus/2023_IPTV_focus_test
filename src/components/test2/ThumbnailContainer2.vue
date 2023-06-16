@@ -8,6 +8,7 @@
 			:text="icon.text"
 			:type="i == 0 ? 'profile':'icon'" 
 			:valid="nav_active"
+			@nav-open="navOpen"
 		>
 		</LeftNavItem>
 	</div>
@@ -21,6 +22,7 @@
 			:focus_type="type"
 			:thumbnail_quantity = thumbnail_quantity
 			:updown_type="updown"
+			:nav_active="nav_active"
 			@nav-open="navOpen"
 		>
 		</MovingFocus>
@@ -175,8 +177,8 @@ export default {
 				this.nav_data.push({ type: type, text: this.nav_text[i], src: i });
 			}
 		},
-		navOpen() {
-			this.nav_active = !this.nav_active;
+		navOpen(e) {
+			this.nav_active = e;
 		}
 	},
 	created() {
