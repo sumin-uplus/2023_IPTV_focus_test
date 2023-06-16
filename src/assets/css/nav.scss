@@ -12,13 +12,8 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      /*background: black;*/
       z-index: 10000;
       transition: var(--transition2);
-
-      .text,.indicator,.icon,.icon_active {
-            transition: var(--transition1);
-      }
 
       .text,.indicator {
             visibility: hidden;
@@ -71,7 +66,7 @@
             position: absolute;
             left: 0;
             content: '';
-            transition: var(--transition1);
+            /*transition: var(--transition1);*/
       }
 
       .text {
@@ -120,12 +115,20 @@
             .icon_active {
                   opacity: 1;
             }
+            
+            .text,.indicator,.icon,.icon_active {
+                  transition: var(--transition1);
+            }
       }
 }
 
 .nav_item_container:nth-of-type(1) {
       margin-bottom: 144px;
       padding: 0 42px;
+      .icon_active {
+            left: -4px;
+            top: -4px;
+      }
 }
 
 .nav_item_container:nth-of-type(7) {

@@ -1,22 +1,33 @@
 <template>
-	<div ref="module" :class="['contents_module']">
+	<div ref="module" class="contents_module">
 		<div>{{ container_title }}</div>
-		<div :class="['postion_check_container']">
+		<div class="postion_check_container">
 			<span ref="first_position"></span>
 			<span ref="second_position"></span>
 			<span ref="third_position"></span>
 			<span ref="last_position">
-				<div class="index_container" :class="{active: this.activeSection == container_num}">
+				<div 
+				class="index_container"
+				:class="{active: this.activeSection == container_num}"
+				>
 					<div>{{ (this.activeIndex - container_num)%thumbnail_quantity + 1}}</div>
 					<div class="whole_number">|</div>
 					<div class="whole_number">{{thumbnail_quantity}}</div>
 				</div>
 			</span>
 		</div>
-		<div :ref="'img_container_' + container_num" :class="['img_container']" :section="container_num">
-			<div class="img_wrapper" v-for="(thumbnail, index) in thumbnails" :index="index + container_num"
-				:key="index + container_num" :ref="'thumbnail-' + index"
-				:class="{ active: this.activeIndex === index + container_num && this.activeSection === container_num }">
+		<div
+		:ref="'img_container_' + container_num" 
+		class="img_container"
+		:section="container_num">
+			<div
+			v-for="(thumbnail, index) in thumbnails"
+			class="img_wrapper"
+			:class="{ active: this.activeIndex === index + container_num && this.activeSection === container_num }"
+			:index="index + container_num"
+			:key="index + container_num"
+			:ref="'thumbnail-' + index"
+			>
 				<img class="img" :src="thumbnail.src" />
 			</div>
 		</div>

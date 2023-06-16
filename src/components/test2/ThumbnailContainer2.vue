@@ -3,10 +3,11 @@
 		<LeftNavItem
 			v-for="(icon, i) in nav_data"
 			:key="i"
-			:index="(i*-1)-1"
+			:index="i"
 			:src="icon.src"
 			:text="icon.text"
 			:type="i == 0 ? 'profile':'icon'" 
+			:valid="nav_active"
 		>
 		</LeftNavItem>
 	</div>

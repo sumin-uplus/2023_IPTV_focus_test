@@ -1,5 +1,6 @@
 <template>
-    <div class="nav_item_container"
+    <div
+    class="nav_item_container"
     :class="{active: index == this.activeIndex}"
     :index="index"
     :type="type">
@@ -17,13 +18,13 @@
         props: {
             src: { type: Number },
             text: { type: String },
-            // active: { type: Boolean, default: false },
+            valid: { type: Boolean, default: false },
             index: { type: Number },
             type: { type: String },
         },
         data() {
             return {
-                activeIndex: -3,
+                activeIndex: 2,
             }
         },
         computed: {
@@ -42,6 +43,23 @@
             },
             actIcon () {
                 return require(`@/assets/svg/menu-${this.src}-active.svg`);
+            },
+        },
+        methods: {
+            customKeyEvent(e) {
+                if (e.key === "ArrowDown") {
+                    this.activeIndex += 1;
+                } else if (e.key === "ArrowUp") {
+                    this.activeIndex -= 1;
+                }
+            }
+        },
+        watch: {
+            valid(newVal) {
+                if(newVal) {
+                    console.log(this.activeIndex);
+                    window.addEventListener("keydown", this.customKeyEvent);
+                }
             }
         },
     }
