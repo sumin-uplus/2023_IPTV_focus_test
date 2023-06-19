@@ -48,7 +48,7 @@ export default {
 		container_title: { type: String, default: "콘텐츠 모듈1" },
 		focus_type: {type: String, default: 'moving'},
 		updown_type: {type: String, default: 'A'},
-		nav_active: { type: Boolean, default: false }
+		nav_active: { type: Object },
 	},
 	mixins:[FocusFunction, UpdownFunction],
 	data() {
@@ -62,7 +62,7 @@ export default {
 			lastPositionIndex: 0,
 			movingPosition: 'first',
 			isEventHandling: false,
-			isNavOpen: false
+			isNavOpen: { status: false }
 		};
 	},
 	computed: {
@@ -77,7 +77,7 @@ export default {
 		customKeyEvent(e) {
 			this.getPosition();
 			let index = this.activeIndex - this.container_num;
-			if (this.isEventHandling || this.isNavOpen) {
+			if (this.isEventHandling || this.isNavOpen.status) {
 				return;
 			}
 			let eventDuration = 100; 
@@ -151,15 +151,7 @@ export default {
 				}
 				this.setTransition();
 			} else if (e.key === "Enter") {
-				this.module.style.transform = `translateY(0px)`;
-				this.module.style.transition = 'none';
-				this.imgContainers.forEach((e)=>{
-					e.style.transform = 'translateX(0px)';
-					e.style.transition = 'none';
-				});
-				setTimeout(()=>{
-					this.setTransition();
-				},1);
+				this.resetTransform();
 				this.activeSection = 0;
 				this.activeIndex = this.container_num;
 				eventBus.emit('position', 'first');
@@ -233,6 +225,17 @@ export default {
 					this.getClosestPosition(this.$refs[position]);
 				}
 			});
+		},
+		resetTransform() {
+			this.module.style.transform = `translateY(0px)`;
+			this.module.style.transition = 'none';
+			this.imgContainers.forEach((e)=>{
+				e.style.transform = 'translateX(0px)';
+				e.style.transition = 'none';
+			});
+			setTimeout(()=>{
+				this.setTransition();
+			},1);
 		}
 	},
 	watch: {
@@ -249,11 +252,21 @@ export default {
 			}
 			this.getPosition();
 		},
-		nav_active(status) {
-			this.isNavOpen = status;
-			if(!status) {
-				this.activeIndex = this.container_num;
-			}
+		// nav_active(data) {
+		// 	console.log(data.status);
+		// 	this.isNavOpen = data.status;
+		// 	if(!data.status) {
+		// 		this.activeIndex = this.container_num;
+		// 	}
+		// },
+		nav_active: {
+			handler(data) {
+				this.isNavOpen.status = data.status;
+				if(!data.status) {
+					this.activeIndex = this.container_num;
+				}
+			},
+			deep: true
 		}
 	},
 	mounted() {
@@ -263,7 +276,7 @@ export default {
 			this.movingPosition = e;
 		});
 		eventBus.on('nav-open', (e)=>{
-			this.isNavOpen = e;
+			this.isNavOpen.status = e;
 		});
 	},
 	unmounted() {

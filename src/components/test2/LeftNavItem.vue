@@ -18,15 +18,16 @@
         props: {
             src: { type: Number },
             text: { type: String },
-            valid: { type: Boolean, default: false },
+            valid: { type: Object },
             index: { type: Number },
             type: { type: String },
+            group: {type: String}
         },
         data() {
             return {
                 activeIndex: 2,
                 isEventHandling: false,
-                isNavOpen: false
+                isNavOpen: { status: false, index: this.activeIndex }
             }
         },
         computed: {
@@ -39,7 +40,7 @@
         },
         methods: {
             customKeyEvent(e) {
-                if (this.isEventHandling || !this.isNavOpen) {
+                if (this.isEventHandling || !this.isNavOpen.status) {
                     return;
                 }
 
@@ -48,7 +49,7 @@
                 } else if (e.key === "ArrowUp" && this.activeIndex !== 0) {
                     this.activeIndex -= 1;
                 } else if (e.key === "ArrowRight") {
-                    this.isNavClose = true;
+                    // this.isNavClose = true;
                     this.$emit('nav-open', false);
                 }
 
@@ -58,15 +59,26 @@
             }
         },
         watch: {
-            valid(valid) {
-                this.isNavOpen = valid;
-                if(valid) {
-                    window.addEventListener("keydown", this.customKeyEvent);
-                }
+            // valid(data) {
+            //     this.isNavOpen.status = data.status;
+            //     if(data.status) {
+            //         window.addEventListener("keydown", this.customKeyEvent);
+            //     }
+            // },
+            valid: {
+                handler(data) {
+                    this.isNavOpen.status = data.status;
+                    if (data.status) {
+                        window.addEventListener("keydown", this.customKeyEvent);
+                    }
+                },
+                deep: true
             },
             activeIndex(index) {
-                if (index === 4) {
-                    this.$emit('update:group', 'imgset02');
+                if(index === 2) {
+                    this.$emit('update:group', [this.group, this.activeIndex]);
+                } else if (index === 4) {
+                    this.$emit('update:group', ['imgset02', this.activeIndex]);
                 }
             }
         },

@@ -1,5 +1,5 @@
 <template>
-	<div :class="['nav_container', {'active': nav_active}]">
+	<div :class="['nav_container', {'active': nav_active.status}]">
 		<LeftNavItem
 			v-for="(icon, i) in nav_data"
 			:key="i"
@@ -8,6 +8,7 @@
 			:text="icon.text"
 			:type="i == 0 ? 'profile':'icon'" 
 			:valid="nav_active"
+			:group="group"
 			@nav-open="navOpen"
 			@update:group="imgSet"
 		>
@@ -60,8 +61,9 @@ export default {
 			module_data: 0,
 			nav_data:[],
 			nav_text: ['마이메뉴', '검색', '홈', '나의 구독', '전체 메뉴 보기', '알림', '설정', '고객지원'],
-			nav_active: false,
-			img_set: ''
+			nav_active: { status: false },
+			img_set: '',
+			//focus_reload: false
 		};
 	},
 	methods: {
@@ -180,11 +182,14 @@ export default {
 			}
 		},
 		navOpen(e) {
-			this.nav_active = e;
+			this.nav_active.status = e;
 		},
 		imgSet(e) {
-			this.img_set = e;
-		}
+			this.img_set = e[0];
+			//this.focus_reload = true;
+			this.nav_active.status = true;
+			this.nav_active.index = e[1];
+		},
 	},
 	watch: {
 		img_set(value) {

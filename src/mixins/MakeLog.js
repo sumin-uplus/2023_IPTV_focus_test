@@ -3,7 +3,6 @@ export default {
 		return {
 			data_log: [],
 			url_pathname: ''
-            // task_num: 1,
 		};
 	},
 	methods:{
@@ -12,10 +11,9 @@ export default {
             this.data_log.push(temp_log);
 
             if(event.key === 'Backspace' || event.key === '=') {
-                this.data_log.push('=========== task 종료 ===========\n');
-                // this.task_num++;
-                this.makeLog();
-                console.log(this.data_log);
+			this.data_log.push('=========== task 종료 ===========\n');
+			this.makeLog();
+			console.log(this.data_log);
             }
 		},
 		makeLog(){
@@ -53,9 +51,9 @@ export default {
 	},
 	mounted() {
 		this.url_pathname = window.location.pathname.substring(process.env.BASE_URL.length);
-        window.addEventListener('keydown', this.loggingData);
+		window.addEventListener('keydown', this.loggingData);
 	},
-    unmounted() {
-        window.removeEventListener('keydown', this.loggingData);
+	unmounted() {
+		window.removeEventListener('keydown', this.loggingData);
 	},
 }
