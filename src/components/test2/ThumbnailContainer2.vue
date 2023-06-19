@@ -9,6 +9,7 @@
 			:type="i == 0 ? 'profile':'icon'" 
 			:valid="nav_active"
 			@nav-open="navOpen"
+			@update:group="imgSet"
 		>
 		</LeftNavItem>
 	</div>
@@ -59,7 +60,8 @@ export default {
 			module_data: 0,
 			nav_data:[],
 			nav_text: ['마이메뉴', '검색', '홈', '나의 구독', '전체 메뉴 보기', '알림', '설정', '고객지원'],
-			nav_active: false
+			nav_active: false,
+			img_set: ''
 		};
 	},
 	methods: {
@@ -179,6 +181,17 @@ export default {
 		},
 		navOpen(e) {
 			this.nav_active = e;
+		},
+		imgSet(e) {
+			this.img_set = e;
+		}
+	},
+	watch: {
+		img_set(value) {
+			this.thumbnails = [];
+			this.slices = [];
+			this.makeImgArray(value, this.thumbnails);
+			this.createSlices();
 		}
 	},
 	created() {

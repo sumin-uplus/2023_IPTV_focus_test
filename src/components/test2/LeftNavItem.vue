@@ -63,6 +63,11 @@
                 if(valid) {
                     window.addEventListener("keydown", this.customKeyEvent);
                 }
+            },
+            activeIndex(index) {
+                if (index === 4) {
+                    this.$emit('update:group', 'imgset02');
+                }
             }
         },
     }
