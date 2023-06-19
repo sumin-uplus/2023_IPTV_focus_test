@@ -10,7 +10,7 @@
 				class="index_container"
 				:class="{active: this.activeSection == container_num}"
 				>
-					<div>{{ (this.activeIndex - container_num) % thumbnail_quantity + 1 }}</div>
+					<div>{{ this.activeIndex === false ? 1 : (this.activeIndex - container_num) % thumbnail_quantity + 1 }}</div>
 					<div class="whole_number">|</div>
 					<div class="whole_number">{{thumbnail_quantity}}</div>
 				</div>
