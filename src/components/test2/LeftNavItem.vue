@@ -27,7 +27,7 @@
             return {
                 activeIndex: 2,
                 isEventHandling: false,
-                isNavOpen: { status: false, index: this.activeIndex }
+                isNavOpen: { status: false, index: 2 }
             }
         },
         computed: {
@@ -49,7 +49,6 @@
                 } else if (e.key === "ArrowUp" && this.activeIndex !== 0) {
                     this.activeIndex -= 1;
                 } else if (e.key === "ArrowRight") {
-                    // this.isNavClose = true;
                     this.$emit('nav-open', false);
                 }
 
@@ -59,12 +58,6 @@
             }
         },
         watch: {
-            // valid(data) {
-            //     this.isNavOpen.status = data.status;
-            //     if(data.status) {
-            //         window.addEventListener("keydown", this.customKeyEvent);
-            //     }
-            // },
             valid: {
                 handler(data) {
                     this.isNavOpen.status = data.status;
@@ -75,6 +68,7 @@
                 deep: true
             },
             activeIndex(index) {
+                this.isNavOpen.index = index;
                 if(index === 2) {
                     this.$emit('update:group', [this.group, this.activeIndex]);
                 } else if (index === 4) {

@@ -62,7 +62,8 @@ export default {
 			lastPositionIndex: 0,
 			movingPosition: 'first',
 			isEventHandling: false,
-			isNavOpen: { status: false }
+			isNavOpen: { status: false, index: 2 },
+			resetFocus: false
 		};
 	},
 	computed: {
@@ -236,7 +237,7 @@ export default {
 			setTimeout(()=>{
 				this.setTransition();
 			},1);
-		}
+		},
 	},
 	watch: {
 		activeIndex(newIndex) {
@@ -252,22 +253,32 @@ export default {
 			}
 			this.getPosition();
 		},
-		// nav_active(data) {
-		// 	console.log(data.status);
-		// 	this.isNavOpen = data.status;
-		// 	if(!data.status) {
-		// 		this.activeIndex = this.container_num;
-		// 	}
-		// },
-		nav_active: {
-			handler(data) {
-				this.isNavOpen.status = data.status;
-				if(!data.status) {
-					this.activeIndex = this.container_num;
+		'nav_active.status': {
+			handler(status) {
+				this.isNavOpen.status = status;
+				if(!status) {
+					if (this.resetFocus) {
+						this.activeIndex = 0;
+						this.activeSection = 0;
+					} else {
+						this.activeIndex = this.container_num;	
+					}
+				}
+				else {
+					if(this.isNavOpen.index == this.nav_active.index) {
+						this.resetFocus = false;
+					}
 				}
 			},
 			deep: true
-		}
+		},
+		'nav_active.index' :{
+			handler(index) {
+				this.isNavOpen.index = index;
+				this.resetTransform();
+				this.resetFocus = true;
+			}
+		},
 	},
 	mounted() {
 		this.imgWrapper = this.$el.querySelectorAll(".img_wrapper");

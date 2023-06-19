@@ -61,9 +61,8 @@ export default {
 			module_data: 0,
 			nav_data:[],
 			nav_text: ['마이메뉴', '검색', '홈', '나의 구독', '전체 메뉴 보기', '알림', '설정', '고객지원'],
-			nav_active: { status: false },
+			nav_active: { status: false , index: 2 },
 			img_set: '',
-			//focus_reload: false
 		};
 	},
 	methods: {
@@ -186,7 +185,6 @@ export default {
 		},
 		imgSet(e) {
 			this.img_set = e[0];
-			//this.focus_reload = true;
 			this.nav_active.status = true;
 			this.nav_active.index = e[1];
 		},
