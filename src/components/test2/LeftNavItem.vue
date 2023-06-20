@@ -21,7 +21,8 @@
             valid: { type: Object },
             index: { type: Number },
             type: { type: String },
-            group: {type: String}
+            group: {type: String},
+            reset: { type: Boolean }
         },
         data() {
             return {
@@ -61,6 +62,7 @@
             valid: {
                 handler(data) {
                     this.isNavOpen.status = data.status;
+                    data.index = this.activeIndex;
                     if (data.status) {
                         window.addEventListener("keydown", this.customKeyEvent);
                     }
@@ -68,12 +70,15 @@
                 deep: true
             },
             activeIndex(index) {
-                this.isNavOpen.index = index;
+                this.isNavOpen.index = this.activeIndex;
                 if(index === 2) {
-                    this.$emit('update:group', [this.group, this.activeIndex]);
+                    this.$emit('update:group', [this.group, index]);
                 } else if (index === 4) {
-                    this.$emit('update:group', ['imgset02', this.activeIndex]);
+                    this.$emit('update:group', ['imgset02', index]);
                 }
+            },
+            reset() {
+                this.activeIndex = 2;
             }
         },
     }

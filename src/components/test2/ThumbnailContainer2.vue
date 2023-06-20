@@ -1,5 +1,5 @@
 <template>
-	<div :class="['nav_container', {'active': nav_active.status}]">
+	<div :class="['nav_container', {'active': nav_data_1.status}]">
 		<LeftNavItem
 			v-for="(icon, i) in nav_data"
 			:key="i"
@@ -7,8 +7,9 @@
 			:src="icon.src"
 			:text="icon.text"
 			:type="i == 0 ? 'profile':'icon'" 
-			:valid="nav_active"
+			:valid="nav_data_1"
 			:group="group"
+			:reset="reset"
 			@nav-open="navOpen"
 			@update:group="imgSet"
 		>
@@ -24,7 +25,7 @@
 			:focus_type="type"
 			:thumbnail_quantity = thumbnail_quantity
 			:updown_type="updown"
-			:nav_active="nav_active"
+			:nav_active="nav_data_2"
 			@nav-open="navOpen"
 		>
 		</MovingFocus>
@@ -61,8 +62,10 @@ export default {
 			module_data: 0,
 			nav_data:[],
 			nav_text: ['마이메뉴', '검색', '홈', '나의 구독', '전체 메뉴 보기', '알림', '설정', '고객지원'],
-			nav_active: { status: false , index: 2 },
+			nav_data_1: { status: false , index: 2 },
+			nav_data_2: { status: false , index: 2 },
 			img_set: '',
+			reset: false
 		};
 	},
 	methods: {
@@ -158,35 +161,34 @@ export default {
 			
 		},
 		handleEvent(e) {
-		if (e.key === 'Backspace') {
-			if (this.$route.path !== this.baseURL) {
-				this.$router.push(this.baseURL);
+			if (e.key === 'Backspace') {
+				if (this.$route.path !== this.baseURL) {
+					this.$router.push(this.baseURL);
+				}
 			}
-		}
-		// else if (e.key === 'Enter') {
-		// 	this.autoKeyEvent();
-		// }
-		else {
-			this.ffCustomKeyEvent(e);
-		}
+			else if (e.key === 'Enter') {
+				this.navOpen(false);
+				this.$nextTick(() => {
+					this.reset = !this.reset;
+				});
+			}
 		},
 		updateSection(section) {
 			this.active_section = section;
 		},
 		makeIconArray() {
 			for (let i = 0; i < this.nav_text.length; i++) {
-				//let src = require(`@/assets/svg/menu-${i}.svg`);
 				let type = '';
 				this.nav_data.push({ type: type, text: this.nav_text[i], src: i });
 			}
 		},
 		navOpen(e) {
-			this.nav_active.status = e;
+			this.nav_data_1.status = e;
+			this.nav_data_2.status = e;
 		},
 		imgSet(e) {
 			this.img_set = e[0];
-			this.nav_active.status = true;
-			this.nav_active.index = e[1];
+			this.nav_data_2.index = e[1];
 		},
 	},
 	watch: {
@@ -195,7 +197,7 @@ export default {
 			this.slices = [];
 			this.makeImgArray(value, this.thumbnails);
 			this.createSlices();
-		}
+		},
 	},
 	created() {
 		this.makeImgArray(this.group, this.thumbnails);
