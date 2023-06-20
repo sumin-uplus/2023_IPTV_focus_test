@@ -51,7 +51,7 @@ export default {
 	},
 	mixins: [
 		BaseURL,
-		MakeLog
+		MakeLog,
 	],
 	data() {
 		return {
@@ -168,6 +168,7 @@ export default {
 			}
 			else if (e.key === 'Enter') {
 				this.navOpen(false);
+				this.nav_data_1.index = 2;
 				this.$nextTick(() => {
 					this.reset = !this.reset;
 				});
