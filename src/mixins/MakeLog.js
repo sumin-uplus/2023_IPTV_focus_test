@@ -34,7 +34,7 @@ export default {
 				updown: this.updown,
 				img_set: this.group.substr(-1),
 				nav_open: this.nav_data_1.status.toString().toLowerCase(),
-				nav_index: this.nav_data_1.index + 1,
+				nav_index: this.nav_data_1.index,
 				key: event.key
 			}
 			this.data_log_2.push(temp_log_2);
