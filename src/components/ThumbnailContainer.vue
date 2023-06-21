@@ -33,7 +33,7 @@
 import MovingFocus from "./MovingFocus.vue";
 import FixedFocus from "./FixedFocus.vue";
 import BaseURL from "../mixins/BaseURL";
-import MakeLog from "../mixins/MakeLog";
+import MakeLog from "../mixins/MakeLog1";
 
 export default {
 	name: "ThumbnailContainer",

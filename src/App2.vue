@@ -29,7 +29,7 @@
 				<router-link
 				class="generate_btn test_btn"
 				@click.prevent="isFullScreen == false ? goFullscreen() : ''"
-				to="mf"
+				to="mf/c/0"
 				>
 				Simulation
 				</router-link>

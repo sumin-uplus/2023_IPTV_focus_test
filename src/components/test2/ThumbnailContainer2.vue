@@ -35,7 +35,7 @@
 <script>
 import MovingFocus from "./MovingFocus2.vue";
 import BaseURL from "../../mixins/BaseURL";
-import MakeLog from "../../mixins/MakeLog";
+import MakeLog from "../../mixins/MakeLog2";
 import LeftNavItem from "./LeftNavItem.vue";
 
 export default {

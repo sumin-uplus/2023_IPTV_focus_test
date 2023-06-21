@@ -8,13 +8,13 @@ const routes = [
             path: process.env.BASE_URL + '/mf',
             name: 'MF',
             component: ThumbnailContainer,
-            props: { group: 'imgset05', type: 'MF'}
+            props: { group: 'imgset00', type: 'MF'}
       },
       {
             path: process.env.BASE_URL + '/ff',
             name: 'FF',
             component: ThumbnailContainer,
-            props: { group: 'imgset05', type: 'FF' }
+            props: { group: 'imgset00', type: 'FF' }
       },
       {
             path: process.env.BASE_URL + '/test1',
@@ -28,14 +28,14 @@ const routes = [
       },
 ]
 
-const groups = ['imgset01', 'imgset02', 'imgset03', 'imgset04', 'imgset05'];
+const groups = ['imgset00', 'imgset01', 'imgset02', 'imgset03', 'imgset04'];
 const types = ['MF', 'FF'];
 const updowns = ['A', 'B', 'C'];
 
 types.forEach((type) => {
       groups.forEach((group, index) => {
-        const path = `${process.env.BASE_URL}/${type.toLowerCase()}/${index + 1}`;
-        const name = `${type}-${index + 1}`;
+        const path = `${process.env.BASE_URL}/${type.toLowerCase()}/${index}`;
+        const name = `${type}-${index}`;
     
         routes.push({
           path,
@@ -48,8 +48,8 @@ types.forEach((type) => {
 
 updowns.forEach((updown) => {
   groups.forEach((group, index) => {
-    const path = `${process.env.BASE_URL}/mf/${updown.toLowerCase()}/${index + 1}`;
-    const name = `MF-${updown}-${index + 1}`;
+    const path = `${process.env.BASE_URL}/mf/${updown.toLowerCase()}/${index}`;
+    const name = `MF-${updown}-${index}`;
 
     routes.push({
       path,
