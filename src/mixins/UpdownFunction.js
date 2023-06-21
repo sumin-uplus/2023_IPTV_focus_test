@@ -1,12 +1,6 @@
-//import eventBus from '../components/test2/EventBus';
 export default {
     methods: {
         downA() {
-            //항상 1로 처리
-            this.nextSection();
-            this.activeIndex = this.firstPositionIndex;
-        },
-        downB() {
             //처음 아래로 내리는 컨테이너는 1로 처리
             this.nextSection();
             if(this.activeIndex / 10 == 0) {
@@ -14,6 +8,11 @@ export default {
                     this.activeIndex = this.activeSection;
                 }
             }
+        },
+        downB() {
+            //항상 1로 처리
+            this.nextSection();
+            this.activeIndex = this.firstPositionIndex;
         },
         focusC(){
             //최단거리 이동
