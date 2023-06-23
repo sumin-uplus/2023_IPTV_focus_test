@@ -75,7 +75,9 @@
                     this.$emit('update:group', [this.group, index]);
                 } else if (index === 4) {
                     this.$emit('update:group', ['imgset02', index]);
-                }
+                } else {
+                    this.$emit('update:group', ['imgset00', index]);
+                } 
             },
             reset() {
                 this.activeIndex = 2;
