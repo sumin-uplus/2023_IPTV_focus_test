@@ -81,7 +81,7 @@
       }
 
       .icon_container {
-            position: relative;
+            position: relative;       
       }
 
       .icon_active {
@@ -137,4 +137,10 @@
 
 .nav_item_container:nth-of-type(7) {
       margin-top: 76px;
+}
+
+.nav_item_container:nth-child(n+2) {
+      .icon {
+            opacity: 0.5;
+      }
 }

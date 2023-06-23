@@ -124,20 +124,6 @@ export default {
 	},
 	mounted() {
 		window.addEventListener("keydown", this.handleEvent);
-		if(this.$refs.focus) {
-			const { width, height, top, left } = this.focus_data;
-			const { style } = this.$refs.focus || {};
-			Object.assign(style, {
-				transition: '0s',
-				paddingLeft: '130px',
-				marginLeft: '6px',
-				width: `${width}px`,
-				height: `${height}px`,
-				top: `${top}px`,
-				left: `${left}px`,
-				transform: 'scale(1.03)'
-			});
-		}
 	},
 	unmounted() {
 		window.removeEventListener("keydown", this.handleEvent);

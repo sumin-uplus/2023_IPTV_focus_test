@@ -1,15 +1,13 @@
 <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g opacity="0.5">
-<mask id="mask0_1529_117864" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="2" y="2" width="32" height="32">
+<mask id="mask0_1570_162680" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="2" y="2" width="32" height="32">
 <rect x="2" y="2" width="32" height="32" fill="#EEEEEE"/>
 </mask>
-<g mask="url(#mask0_1529_117864)">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M29.25 7.875H6.75H29.25Z" fill="#EEEEEE"/>
+<g mask="url(#mask0_1570_162680)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M29.25 7.875H6.75Z" fill="#EEEEEE"/>
 <path d="M29.25 7.875H6.75" stroke="#EEEEEE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M29.25 28.125H6.75H29.25Z" fill="#EEEEEE"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M29.25 28.125H6.75Z" fill="#EEEEEE"/>
 <path d="M29.25 28.125H6.75" stroke="#EEEEEE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M29.25 18H6.75H29.25Z" fill="#EEEEEE"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M29.25 18H6.75Z" fill="#EEEEEE"/>
 <path d="M29.25 18H6.75" stroke="#EEEEEE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-</g>
 </g>
 </svg>
