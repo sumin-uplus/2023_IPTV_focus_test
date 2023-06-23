@@ -1,5 +1,5 @@
 <template>
-	<div class="intro_bg" v-if="$route.path == baseURL" ref="routerContainer">
+	<div class="intro_bg">
 		<div class="router_container">
 			<div class="select_container">
 				<div class="focus_select">
@@ -60,8 +60,8 @@ import BaseURL from "./mixins/BaseURL";
 		},
 		methods: {
 			goFullscreen() {
-				const container = this.$refs.routerContainer;
-				if (container.requestFullscreen) {
+			const container = document.documentElement;
+			if (container.requestFullscreen) {
 					container.requestFullscreen();
 					this.isFullScreen = true;
 				} else if (container.webkitRequestFullscreen) {
