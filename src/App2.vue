@@ -19,7 +19,7 @@
 			</div>
 			<div class="group_select">
 				Thumbnail Selection
-				<label class="option" v-for="i in 4" :key="i" :for="'group_'+i">
+				<label class="option" v-for="i in 3" :key="i" :for="'group_'+i">
 					<input type="radio" :id="'group_' + i" :value="i" name="group" v-model="selectedGroup">
 					{{ "group " + i }}
 				</label>			

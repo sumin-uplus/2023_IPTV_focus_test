@@ -71,10 +71,12 @@
             },
             activeIndex(index) {
                 this.isNavOpen.index = this.activeIndex;
+                let group_index = this.group.slice(-1)*1;
+                let group_next = `imgset0${group_index+3}`;
                 if(index === 2) {
                     this.$emit('update:group', [this.group, index]);
                 } else if (index === 4) {
-                    this.$emit('update:group', ['imgset02', index]);
+                    this.$emit('update:group', [group_next, index]);
                 } else {
                     this.$emit('update:group', ['imgset00', index]);
                 } 

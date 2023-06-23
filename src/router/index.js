@@ -28,7 +28,7 @@ const routes = [
       },
 ]
 
-const groups = ['imgset00', 'imgset01', 'imgset02', 'imgset03', 'imgset04'];
+const groups = ['imgset00', 'imgset01', 'imgset02', 'imgset03'];
 const types = ['MF', 'FF'];
 const updowns = ['A', 'B', 'C'];
 
