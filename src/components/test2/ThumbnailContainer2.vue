@@ -62,7 +62,7 @@ export default {
 			module_data: 0,
 			nav_data:[],
 			// nav_text: ['마이메뉴', '검색', '홈', '나의 구독', '전체 메뉴 보기', '알림', '설정', '고객지원'],
-			nav_text: ['프로필', '메뉴1', '메뉴2', '메뉴3', '메뉴4', '메뉴5', '설정', '고객지원'],
+			nav_text: ['프로필', '메뉴', '홈1', '메뉴', '홈2', '메뉴', '설정', '고객지원'],
 			nav_data_1: { status: false , index: 2 },
 			nav_data_2: { status: false , index: 2 },
 			img_set: '',
