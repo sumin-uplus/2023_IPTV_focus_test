@@ -81,10 +81,10 @@ export default {
 			if (this.isEventHandling || this.isNavOpen.status) {
 				return;
 			}
-			let eventDuration = 100; 
-			// if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
-			// 	eventDuration = 200;
-			// }
+			let eventDuration = 350; 
+			if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+				eventDuration = 200;
+			}
 			this.isEventHandling = true;
 			if (e.key === "ArrowRight") {
 				if (index != this.thumbnail_quantity - 1
@@ -214,10 +214,10 @@ export default {
 		},
 		setTransition() {
 			if(this.activeContainer) {
-				this.activeContainer.style.transition = '0.2s all ease-in-out';
+				this.activeContainer.style.transition = '0.3s all ease-in-out';
 			}
-			this.imgWrapper.forEach((e)=>{e.style.transition = '0.2s all ease-in-out';});
-			this.module.style.transition = '0.2s all ease-in-out';
+			this.imgWrapper.forEach((e)=>{e.style.transition = '0.3s all ease-in-out';});
+			this.module.style.transition = '0.3s all ease-in-out';
 		},
 		getPosition() {
 			const positions = ['first_position', 'second_position', 'third_position', 'last_position'];
