@@ -261,7 +261,9 @@ export default {
 						this.activeIndex = 0;
 						this.activeSection = 0;
 					} else {
-						this.activeIndex = this.container_num;	
+						if(this.activeContainer) {
+							this.activeIndex = this.container_num;	
+						}
 					}
 				}
 				else {
