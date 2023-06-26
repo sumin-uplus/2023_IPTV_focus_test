@@ -81,7 +81,7 @@ export default {
 			if (this.isEventHandling || this.isNavOpen.status) {
 				return;
 			}
-			let eventDuration = 350; 
+			let eventDuration = 300; 
 			if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
 				eventDuration = 200;
 			}
