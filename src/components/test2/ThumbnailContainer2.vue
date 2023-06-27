@@ -27,6 +27,7 @@
 			:updown_type="updown"
 			:nav_active="nav_data_2"
 			@nav-open="navOpen"
+			@update:index="updateIndex"
 		>
 		</MovingFocus>
 	</div>
@@ -43,7 +44,8 @@ export default {
 	props: {
 		group: {type: String, default: 'imgset01'},
 		type: {type: String, default: 'MF'},
-		updown: {type: String, default: 'A'}
+		updown: {type: String, default: 'A'},
+		task: {type: String, default: 'task1'}
 	},
 	components: {
 		MovingFocus,
@@ -58,15 +60,15 @@ export default {
 			thumbnail_quantity: 20,
 			thumbnails: [],
 			slices: [],
-			focus_data: 0,
-			module_data: 0,
 			nav_data:[],
 			// nav_text: ['마이메뉴', '검색', '홈', '나의 구독', '전체 메뉴 보기', '알림', '설정', '고객지원'],
 			nav_text: ['프로필', '메뉴', '홈1', '메뉴', '홈2', '메뉴', '설정', '고객지원'],
 			nav_data_1: { status: false , index: 2 },
 			nav_data_2: { status: false , index: 2 },
 			img_set: '',
-			reset: false
+			reset: false,
+			active_index: 0,
+			active_section: 0,
 		};
 	},
 	methods: {
@@ -109,6 +111,10 @@ export default {
 			this.img_set = e[0];
 			this.nav_data_2.index = e[1];
 		},
+		updateIndex(index, section) {
+			this.active_index = index;
+			this.active_section = section;
+		}
 	},
 	watch: {
 		img_set(value) {

@@ -31,6 +31,7 @@ const routes = [
 const groups = ['imgset00', 'imgset01', 'imgset02', 'imgset03'];
 const types = ['MF', 'FF'];
 const updowns = ['A', 'B', 'C'];
+const tasks = ['task1', 'task2', 'task3'];
 
 types.forEach((type) => {
       groups.forEach((group, index) => {
@@ -47,15 +48,17 @@ types.forEach((type) => {
     });
 
 updowns.forEach((updown) => {
-  groups.forEach((group, index) => {
-    const path = `${process.env.BASE_URL}/mf/${updown.toLowerCase()}/${index}`;
-    const name = `MF-${updown}-${index}`;
+  tasks.forEach((task, num) => {
+    groups.forEach((group, index) => {
+      const path = `${process.env.BASE_URL}/mf/${updown.toLowerCase()}/${index}/${num+1}`;
+      const name = `MF-${updown}-${index}-${num+1}`;
 
-    routes.push({
-      path,
-      name,
-      component: ThumbnailContainer2,
-      props: { group, type: 'MF', updown },
+      routes.push({
+        path,
+        name,
+        component: ThumbnailContainer2,
+        props: { group, type: 'MF', updown, task },
+      });
     });
   });
 });

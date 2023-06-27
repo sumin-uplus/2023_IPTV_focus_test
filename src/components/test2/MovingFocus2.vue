@@ -86,6 +86,7 @@ export default {
 				eventDuration = 200;
 			}
 			this.isEventHandling = true;
+
 			if (e.key === "ArrowRight") {
 				if (index != this.thumbnail_quantity - 1
 					&& this.activeIndex == this.lastPositionIndex) {
@@ -157,6 +158,11 @@ export default {
 				this.activeIndex = this.container_num;
 				eventBus.emit('position', 'first');
 			}
+
+			if(this.activeContainer) {
+				this.$emit('update:index', this.activeIndex, this.activeSection);
+			}
+			
 			setTimeout(() => {
 				this.isEventHandling = false;
 			}, eventDuration);

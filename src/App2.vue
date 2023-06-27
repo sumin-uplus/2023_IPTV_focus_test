@@ -16,30 +16,46 @@
 					<input type="radio" id="C" value="C" name="focus" v-model="selectedFocus">
 					C
 				</label>	
-			</div>
-			<div class="group_select">
-				Thumbnail Selection
-				<label class="option" v-for="i in 3" :key="i" :for="'group_'+i">
-					<input type="radio" :id="'group_' + i" :value="i" name="group" v-model="selectedGroup">
-					{{ "group " + i }}
-				</label>			
-			</div>
+				</div>
+				<div class="group_select">
+					Thumbnail Selection
+					<label class="option" v-for="i in 3" :key="i" :for="'group_'+i">
+						<input type="radio" :id="'group_' + i" :value="i" name="group" v-model="selectedGroup">
+						{{ "group " + i }}
+					</label>			
+				</div>
 			</div>
 			<div class="btn_container">
 				<router-link
 				class="generate_btn test_btn"
 				@click.prevent="isFullScreen == false ? goFullscreen() : ''"
-				to="mf/c/0"
+				to="mf/c/0/1"
 				>
 				Simulation
 				</router-link>
-				<router-link
-				class="generate_btn"
-				@click.prevent="isFullScreen == false ? goFullscreen() : ''"
-				:to="baseURL + 'mf/' + selectedFocus.toLowerCase() + '/' + selectedGroup"
-				>
-				생성하기
-				</router-link>
+				<div class="btn_inner_container">
+					<router-link
+					class="generate_btn"
+					@click.prevent="isFullScreen == false ? goFullscreen() : ''"
+					:to="baseURL + 'mf/' + selectedFocus.toLowerCase() + '/' + selectedGroup + '/1'"
+					>
+					Task1
+					</router-link>
+					<router-link
+					class="generate_btn"
+					@click.prevent="isFullScreen == false ? goFullscreen() : ''"
+					:to="baseURL + 'mf/' + selectedFocus.toLowerCase() + '/' + selectedGroup + '/2'"
+					>
+					Task2
+					</router-link>
+					<router-link
+					class="generate_btn"
+					@click.prevent="isFullScreen == false ? goFullscreen() : ''"
+					:to="baseURL + 'mf/' + selectedFocus.toLowerCase() + '/' + selectedGroup + '/3'"
+					>
+					Task3
+					</router-link>
+				</div>
 			</div>		
 		</div>
 	</div>
@@ -81,4 +97,15 @@ import BaseURL from "./mixins/BaseURL";
 	@import './assets/css/thumbnail.css';
 	@import './assets/css/intro.css';
 	@import './assets/css/nav.scss';
+
+	/*실험 2번 CSS*/
+	.btn_inner_container {
+		display: flex;
+		width: 100%;
+		gap: 20px;
+	}
+
+	.btn_inner_container .generate_btn {
+		width: 100%;
+	}
 </style>

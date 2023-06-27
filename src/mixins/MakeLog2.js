@@ -10,32 +10,50 @@ export default {
 	},
 	methods:{
 		loggingData(event) {
+			let updown = this.updown
+			let img_set = this.group.substr(-1)
+			let task = this.task.substr(-1)
+			let active_section = this.active_section
+			let active_thumbnail = typeof this.active_index === 'boolean' ? -1 : this.active_index
+			let nav_open = this.nav_data_1.status.toString().toLowerCase()
+			let nav_index = this.nav_data_1.index
+			let key = event.key
+
 			//txt 로그
-            var temp_log_1 = 
+            let temp_log_1 = 
 			'[' +
 			this.getCurDt().ymd +
 			']' +
-			this.updown + 
+			updown + 
 			'/' +
-			this.group.substr(-1) +
+			img_set +
+			'/' +
+			task +
 			'||' +
-			this.nav_data_1.status.toString().toLowerCase() +
+			active_section + 
 			'||' +
-			this.nav_data_1.index +
+			active_thumbnail + 
 			'||' +
-			event.key +
+			nav_open +
+			'||' +
+			nav_index +
+			'||' +
+			key +
 			'\n' ;
             this.data_log_1.push(temp_log_1);
 
 			//xlsx 로그
-			var temp_log_2 = {
+			let temp_log_2 = {
 				date: this.getCurDt().date,
 				time: this.getCurDt().time,
-				updown: this.updown,
-				img_set: this.group.substr(-1),
-				nav_open: this.nav_data_1.status.toString().toLowerCase(),
-				nav_index: this.nav_data_1.index,
-				key: event.key
+				updown: updown,
+				img_set: img_set,
+				task: task,
+				active_section: active_section,
+				active_thumbnail: active_thumbnail,
+				nav_open: nav_open,
+				nav_index: nav_index,
+				key: key
 			}
 			this.data_log_2.push(temp_log_2);
 
