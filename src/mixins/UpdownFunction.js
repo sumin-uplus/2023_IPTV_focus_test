@@ -1,17 +1,15 @@
 export default {
     methods: {
-        downA() {
+        focusA() {
             //처음 아래로 내리는 컨테이너는 1로 처리
-            this.nextSection();
             if(this.activeIndex / 10 == 0) {
                 if (this.activeContainer) {
                     this.activeIndex = this.activeSection;
                 }
             }
         },
-        downB() {
+        focusB() {
             //항상 1로 처리
-            this.nextSection();
             this.activeIndex = this.firstPositionIndex;
         },
         focusC(){
@@ -24,9 +22,25 @@ export default {
             };
             this.activeIndex = positionMap[this.movingPosition];
         },
+        downA() {
+            this.nextSection();
+            this.focusA();
+        },
+        downB() {
+            this.nextSection();
+            this.focusB();
+        },
         downC() {
             this.nextSection();
             this.focusC();
+        },
+        upA() {
+            this.prevSection();
+            this.focusA();
+        },
+        upB() {
+            this.prevSection();
+            this.focusB();
         },
         upC() {
             this.prevSection();

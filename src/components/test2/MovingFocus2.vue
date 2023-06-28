@@ -48,6 +48,7 @@ export default {
 		container_title: { type: String, default: "콘텐츠 모듈1" },
 		focus_type: {type: String, default: 'moving'},
 		updown_type: {type: String, default: 'A'},
+		task_type: {type: String, default: 'task1'},
 		nav_active: { type: Object },
 	},
 	mixins:[FocusFunction, UpdownFunction],
@@ -145,9 +146,10 @@ export default {
 				}
 				this.keyPressed = "up";
 				if(this.updown_type == 'A') {
-					this.prevSection();
+					// this.prevSection();
+					this.upA();
 				} else if(this.updown_type == 'B') {
-					this.prevSection();
+					this.upB();
 				} else if(this.updown_type == 'C') {
 					this.upC();
 				}
@@ -168,27 +170,27 @@ export default {
 			}, eventDuration);
 		},
 		getClosestPosition(position) {
-		const positionRect = position.getBoundingClientRect();
-		const imgWrappers = this.$el.querySelectorAll('.img_wrapper');
-		let minDistance = Number.MAX_VALUE;
-		let positionRefs = [this.$refs.first_position, this.$refs.second_position, this.$refs.third_position, this.$refs.last_position];
-		let positionIndexes = ['firstPositionIndex', 'secondPositionIndex', 'thirdPositionIndex', 'lastPositionIndex'];
+			const positionRect = position.getBoundingClientRect();
+			const imgWrappers = this.$el.querySelectorAll('.img_wrapper');
+			let minDistance = Number.MAX_VALUE;
+			let positionRefs = [this.$refs.first_position, this.$refs.second_position, this.$refs.third_position, this.$refs.last_position];
+			let positionIndexes = ['firstPositionIndex', 'secondPositionIndex', 'thirdPositionIndex', 'lastPositionIndex'];
 
-		imgWrappers.forEach((thumbnail) => {
-			const rect = thumbnail.getBoundingClientRect();
-			const distance = Math.abs(positionRect.left - rect.left);
+			imgWrappers.forEach((thumbnail) => {
+				const rect = thumbnail.getBoundingClientRect();
+				const distance = Math.abs(positionRect.left - rect.left);
 
-				if (rect.left >= 0 && distance < minDistance) {
-					minDistance = distance;
-					const index = parseInt(thumbnail.getAttribute("index"));
+					if (rect.left >= 0 && distance < minDistance) {
+						minDistance = distance;
+						const index = parseInt(thumbnail.getAttribute("index"));
 
-					positionRefs.forEach((ref, i) => {
-						if (position === ref) {
-						this[positionIndexes[i]] = index;
-						}
-					});
-				}
-			});
+						positionRefs.forEach((ref, i) => {
+							if (position === ref) {
+							this[positionIndexes[i]] = index;
+							}
+						});
+					}
+				});
 		},
 		rightMove() {
 			if (this.activeContainer) {
@@ -297,6 +299,19 @@ export default {
 		eventBus.on('nav-open', (e)=>{
 			this.isNavOpen.status = e;
 		});
+
+		//task3일때 초기 세팅
+		if(this.task_type === 'task3') {
+			this.activeSection = 30;
+			this.downMove();
+			this.activeSection+=10;
+			if(this.activeContainer) {
+				this.activeIndex = 44;
+				this.rightMove();
+				this.activeIndex+=1;
+			}
+			eventBus.emit('position', 'last');
+		}
 	},
 	unmounted() {
 		eventBus.off('position');

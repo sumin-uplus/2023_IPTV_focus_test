@@ -20,11 +20,12 @@
 			v-for="(slice, index) in slices"
 			:key="index"
 			:thumbnails="slice"
+			:thumbnail_quantity = thumbnail_quantity
 			:container_num="index * 10"
 			:container_title="'콘텐츠 모듈 ' + (index + 1)"
 			:focus_type="type"
-			:thumbnail_quantity = thumbnail_quantity
 			:updown_type="updown"
+			:task_type="task"
 			:nav_active="nav_data_2"
 			@nav-open="navOpen"
 			@update:index="updateIndex"
@@ -114,7 +115,84 @@ export default {
 		updateIndex(index, section) {
 			this.active_index = index;
 			this.active_section = section;
-		}
+		},
+		//자동 키 입력 기능
+		// setFocusDown() {
+		// 	const ref = this.$refs.focus;
+		// 		if (ref && this.active_section/10 != 9) {
+		// 			const translateY = `translateY(${(this.module_data.height + 40) * (this.active_section/10 == 8 ? 2 : 1)}px) scale(1.03)`;
+		// 			this.setFocusAnimation(ref, translateY);
+		// 		}
+		// },
+		// setFocusUp() {
+		// 	const ref = this.$refs.focus;
+		// 		if (ref && this.active_section/10 != 0) {
+		// 			const translateY = `translateY(${(this.module_data.height + 40) * (this.active_section/10 == 1 ? 0 : 1)}px) scale(1.03)`;
+		// 			this.setFocusAnimation(ref, translateY);
+		// 		}
+		// },
+		// ffCustomKeyEvent(e) {
+		// 	if (e.key === "ArrowDown") {
+		// 		this.setFocusDown();
+		// 	} else if (e.key === "ArrowUp") {
+		// 		this.setFocusUp();
+		// 	}
+		// },
+		autoKeyEvent() {
+			// const eventLeft = new KeyboardEvent('keydown', {keyCode: 37});
+			// const eventUp = new KeyboardEvent('keydown', {keyCode: 38});
+			const eventRight = new KeyboardEvent('keydown', {key: 'ArrowRight'});
+			const eventDown = new KeyboardEvent('keydown', {key: 'ArrowDown'});
+			const delay = 1500;
+			// 7
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*2)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*3)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*4)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*5)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*6)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*7)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*8)
+			// 5
+			setTimeout(()=>{
+				window.dispatchEvent(eventDown);
+				//this.ffCustomKeyEvent(eventDown);
+			},delay*9)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*10)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*11)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*12)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*13)
+			// 10
+			setTimeout(()=>{
+				window.dispatchEvent(eventDown);
+				//this.ffCustomKeyEvent(eventDown);
+			},delay*14)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*15)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*16)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*17)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*18)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*19)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*20)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*21)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*22)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*23)
+			// 3
+			setTimeout(()=>{
+				window.dispatchEvent(eventDown);
+				//this.ffCustomKeyEvent(eventDown);
+			},delay*24)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*25)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*26)
+			//5
+			setTimeout(()=>{
+				window.dispatchEvent(eventDown);
+				//this.ffCustomKeyEvent(eventDown);
+			},delay*27)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*28)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*29)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*30)
+			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*31)
+			
+		},
 	},
 	watch: {
 		img_set(value) {
