@@ -131,12 +131,12 @@ export default {
 					this.downMove();
 				}
 				this.keyPressed = "down";
-				if(this.updown_type == 'A') {
-					this.downA();
-				} else if(this.updown_type == 'B') {
-					this.downB();
-				} else if(this.updown_type == 'C') {
-					this.downC();
+				if(this.updown_type === 'A') {
+					this.updownIndex('down', 'A');
+				} else if(this.updown_type === 'B') {
+					this.updownIndex('down', 'B');
+				} else if(this.updown_type === 'C') {
+					this.updownIndex('down', 'C');
 				}
 				this.setTransition();
 
@@ -145,13 +145,12 @@ export default {
 					this.upMove();
 				}
 				this.keyPressed = "up";
-				if(this.updown_type == 'A') {
-					// this.prevSection();
-					this.upA();
-				} else if(this.updown_type == 'B') {
-					this.upB();
-				} else if(this.updown_type == 'C') {
-					this.upC();
+				if(this.updown_type === 'A') {
+					this.updownIndex('up', 'A')
+				} else if(this.updown_type === 'B') {
+					this.updownIndex('up', 'B')
+				} else if(this.updown_type === 'C') {
+					this.updownIndex('up', 'C')
 				}
 				this.setTransition();
 			} else if (e.key === "Enter") {

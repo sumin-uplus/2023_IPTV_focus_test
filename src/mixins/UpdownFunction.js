@@ -10,7 +10,9 @@ export default {
         },
         focusB() {
             //항상 1로 처리
-            this.activeIndex = this.firstPositionIndex;
+            if (this.activeContainer) {
+                this.activeIndex = this.firstPositionIndex;
+            }
         },
         focusC(){
             //최단거리 이동
@@ -22,30 +24,6 @@ export default {
             };
             this.activeIndex = positionMap[this.movingPosition];
         },
-        downA() {
-            this.nextSection();
-            this.focusA();
-        },
-        downB() {
-            this.nextSection();
-            this.focusB();
-        },
-        downC() {
-            this.nextSection();
-            this.focusC();
-        },
-        upA() {
-            this.prevSection();
-            this.focusA();
-        },
-        upB() {
-            this.prevSection();
-            this.focusB();
-        },
-        upC() {
-            this.prevSection();
-            this.focusC();
-        },
         nextSection() {
             if(this.activeSection != 90) {
                 this.activeSection += 10;
@@ -55,6 +33,12 @@ export default {
             if(this.activeSection != 0) {
                 this.activeSection -= 10;
             }
-        }
+        },
+        updownIndex(direction, section) {
+            const updownAction = direction === 'down' ? this.nextSection : this.prevSection;
+            const focusAction = this[`focus${section}`];
+            updownAction();
+            focusAction();
+        },
     }
 }
