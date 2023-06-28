@@ -151,7 +151,7 @@ export default {
 				this.makeKeyEvent(11, 16, eventRight);
 				this.makeKeyEvent(17, 17, eventDown);
 				this.makeKeyEvent(18, 23, eventRight);
-				this.makeKeyEvent(23, 23, eventUp);
+				this.makeKeyEvent(24, 24, eventUp);
 			}
 		},
 	},
