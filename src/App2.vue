@@ -29,7 +29,7 @@
 				<router-link
 				class="generate_btn test_btn"
 				@click.prevent="isFullScreen == false ? goFullscreen() : ''"
-				to="mf/c/0/1"
+				:to="baseURL + 'mf/' + selectedFocus.toLowerCase() + '/0/1'"
 				>
 				Simulation
 				</router-link>
