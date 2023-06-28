@@ -301,17 +301,17 @@ export default {
 		});
 
 		//task3일때 초기 세팅
-		if(this.task_type === 'task3') {
-			this.activeSection = 30;
-			this.downMove();
-			this.activeSection+=10;
-			if(this.activeContainer) {
-				this.activeIndex = 44;
-				this.rightMove();
-				this.activeIndex+=1;
-			}
-			eventBus.emit('position', 'last');
-		}
+		// if(this.task_type === 'task3') {
+		// 	this.activeSection = 30;
+		// 	this.downMove();
+		// 	this.activeSection+=10;
+		// 	if(this.activeContainer) {
+		// 		this.activeIndex = 44;
+		// 		this.rightMove();
+		// 		this.activeIndex+=1;
+		// 	}
+		// 	eventBus.emit('position', 'last');
+		// }
 	},
 	unmounted() {
 		eventBus.off('position');

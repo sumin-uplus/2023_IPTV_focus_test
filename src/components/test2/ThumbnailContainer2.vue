@@ -62,7 +62,6 @@ export default {
 			thumbnails: [],
 			slices: [],
 			nav_data:[],
-			// nav_text: ['마이메뉴', '검색', '홈', '나의 구독', '전체 메뉴 보기', '알림', '설정', '고객지원'],
 			nav_text: ['프로필', '메뉴', '홈1', '메뉴', '홈2', '메뉴', '설정', '고객지원'],
 			nav_data_1: { status: false , index: 2 },
 			nav_data_2: { status: false , index: 2 },
@@ -96,7 +95,9 @@ export default {
 				this.$nextTick(() => {
 					this.reset = !this.reset;
 				});
-			}
+			} else if (e.key === '1' && this.task === 'task3') {
+				this.autoKeyEvent();
+			} 
 		},
 		makeIconArray() {
 			for (let i = 0; i < this.nav_text.length; i++) {
@@ -117,81 +118,41 @@ export default {
 			this.active_section = section;
 		},
 		//자동 키 입력 기능
-		// setFocusDown() {
-		// 	const ref = this.$refs.focus;
-		// 		if (ref && this.active_section/10 != 9) {
-		// 			const translateY = `translateY(${(this.module_data.height + 40) * (this.active_section/10 == 8 ? 2 : 1)}px) scale(1.03)`;
-		// 			this.setFocusAnimation(ref, translateY);
-		// 		}
-		// },
-		// setFocusUp() {
-		// 	const ref = this.$refs.focus;
-		// 		if (ref && this.active_section/10 != 0) {
-		// 			const translateY = `translateY(${(this.module_data.height + 40) * (this.active_section/10 == 1 ? 0 : 1)}px) scale(1.03)`;
-		// 			this.setFocusAnimation(ref, translateY);
-		// 		}
-		// },
-		// ffCustomKeyEvent(e) {
-		// 	if (e.key === "ArrowDown") {
-		// 		this.setFocusDown();
-		// 	} else if (e.key === "ArrowUp") {
-		// 		this.setFocusUp();
-		// 	}
-		// },
+		makeKeyEvent(start, count, key) {
+			const delay = 400;
+			for (let i = start; i <= count; i++) {
+				setTimeout(() => {
+					window.dispatchEvent(key);
+				}, delay * i);
+			}
+		},
 		autoKeyEvent() {
-			// const eventLeft = new KeyboardEvent('keydown', {keyCode: 37});
-			// const eventUp = new KeyboardEvent('keydown', {keyCode: 38});
+			const eventUp = new KeyboardEvent('keydown', {key: 'ArrowUp'});
 			const eventRight = new KeyboardEvent('keydown', {key: 'ArrowRight'});
 			const eventDown = new KeyboardEvent('keydown', {key: 'ArrowDown'});
-			const delay = 1500;
-			// 7
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*2)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*3)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*4)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*5)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*6)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*7)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*8)
-			// 5
-			setTimeout(()=>{
-				window.dispatchEvent(eventDown);
-				//this.ffCustomKeyEvent(eventDown);
-			},delay*9)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*10)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*11)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*12)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*13)
-			// 10
-			setTimeout(()=>{
-				window.dispatchEvent(eventDown);
-				//this.ffCustomKeyEvent(eventDown);
-			},delay*14)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*15)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*16)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*17)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*18)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*19)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*20)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*21)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*22)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*23)
-			// 3
-			setTimeout(()=>{
-				window.dispatchEvent(eventDown);
-				//this.ffCustomKeyEvent(eventDown);
-			},delay*24)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*25)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*26)
-			//5
-			setTimeout(()=>{
-				window.dispatchEvent(eventDown);
-				//this.ffCustomKeyEvent(eventDown);
-			},delay*27)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*28)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*29)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*30)
-			setTimeout(()=>{window.dispatchEvent(eventRight);},delay*31)
-			
+			if(this.updown === 'A') {
+				this.makeKeyEvent(1, 9, eventRight);
+				this.makeKeyEvent(10, 10, eventDown);
+				this.makeKeyEvent(11, 19, eventRight);
+				this.makeKeyEvent(20, 20, eventDown);
+				this.makeKeyEvent(21, 29, eventRight);
+				this.makeKeyEvent(30, 30, eventUp);
+			} else if (this.updown === 'B') {
+				this.makeKeyEvent(1, 9, eventRight);
+				this.makeKeyEvent(10, 10, eventDown);
+				this.makeKeyEvent(11, 19, eventRight);
+				this.makeKeyEvent(20, 20, eventDown);
+				this.makeKeyEvent(21, 29, eventRight);
+				this.makeKeyEvent(30, 30, eventUp);
+				this.makeKeyEvent(31, 33, eventRight);
+			} else if (this.updown === 'C') {
+				this.makeKeyEvent(1, 9, eventRight);
+				this.makeKeyEvent(10, 10, eventDown);
+				this.makeKeyEvent(11, 16, eventRight);
+				this.makeKeyEvent(17, 17, eventDown);
+				this.makeKeyEvent(18, 23, eventRight);
+				this.makeKeyEvent(23, 23, eventUp);
+			}
 		},
 	},
 	watch: {
