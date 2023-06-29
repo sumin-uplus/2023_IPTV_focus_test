@@ -76,7 +76,7 @@ export default {
 	methods: {
 		makeImgArray(group, array) {
 			for (let i = 1; i <= 200; i++) {
-				const src = require(`@/assets/img/${group}/thumbnail_${i}.jpg`);
+				const src = require(`@/assets/img/${group}/thumbnail_${i}.jpeg`);
 				array.push({ i, src });
 			}
 		},

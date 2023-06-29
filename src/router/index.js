@@ -28,7 +28,7 @@ const routes = [
       },
 ]
 
-const groups = ['imgset00', 'imgset01', 'imgset02', 'imgset03', 'imgset07', 'imgset08', 'imgset09'];
+const groups = ['imgset00', 'imgset01', 'imgset02', 'imgset03', 'imgset04', 'imgset05', 'imgset06'];
 const types = ['MF', 'FF'];
 const updowns = ['A', 'B', 'C'];
 const tasks = ['task1', 'task2', 'task3'];

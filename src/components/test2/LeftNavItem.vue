@@ -71,12 +71,16 @@
             },
             activeIndex(index) {
                 this.isNavOpen.index = this.activeIndex;
-                let group_index = this.group.slice(-1)*1;
-                let group_next = `imgset0${group_index+3}`;
+                let group_index = this.group.replace('imgset', '')*1;
+                let group_next = `imgset${String(group_index+6).padStart(2, '0')}`;
                 if(index === 2) {
                     this.$emit('update:group', [this.group, index]);
                 } else if (index === 4) {
-                    this.$emit('update:group', [group_next, index]);
+                    if(group_index === 0) {
+                        this.$emit('update:group', ['imgset00', index]);
+                    } else {
+                        this.$emit('update:group', [group_next, index]);
+                    }
                 } else {
                     this.$emit('update:group', ['imgset00', index]);
                 } 
