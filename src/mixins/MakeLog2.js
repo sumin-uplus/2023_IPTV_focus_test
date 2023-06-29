@@ -15,6 +15,7 @@ export default {
 			let task = this.task.substr(-1);
 			let active_section = (this.active_section/10)+1;
 			let active_thumbnail = typeof this.active_index === 'boolean' ? -1 : this.active_position+1;
+			let active_moving = this.active_moving;
 			let nav_open = this.nav_data_1.status.toString().toLowerCase();
 			let nav_index = this.nav_data_1.index;
 			let key = event.key;
@@ -34,6 +35,8 @@ export default {
 			'||' +
 			active_thumbnail + 
 			'||' +
+			active_moving +
+			'||' +
 			nav_open +
 			'||' +
 			nav_index +
@@ -51,9 +54,10 @@ export default {
 				task: task,
 				active_section: active_section,
 				active_thumbnail: active_thumbnail,
+				active_moving: active_moving,
 				nav_open: nav_open,
 				nav_index: nav_index,
-				key: key
+				key: key,
 			}
 			this.data_log_2.push(temp_log_2);
 

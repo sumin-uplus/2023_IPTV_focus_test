@@ -163,7 +163,7 @@ export default {
 			}
 
 			if(this.activeContainer) {
-				this.$emit('update:index', this.activeIndex, this.activeSection, this.positionIndex);
+				this.$emit('update:index', this.activeIndex, this.activeSection, this.positionIndex, this.movingPosition);
 			}
 			
 			setTimeout(() => {
