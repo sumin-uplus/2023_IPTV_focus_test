@@ -10,14 +10,14 @@ export default {
 	},
 	methods:{
 		loggingData(event) {
-			let updown = this.updown
-			let img_set = this.group.substr(-1)
-			let task = this.task.substr(-1)
-			let active_section = this.active_section
-			let active_thumbnail = typeof this.active_index === 'boolean' ? -1 : this.active_index
-			let nav_open = this.nav_data_1.status.toString().toLowerCase()
-			let nav_index = this.nav_data_1.index
-			let key = event.key
+			let updown = this.updown;
+			let img_set = this.group.substr(-1);
+			let task = this.task.substr(-1);
+			let active_section = (this.active_section/10)+1;
+			let active_thumbnail = typeof this.active_index === 'boolean' ? -1 : this.active_position+1;
+			let nav_open = this.nav_data_1.status.toString().toLowerCase();
+			let nav_index = this.nav_data_1.index;
+			let key = event.key;
 
 			//txt 로그
             let temp_log_1 = 
@@ -58,7 +58,6 @@ export default {
 			this.data_log_2.push(temp_log_2);
 
             if(event.key === 'Backspace' || event.key === '=') {
-				// this.data_log.push('=========== task 종료 ===========\n');
 				this.makeTxt();
 				this.makeXlsx();
             }

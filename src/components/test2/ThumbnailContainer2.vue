@@ -69,6 +69,7 @@ export default {
 			reset: false,
 			active_index: 0,
 			active_section: 0,
+			active_position: 0
 		};
 	},
 	methods: {
@@ -113,9 +114,10 @@ export default {
 			this.img_set = e[0];
 			this.nav_data_2.index = e[1];
 		},
-		updateIndex(index, section) {
+		updateIndex(index, section, position) {
 			this.active_index = index;
 			this.active_section = section;
+			this.active_position = position;
 		},
 		//자동 키 입력 기능
 		makeKeyEvent(start, count, key) {
