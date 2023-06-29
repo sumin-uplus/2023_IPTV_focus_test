@@ -25,20 +25,19 @@ export default {
             this.activeIndex = positionMap[this.movingPosition];
         },
         nextSection() {
-            if(this.activeSection != 90) {
-                this.activeSection += 10;
-            }
+            this.activeSection += 10;
         },
         prevSection() {
-            if(this.activeSection != 0) {
-                this.activeSection -= 10;
-            }
+            this.activeSection -= 10;
         },
         updownIndex(direction, section) {
+            const activateAction = direction === 'down' ? this.activeSection != 90 : this.activeSection != 0;
             const updownAction = direction === 'down' ? this.nextSection : this.prevSection;
             const focusAction = this[`focus${section}`];
-            updownAction();
-            focusAction();
+            if(activateAction) {
+                updownAction();
+                focusAction();
+            }
         },
     }
 }
