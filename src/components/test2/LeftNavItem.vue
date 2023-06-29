@@ -49,7 +49,7 @@
                     this.activeIndex += 1;
                 } else if (e.key === "ArrowUp" && this.activeIndex !== 0) {
                     this.activeIndex -= 1;
-                } else if (e.key === "ArrowRight") {
+                } else if (e.key === "ArrowRight" || e.key === '2') {
                     this.$emit('nav-open', false);
                 }
 
